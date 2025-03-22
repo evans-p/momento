@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="logo" src="assets/logo.png" width="150" style="margin-top:100px"/>
+  <img alt="logo" src="assets/logo.png" style="width:150px"/>
 </p>
 
 # Momento
