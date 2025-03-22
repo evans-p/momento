@@ -9,5 +9,4 @@ public class MomentoCDN {
 	public static void main(String[] args) {
 		SpringApplication.run(MomentoCDN.class, args);
 	}
-
 }
