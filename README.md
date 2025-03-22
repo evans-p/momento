@@ -8,6 +8,12 @@
 ## Description
 Momento is a social media like app, built in java.
 
+## Useful Resources
+
+- Static s analysis and vulnerability check
+  - https://stackoverflow.com/questions/61344217/gitlab-ci-pipeline-to-check-for-code-formatting
+  - https://www.baeldung.com/java-maven-owasp-dependency-check?ref=dailydev
+
 ## Initial Idea
 - Microservices:
     - User Service: Manages user profiles and authentication.
