@@ -1,6 +1,8 @@
+<p align="center">
+<img alt="logo" src="assets/logo.png" width="229" style="margin-top:100px"/>
+</p>
 
-
-# Momento <img alt="logo" src="assets/logo.png" width="229" style="margin-top:100px"/>
+# Momento
 
 
 ## Description
