@@ -14,7 +14,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <name>Momento</name>
+    <name>momento</name>
     <description>Momento is a social media like app, built in java and Spring Boot</description>
 
     <url>https://github.com/evans-p/momento</url>
