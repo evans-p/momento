@@ -14,11 +14,13 @@ Momento is a social media like app, built in java.
     - Post Service: Handles post creation, retrieval, and updates.
     - Feed Service: Aggregates posts from followed users.
     - Notification Service: Sends notifications for new posts, likes, and comments.
+
 - Apache Kafka
     - Post creation events are published to a Kafka topic.
     - Feed service subscribes to this topic to update user feeds.
     - Like and comment events are also published to kafka.
     - Notification service subscribes to like, comment and post topics.
+
 - Nginx
     - Routes requests to the appropriate microservices.
     - Handles static content.
