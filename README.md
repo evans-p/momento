@@ -4,12 +4,10 @@
 
 # Momento
 
-
 ## Description
 Momento is a social media like app, built in java.
 
 ## Useful Resources
-
 - Static s analysis and vulnerability check
   - https://stackoverflow.com/questions/61344217/gitlab-ci-pipeline-to-check-for-code-formatting
   - https://www.baeldung.com/java-maven-owasp-dependency-check?ref=dailydev
@@ -46,7 +44,6 @@ Momento is a social media like app, built in java.
     - Used for communication between microservices and for Kafka message serialization.
 
 ## Detailed Architecture
-
 - User Service
   - Manages user profiles (username, email, bio, profile picture, followers, following).
   - Handles user authentication and authorization (using JWT or OAuth 2.0).
@@ -101,7 +98,6 @@ Momento is a social media like app, built in java.
   - Used for efficient data serialization between microservices, and Kafka messages.
 
 ### Key Features
-
 - Real-time Feed
   - Users see new posts from followed users in real-time.
   - Feed updates are pushed to clients using WebSockets or Server-Sent Events (SSE).
@@ -135,7 +131,6 @@ Momento is a social media like app, built in java.
   - Protect against common web vulnerabilities.
   
 ### Technology Stack:
-
 - Spring Boot for microservices development.
 - Apache Kafka for message queuing.
 - Redis for caching and real-time data storage.
@@ -147,7 +142,6 @@ Momento is a social media like app, built in java.
 - Docker and Kubernetes for containerization and orchestration.
 
 ### Development Workflow
-
 - Design: Define the microservice architecture and API contracts.
 - Development: Implement each microservice independently.
 - Testing: Write unit and integration tests.
