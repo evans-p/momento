@@ -27,8 +27,13 @@ public class AssetServiceImpl implements AssetService {
 	@Value("${cdn.storage.location}")
 	private String storageLocation;
 
+
+	private final AssetRepository assetRepository;
+
 	@Autowired
-	private AssetRepository assetRepository;
+	public AssetServiceImpl(AssetRepository assetRepository) {
+		this.assetRepository = assetRepository;
+	}
 
 	@Override
 	public Optional<Asset> getAssetByPath(String path) {
