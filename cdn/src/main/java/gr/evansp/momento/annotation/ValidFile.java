@@ -1,0 +1,18 @@
+package gr.evansp.momento.annotation;
+
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+
+import gr.evansp.momento.validator.FileValidator;
+import jakarta.validation.Constraint;
+
+@Target({ElementType.PARAMETER})
+@Retention(RetentionPolicy.RUNTIME)
+@Constraint(validatedBy = FileValidator.class)
+@Documented
+public @interface ValidFile {
+	String message() default "Invalid file";
+}
