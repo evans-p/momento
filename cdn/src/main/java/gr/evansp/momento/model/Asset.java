@@ -25,7 +25,7 @@ public class Asset {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	@Column(name = "ID", nullable = false)
+	@Column(name = "ID", nullable = false, unique = true)
 	private UUID id;
 
 	@Column(name = "FILE_NAME", nullable = false)
