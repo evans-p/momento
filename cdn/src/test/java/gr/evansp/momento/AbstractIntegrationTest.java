@@ -7,6 +7,7 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.junit.jupiter.Container;
 
 /**
  * Abstract Class for Integration tests. Contains the initialization of
@@ -14,7 +15,7 @@ import org.testcontainers.containers.wait.strategy.Wait;
  */
 public abstract class AbstractIntegrationTest {
 
-	@ClassRule
+	@Container
 	public static PostgreSQLContainer<?> postgres =new PostgreSQLContainer<>("postgres:14")
 				.withDatabaseName("cdn")
 				.withUsername("postgres")
