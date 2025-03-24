@@ -8,7 +8,11 @@ import java.lang.annotation.Target;
 
 import gr.evansp.momento.validator.FileValidator;
 import jakarta.validation.Constraint;
+import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Annotation to validate {@link MultipartFile}.
+ */
 @Target({ElementType.PARAMETER})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = FileValidator.class)
