@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
+/**
+ * {@link Configuration} for {@link MessageSource}.
+ */
 @Configuration
 public class MessagesConfiguration {
 	/**
