@@ -1,12 +1,11 @@
-package gr.evansp.momento.it.repository;
+package gr.evansp.momento.repository;
 
 import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
-import gr.evansp.momento.it.AbstractIntegrationTest;
+import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.model.Asset;
-import gr.evansp.momento.repository.AssetRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.runner.RunWith;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class TestAssetRepository extends AbstractIntegrationTest {
+public class TestAssetRepositoryIT extends AbstractIntegrationTest {
 
 	@Autowired
 	AssetRepository repository;

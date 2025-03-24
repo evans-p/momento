@@ -1,4 +1,4 @@
-package gr.evansp.momento.it;
+package gr.evansp.momento;
 
 
 import org.junit.ClassRule;
