@@ -147,3 +147,15 @@ Momento is a social media like app, built in java.
 - Testing: Write unit and integration tests.
 - Deployment: Containerize microservices and deploy them to a Kubernetes cluster.
 - Monitoring: Implement monitoring and logging to track system performance.
+
+
+## Initial Topology
+```mermaid
+graph TD;
+    GATEWAY --> User-Service;
+    GATEWAY --> Post-Service;
+    GATEWAY --> Feed-Service;
+    GATEWAY --> Notification-Service;
+    Post-Service --> Notification-Service;
+    
+```
