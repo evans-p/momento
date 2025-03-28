@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * Annotation to validate {@link MultipartFile}.
  */
-@Target({ElementType.PARAMETER})
+@Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = FileValidator.class)
 @Documented
