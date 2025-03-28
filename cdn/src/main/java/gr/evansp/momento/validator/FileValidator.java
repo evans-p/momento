@@ -5,6 +5,9 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * {@link ConstraintValidator} for {@link MultipartFile}.
+ */
 public class FileValidator implements ConstraintValidator<ValidFile, MultipartFile> {
 	@Override
 	public void initialize(ValidFile constraintAnnotation) {
