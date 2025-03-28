@@ -21,7 +21,7 @@ public abstract class AbstractIntegrationTest {
 				.withUsername("postgres")
 				.withPassword("postgres")
 				.withExposedPorts(5432)
-                .withInitScript("ddl.sql")
+                .withInitScript("sql/ddl.sql")
 				.waitingFor(Wait.forLogMessage(".*database system is ready to accept connections.*", 2));
 
 
