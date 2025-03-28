@@ -16,7 +16,7 @@ import org.testcontainers.junit.jupiter.Container;
 public abstract class AbstractIntegrationTest {
 
 	@Container
-	public static PostgreSQLContainer<?> postgres =new PostgreSQLContainer<>("postgres:14")
+	private static final PostgreSQLContainer<?> postgres =new PostgreSQLContainer<>("postgres:14")
 				.withDatabaseName("cdn")
 				.withUsername("postgres")
 				.withPassword("postgres")
@@ -26,7 +26,7 @@ public abstract class AbstractIntegrationTest {
 
 
 	@DynamicPropertySource
-	static void registerPgProperties(DynamicPropertyRegistry registry) {
+	private static void registerPgProperties(DynamicPropertyRegistry registry) {
 		registry.add("spring.datasource.url", postgres::getJdbcUrl);
 		registry.add("spring.datasource.username", postgres::getUsername);
 		registry.add("spring.datasource.password", postgres::getPassword);
