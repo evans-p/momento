@@ -157,5 +157,6 @@ graph TD;
     GATEWAY --> Feed-Service;
     GATEWAY --> Notification-Service;
     Post-Service --> Notification-Service;
+  Notification-Service --> GATEWAY;
     
 ```
