@@ -8,6 +8,7 @@ import java.lang.annotation.Target;
 
 import gr.evansp.momento.validator.FileValidator;
 import jakarta.validation.Constraint;
+import jakarta.validation.Payload;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -19,4 +20,6 @@ import org.springframework.web.multipart.MultipartFile;
 @Documented
 public @interface ValidFile {
 	String message() default "Invalid file";
+	Class<?>[] groups() default {};
+	Class<? extends Payload>[] payload() default {};
 }
