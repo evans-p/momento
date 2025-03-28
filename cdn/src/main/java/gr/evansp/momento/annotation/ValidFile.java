@@ -19,7 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Constraint(validatedBy = FileValidator.class)
 @Documented
 public @interface ValidFile {
-	String message() default "Invalid file";
+	String message() default "{invalid.file}";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 }

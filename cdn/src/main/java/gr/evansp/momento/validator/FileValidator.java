@@ -19,12 +19,12 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 		boolean valid = true;
 
 		if (file == null || file.isEmpty()) {
-			valid = buildConstraintViolationMessage("empty.file", constraintValidatorContext);
+			valid = buildConstraintViolationMessage("{empty.file}", constraintValidatorContext);
 		}
 
 		if (file != null && (file.getOriginalFilename() == null ||
 				    file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".")).isBlank())) {
-			valid = buildConstraintViolationMessage("faulty.file.name", constraintValidatorContext);
+			valid = buildConstraintViolationMessage("{faulty.file.name}", constraintValidatorContext);
 		}
 
 		return valid;
