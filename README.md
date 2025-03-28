@@ -5,14 +5,17 @@
 # Momento
 
 ## Description
+
 Momento is a social media like app, built in java.
 
 ## Useful Resources
+
 - Static s analysis and vulnerability check
-  - https://stackoverflow.com/questions/61344217/gitlab-ci-pipeline-to-check-for-code-formatting
-  - https://www.baeldung.com/java-maven-owasp-dependency-check?ref=dailydev
+    - https://stackoverflow.com/questions/61344217/gitlab-ci-pipeline-to-check-for-code-formatting
+    - https://www.baeldung.com/java-maven-owasp-dependency-check?ref=dailydev
 
 ## Initial Idea
+
 - Microservices:
     - User Service: Manages user profiles and authentication.
     - Post Service: Handles post creation, retrieval, and updates.
@@ -44,93 +47,96 @@ Momento is a social media like app, built in java.
     - Used for communication between microservices and for Kafka message serialization.
 
 ## Detailed Architecture
+
 - User Service
-  - Manages user profiles (username, email, bio, profile picture, followers, following).
-  - Handles user authentication and authorization (using JWT or OAuth 2.0).
-  - Provides endpoints for user registration, login, profile updates, and follower/following management.
-  - Database: Relational database (e.g., PostgreSQL) with Hibernate.
+    - Manages user profiles (username, email, bio, profile picture, followers, following).
+    - Handles user authentication and authorization (using JWT or OAuth 2.0).
+    - Provides endpoints for user registration, login, profile updates, and follower/following management.
+    - Database: Relational database (e.g., PostgreSQL) with Hibernate.
 
 - Post Service
-  - Manages post creation, retrieval, updates, and deletion.
-  - Handles media uploads (images, videos).
-  - Stores post metadata (timestamp, author, caption, media URLs).
-  - Database: Relational database (e.g., PostgreSQL) with Hibernate.
+    - Manages post creation, retrieval, updates, and deletion.
+    - Handles media uploads (images, videos).
+    - Stores post metadata (timestamp, author, caption, media URLs).
+    - Database: Relational database (e.g., PostgreSQL) with Hibernate.
 
 - Feed Service
-  - Aggregates posts from users a user follows.
-  - Implements a real-time feed algorithm (e.g., using Redis sorted sets or a graph database).
-  - Provides endpoints for retrieving user feeds.
-  - Uses Kafka to subscribe to post creation events.
-  - Redis: Used for caching the user feed.
+    - Aggregates posts from users a user follows.
+    - Implements a real-time feed algorithm (e.g., using Redis sorted sets or a graph database).
+    - Provides endpoints for retrieving user feeds.
+    - Uses Kafka to subscribe to post creation events.
+    - Redis: Used for caching the user feed.
 
 - Notification Service
-  - Sends notifications for new posts, likes, and comments.
-  - Manages notification preferences.
-  - Uses Kafka to subscribe to post creation, like, and comment events.
-  - Can integrate with push notification services (e.g., Firebase Cloud Messaging).
+    - Sends notifications for new posts, likes, and comments.
+    - Manages notification preferences.
+    - Uses Kafka to subscribe to post creation, like, and comment events.
+    - Can integrate with push notification services (e.g., Firebase Cloud Messaging).
 
 - Like/Comment Service:
-  - Handles likes and comments on posts.
-  - Stores like and comment data.
-  - Publishes like and comment events to Kafka.
-  - Database: Relational database.
+    - Handles likes and comments on posts.
+    - Stores like and comment data.
+    - Publishes like and comment events to Kafka.
+    - Database: Relational database.
 
 - Media Storage
-  - Object storage (e.g., AWS S3, Google Cloud Storage) for storing images and videos.
-  - Content Delivery Network (CDN) for efficient media delivery.
+    - Object storage (e.g., AWS S3, Google Cloud Storage) for storing images and videos.
+    - Content Delivery Network (CDN) for efficient media delivery.
 
 - API Gateway (Spring Cloud Gateway or Nginx)
-  - Centralized entry point for all API requests.
-  - Handles authentication, authorization, rate limiting, and routing.
-  - Load balancing across microservice instances.
+    - Centralized entry point for all API requests.
+    - Handles authentication, authorization, rate limiting, and routing.
+    - Load balancing across microservice instances.
 
 - Apache Kafka
-  - Message broker for asynchronous communication between microservices.
-  - Handles post creation, like, and comment events.
-  - Ensures reliable and scalable event delivery.
+    - Message broker for asynchronous communication between microservices.
+    - Handles post creation, like, and comment events.
+    - Ensures reliable and scalable event delivery.
 
 - Redis
-  - Caching for user feeds, session data, and active user information.
-  - Real-time data storage for feed aggregation.
-  - Can be used as a message broker for real time updates.
+    - Caching for user feeds, session data, and active user information.
+    - Real-time data storage for feed aggregation.
+    - Can be used as a message broker for real time updates.
 
 - Protocol Buffers:
-  - Used for efficient data serialization between microservices, and Kafka messages.
+    - Used for efficient data serialization between microservices, and Kafka messages.
 
 ### Key Features
+
 - Real-time Feed
-  - Users see new posts from followed users in real-time.
-  - Feed updates are pushed to clients using WebSockets or Server-Sent Events (SSE).
+    - Users see new posts from followed users in real-time.
+    - Feed updates are pushed to clients using WebSockets or Server-Sent Events (SSE).
 
 - Notifications
 
-  - Users receive notifications for new posts, likes, and comments.
-  - Customizable notification preferences.
+    - Users receive notifications for new posts, likes, and comments.
+    - Customizable notification preferences.
 - Media Uploads
 
-  - Users can upload images and videos to their posts.
-  - Media files are stored in object storage and served via CDN.
+    - Users can upload images and videos to their posts.
+    - Media files are stored in object storage and served via CDN.
 
 - User Profiles
-  - Users can create and manage their profiles.
-  - Follow and unfollow other users.
+    - Users can create and manage their profiles.
+    - Follow and unfollow other users.
 
 - Search
-  - Users can search for other users and posts.
-  - Elasticsearch or similar can be used for search functionality.
+    - Users can search for other users and posts.
+    - Elasticsearch or similar can be used for search functionality.
 
 - Rate Limiting
-  - Prevent API abuse with rate limiting.
+    - Prevent API abuse with rate limiting.
 
 - Scalability
-  - Microservices architecture allows for horizontal scaling.
-  - Kafka ensures scalable event processing.
-  
+    - Microservices architecture allows for horizontal scaling.
+    - Kafka ensures scalable event processing.
+
 - Security:
-  - Secure authentication and authorization.
-  - Protect against common web vulnerabilities.
-  
+    - Secure authentication and authorization.
+    - Protect against common web vulnerabilities.
+
 ### Technology Stack:
+
 - Spring Boot for microservices development.
 - Apache Kafka for message queuing.
 - Redis for caching and real-time data storage.
@@ -142,21 +148,22 @@ Momento is a social media like app, built in java.
 - Docker and Kubernetes for containerization and orchestration.
 
 ### Development Workflow
+
 - Design: Define the microservice architecture and API contracts.
 - Development: Implement each microservice independently.
 - Testing: Write unit and integration tests.
 - Deployment: Containerize microservices and deploy them to a Kubernetes cluster.
 - Monitoring: Implement monitoring and logging to track system performance.
 
-
 ## Initial Topology
+
 ```mermaid
-graph TD;
+graph TD
+;
     GATEWAY --> User-Service;
     GATEWAY --> Post-Service;
     GATEWAY --> Feed-Service;
     GATEWAY --> Notification-Service;
+    Notification-Service --> GATEWAY;
     Post-Service --> Notification-Service;
-  Notification-Service --> GATEWAY;
-    
 ```
