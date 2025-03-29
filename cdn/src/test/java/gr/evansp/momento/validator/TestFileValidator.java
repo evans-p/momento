@@ -1,7 +1,6 @@
 package gr.evansp.momento.validator;
 
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import gr.evansp.momento.AbstractUnitTest;
 import gr.evansp.momento.annotation.ValidFile;
