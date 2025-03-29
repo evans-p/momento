@@ -32,10 +32,20 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 
 	private boolean isValid = true;
 
-	boolean validFileName;
-	boolean validContentType;
-	boolean validMatchBetweenFileExtensionAndContentType;
-	boolean validFileContent;
+	/**
+	 * validFileName flag.
+	 */
+	private boolean validFileName;
+
+	/**
+	 * validContentType flag.
+	 */
+	private boolean validContentType;
+
+	/**
+	 * validMatchBetweenFileExtensionAndContentType flag.
+	 */
+	private boolean validMatchBetweenFileExtensionAndContentType;
 
 	@Override
 	public void initialize(ValidFile constraintAnnotation) {
@@ -52,36 +62,33 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 		validFileName = validateFileName(file, context);
 		validContentType = validateContentType(file, context);
 		validMatchBetweenFileExtensionAndContentType = validateMatchBetweenFileExtensionAndContentType(file, context);
-		validFileContent = validateFileContent(file, context);
+		validateFileContent(file, context);
 
 		return isValid;
 	}
 
 
-	private boolean validateFileContent(MultipartFile file, ConstraintValidatorContext context) {
+	private void validateFileContent(MultipartFile file, ConstraintValidatorContext context) {
 		byte[] data;
 		try {
 			data = file.getBytes();
 		} catch (IOException e) {
 			isValid = buildConstraintViolationMessage("{invalid.file.content}", context);
-			return false;
+			return;
 		}
 
 		try (ByteArrayInputStream bais = new ByteArrayInputStream(data)) {
 			BufferedImage image = ImageIO.read(bais);
 			if (image == null) {
 				isValid = buildConstraintViolationMessage("{invalid.file.content}", context);
-				return false;
+				return;
 			}
 			if (validContentType && validMatchBetweenFileExtensionAndContentType && getContentType(data, file) == null) {
 				isValid = buildConstraintViolationMessage("{invalid.file.content}", context);
-				return false;
 			}
 		} catch (IOException e) {
 			isValid = buildConstraintViolationMessage("{invalid.file.content}", context);
-			return false;
 		}
-		return true;
 	}
 
 
