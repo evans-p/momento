@@ -1,8 +1,5 @@
 package gr.evansp.momento;
 
-
-import org.junit.ClassRule;
-
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -13,7 +10,7 @@ import org.testcontainers.junit.jupiter.Container;
  * Abstract Class for Integration tests. Contains the initialization of
  * the required test containers.
  */
-public abstract class AbstractIntegrationTest {
+public abstract class AbstractIntegrationTest extends AbstractUnitTest {
 
 	@Container
 	private static final PostgreSQLContainer<?> postgres =new PostgreSQLContainer<>("postgres:14")
