@@ -42,7 +42,7 @@ public class AssetServiceImpl implements AssetService {
 
 	@Override
 	public Asset getAssetByName(String name) {
-		return assetRepository.findByFileName(name).orElseThrow(() -> new ResourceNotFoundException("file.not.found", new Object[]{name}));
+		return assetRepository.findByFileName(name).orElseThrow(() -> new ResourceNotFoundException(ResourceNotFoundException.FILE_NOT_FOUND, new Object[]{name}));
 	}
 
 	@Validated

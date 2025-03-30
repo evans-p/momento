@@ -5,6 +5,8 @@ package gr.evansp.momento.exception;
  */
 public class ResourceNotFoundException extends AbstractException {
 
+  public static final String FILE_NOT_FOUND = "file.not.found";
+
   /**
    * All args constructor.
    *
