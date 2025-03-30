@@ -23,11 +23,11 @@ public interface AssetRepository extends JpaRepository<Asset, UUID> {
 	Optional<Asset> findByContentHash(String contentHash);
 
 	/**
-	 * Find asset by path.
+	 * Find asset by fileName.
 	 *
-	 * @param path path
+	 * @param fileName fileName
 	 *
 	 * @return Asset
 	 */
-	Optional<Asset> findByPath(String path);
+	Optional<Asset> findByFileName(String fileName);
 }

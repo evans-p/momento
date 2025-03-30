@@ -34,9 +34,6 @@ public class Asset {
 	@Column(name = "CONTENT_TYPE", nullable = false)
 	private String contentType;
 
-	@Column(name = "PATH", nullable = false)
-	private String path;
-
 	@Column(name = "CONTENT_HASH", nullable = false, unique = true)
 	private String contentHash;
 
