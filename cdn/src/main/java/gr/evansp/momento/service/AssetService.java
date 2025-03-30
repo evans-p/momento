@@ -1,9 +1,9 @@
 package gr.evansp.momento.service;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Optional;
 
+
+import gr.evansp.momento.annotation.ValidFile;
 import org.springframework.stereotype.Service;
 import gr.evansp.momento.model.Asset;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,9 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface AssetService {
 
-	Optional<Asset> getAssetByPath(String path);
+	Asset getAssetByPath(String path);
 
-	Asset uploadAsset(MultipartFile file) throws IOException;
+	Asset uploadAsset(@ValidFile MultipartFile file);
 
 	File getPhysicalFile(Asset asset);
 }
