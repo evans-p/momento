@@ -11,12 +11,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 import gr.evansp.momento.annotation.ValidFile;
+import gr.evansp.momento.annotation.ValidFileName;
 import gr.evansp.momento.exception.InternalServiceException;
 import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.Asset;
 import gr.evansp.momento.repository.AssetRepository;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -91,7 +91,7 @@ public class AssetServiceImpl implements AssetService {
 
 	@Validated
 	@Override
-	public File getFileByName(@NotEmpty(message = "{faulty.file.name}") String name) {
+	public File getFileByName(@ValidFileName String name) {
 		Optional<Asset> result = assetRepository.findByFileName(name);
 
 		if (result.isEmpty()) {

@@ -3,7 +3,7 @@ package gr.evansp.momento.service;
 import java.io.File;
 
 import gr.evansp.momento.annotation.ValidFile;
-import jakarta.validation.constraints.NotEmpty;
+import gr.evansp.momento.annotation.ValidFileName;
 import org.springframework.stereotype.Service;
 import gr.evansp.momento.model.Asset;
 import org.springframework.web.multipart.MultipartFile;
@@ -27,5 +27,5 @@ public interface AssetService {
 	 * @param name
 	 * @return
 	 */
-	File getFileByName(@NotEmpty(message = "{faulty.file.name}") String name);
+	File getFileByName(@ValidFileName String name);
 }
