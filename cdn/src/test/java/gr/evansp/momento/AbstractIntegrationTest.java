@@ -12,7 +12,6 @@ import org.testcontainers.junit.jupiter.Container;
  */
 public abstract class AbstractIntegrationTest extends AbstractUnitTest {
 
-	@Container
 	private static final PostgreSQLContainer<?> postgres =new PostgreSQLContainer<>("postgres:14")
 				.withDatabaseName("cdn")
 				.withUsername("postgres")
@@ -21,6 +20,9 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
                 .withInitScript("sql/ddl.sql")
 				.waitingFor(Wait.forLogMessage(".*database system is ready to accept connections.*", 2));
 
+	static {
+		postgres.start();
+	}
 
 	@DynamicPropertySource
 	private static void registerPgProperties(DynamicPropertyRegistry registry) {

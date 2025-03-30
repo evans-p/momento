@@ -6,20 +6,20 @@ import java.util.List;
 
 import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.model.Asset;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Integration tests for {@link AssetRepository}.
  */
-@Testcontainers
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TestAssetRepositoryIT extends AbstractIntegrationTest {
@@ -28,6 +28,7 @@ public class TestAssetRepositoryIT extends AbstractIntegrationTest {
 	AssetRepository repository;
 
 
+	@BeforeEach
 	@AfterEach
 	public void cleanup() {
 		repository.deleteAll();

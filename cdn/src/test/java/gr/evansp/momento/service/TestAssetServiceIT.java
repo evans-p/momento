@@ -10,14 +10,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.multipart.MultipartFile;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * Integration tests for {@link AssetService}.
  */
-@Testcontainers
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class TestAssetServiceIT extends AbstractIntegrationTest {
