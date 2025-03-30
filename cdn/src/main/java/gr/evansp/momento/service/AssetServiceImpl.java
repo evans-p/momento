@@ -11,8 +11,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import gr.evansp.momento.annotation.ValidFile;
+import gr.evansp.momento.exception.InternalServiceException;
 import gr.evansp.momento.model.Asset;
 import gr.evansp.momento.repository.AssetRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -20,7 +22,9 @@ import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
-@Validated
+/**
+ * Implementation of {@link AssetService}.
+ */
 @Service
 public class AssetServiceImpl implements AssetService {
 
@@ -36,58 +40,63 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 	@Override
-	public Optional<Asset> getAssetByPath(String path) {
-		return assetRepository.findByPath(path);
+	public Asset getAssetByPath(String path) {
+		return assetRepository.findByPath(path).orElseThrow();
 	}
 
+	@Validated
 	@Override
-	public Asset uploadAsset(@ValidFile MultipartFile file) throws IOException {
+	public Asset uploadAsset(@ValidFile MultipartFile file) {
+		try {
+			byte[] bytes = file.getBytes();
 
-		byte[] bytes = file.getBytes();
+			String contentHash = DigestUtils.md5DigestAsHex(bytes);
 
-		String contentHash = DigestUtils.md5DigestAsHex(bytes);
+			Optional<Asset> existingAsset = assetRepository.findByContentHash(contentHash);
+			if (existingAsset.isPresent()) {
+				return existingAsset.get();
+			}
 
-		Optional<Asset> existingAsset = assetRepository.findByContentHash(contentHash);
-		if (existingAsset.isPresent()) {
-			return existingAsset.get();
+			String fileExtension = file.getOriginalFilename()
+				                       .substring(file.getOriginalFilename().lastIndexOf("."));
+			String storedFilename = UUID.randomUUID() + contentHash.substring(0, 4) + fileExtension;
+
+			String fullPath = storageLocation + "/";
+
+			Path targetPath = Paths.get(fullPath, storedFilename);
+			Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+
+			return storeAssetMetadata(file, storedFilename, contentHash);
+		} catch (IOException e) {
+			throw new InternalServiceException(InternalServiceException.FILE_PROCESS_FAILED, null);
 		}
-
-		String originalFilename = file.getOriginalFilename();
-		String fileExtension = originalFilename.substring(originalFilename.lastIndexOf("."));
-		String storedFilename = UUID.randomUUID() + fileExtension;
-
-		String relativePath = generatePath(contentHash);
-		String fullPath = storageLocation + "/" + relativePath;
-
-		// Create directories if they don't exist
-		Path directory = Paths.get(fullPath).getParent();
-		if (!Files.exists(directory)) {
-			Files.createDirectories(directory);
-		}
-
-		// Save the file
-		Path targetPath = Paths.get(fullPath, storedFilename);
-		Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
-
-		// Create and save asset metadata
-		Asset asset = new Asset();
-		asset.setFileName(originalFilename);
-		asset.setContentType(file.getContentType());
-		asset.setPath(relativePath + "/" + storedFilename);
-		asset.setContentHash(contentHash);
-		asset.setFileSize(file.getSize());
-		asset.setUploadDate(OffsetDateTime.now());
-
-		return assetRepository.save(asset);
 	}
 
+	@Transactional
+	private Asset storeAssetMetadata(MultipartFile file, String storedFilename, String contentHash) {
+		try {
+			Asset asset = new Asset();
+			asset.setFileName(storedFilename);
+			asset.setContentType(file.getContentType());
+			asset.setPath("/" + storedFilename);
+			asset.setContentHash(contentHash);
+			asset.setFileSize(file.getSize());
+			asset.setUploadDate(OffsetDateTime.now());
 
-	private String generatePath(String contentHash) {
-		return contentHash.substring(0, 2) + "/" + contentHash.substring(2, 4);
+			return assetRepository.save(asset);
+		} catch (Exception e) {
+			try {
+				Files.deleteIfExists(Paths.get(storageLocation + "/", storedFilename));
+			} catch (IOException ex) {
+				throw new InternalServiceException(InternalServiceException.FILE_PROCESS_FAILED, null);
+			}
+			throw new InternalServiceException(InternalServiceException.FILE_PROCESS_FAILED, null);
+		}
 	}
+
 
 	@Override
 	public File getPhysicalFile(Asset asset) {
-		return new File(storageLocation + "/" + asset.getPath());
+		return new File(storageLocation + asset.getPath());
 	}
 }
