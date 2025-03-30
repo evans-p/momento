@@ -40,7 +40,6 @@ public class TestAssetRepositoryIT extends AbstractIntegrationTest {
 	public void testStore() {
 		Asset asset = new Asset();
 
-		asset.setPath("1");
 		asset.setContentHash("2");
 		asset.setContentType("3");
 		asset.setUploadDate(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS));
@@ -53,7 +52,6 @@ public class TestAssetRepositoryIT extends AbstractIntegrationTest {
 
 		assertEquals(1, assets.size());
 
-		assertEquals(asset.getPath(), assets.getFirst().getPath());
 		assertEquals(asset.getContentHash(), assets.getFirst().getContentHash());
 		assertEquals(asset.getContentType(), assets.getFirst().getContentType());
 		assertEquals(asset.getUploadDate(), assets.getFirst().getUploadDate());
