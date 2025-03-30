@@ -2,8 +2,8 @@ package gr.evansp.momento.service;
 
 import java.io.File;
 
-
 import gr.evansp.momento.annotation.ValidFile;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.stereotype.Service;
 import gr.evansp.momento.model.Asset;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,9 +13,19 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface AssetService {
 
-	Asset getAssetByName(String name);
-
+	/**
+	 * Uploads {@link MultipartFile} to system.
+	 *
+	 * @param file
+	 *        {@link MultipartFile}
+	 * @return {@link Asset}
+	 */
 	Asset uploadAsset(@ValidFile MultipartFile file);
 
-	File getPhysicalFile(Asset asset);
+	/**
+	 *
+	 * @param name
+	 * @return
+	 */
+	File getFileByName(@NotEmpty(message = "{faulty.file.name}") String name);
 }

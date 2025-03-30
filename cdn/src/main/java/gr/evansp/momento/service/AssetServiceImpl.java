@@ -16,6 +16,7 @@ import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.Asset;
 import gr.evansp.momento.repository.AssetRepository;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.NotEmpty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -32,17 +33,11 @@ public class AssetServiceImpl implements AssetService {
 	@Value("${cdn.storage.location}")
 	private String storageLocation;
 
-
 	private final AssetRepository assetRepository;
 
 	@Autowired
 	public AssetServiceImpl(AssetRepository assetRepository) {
 		this.assetRepository = assetRepository;
-	}
-
-	@Override
-	public Asset getAssetByName(String name) {
-		return assetRepository.findByFileName(name).orElseThrow(() -> new ResourceNotFoundException(ResourceNotFoundException.FILE_NOT_FOUND, new Object[]{name}));
 	}
 
 	@Validated
@@ -94,9 +89,22 @@ public class AssetServiceImpl implements AssetService {
 		}
 	}
 
-
+	@Validated
 	@Override
-	public File getPhysicalFile(Asset asset) {
-		return new File(storageLocation + "/" + asset.getFileName());
+	public File getFileByName(@NotEmpty(message = "{faulty.file.name}") String name) {
+		Optional<Asset> result = assetRepository.findByFileName(name);
+
+		if (result.isEmpty()) {
+			throw new ResourceNotFoundException(ResourceNotFoundException.FILE_NOT_FOUND, new Object[] { name });
+		}
+		Asset asset = result.get();
+
+		File file = new File(storageLocation + "/" + asset.getFileName());
+
+		if (!file.exists()) {
+			throw new ResourceNotFoundException(ResourceNotFoundException.FILE_NOT_FOUND, new Object[] { name });
+		}
+
+		return file;
 	}
 }
