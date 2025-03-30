@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import gr.evansp.momento.annotation.ValidFile;
 import gr.evansp.momento.exception.InternalServiceException;
+import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.Asset;
 import gr.evansp.momento.repository.AssetRepository;
 import jakarta.transaction.Transactional;
@@ -40,8 +41,8 @@ public class AssetServiceImpl implements AssetService {
 	}
 
 	@Override
-	public Asset getAssetByPath(String path) {
-		return assetRepository.findByPath(path).orElseThrow();
+	public Asset getAssetByName(String name) {
+		return assetRepository.findByFileName(name).orElseThrow(() -> new ResourceNotFoundException("file.not.found", new Object[]{name}));
 	}
 
 	@Validated
@@ -59,7 +60,7 @@ public class AssetServiceImpl implements AssetService {
 
 			String fileExtension = file.getOriginalFilename()
 				                       .substring(file.getOriginalFilename().lastIndexOf("."));
-			String storedFilename = UUID.randomUUID() + contentHash.substring(0, 4) + fileExtension;
+			String storedFilename = UUID.randomUUID() + "-" + contentHash.substring(0, 8) + fileExtension;
 
 			String fullPath = storageLocation + "/";
 
@@ -78,7 +79,6 @@ public class AssetServiceImpl implements AssetService {
 			Asset asset = new Asset();
 			asset.setFileName(storedFilename);
 			asset.setContentType(file.getContentType());
-			asset.setPath("/" + storedFilename);
 			asset.setContentHash(contentHash);
 			asset.setFileSize(file.getSize());
 			asset.setUploadDate(OffsetDateTime.now());
@@ -97,6 +97,6 @@ public class AssetServiceImpl implements AssetService {
 
 	@Override
 	public File getPhysicalFile(Asset asset) {
-		return new File(storageLocation + asset.getPath());
+		return new File(storageLocation + "/" + asset.getFileName());
 	}
 }

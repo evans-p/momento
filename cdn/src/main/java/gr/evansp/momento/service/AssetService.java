@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface AssetService {
 
-	Asset getAssetByPath(String path);
+	Asset getAssetByName(String name);
 
 	Asset uploadAsset(@ValidFile MultipartFile file);
 
