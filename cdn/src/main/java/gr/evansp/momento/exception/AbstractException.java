@@ -8,7 +8,7 @@ import lombok.Getter;
  */
 @Getter
 @AllArgsConstructor
-abstract class AbstractException extends Exception {
+abstract class AbstractException extends RuntimeException {
 
 	final String message;
 	final Object[] args;
