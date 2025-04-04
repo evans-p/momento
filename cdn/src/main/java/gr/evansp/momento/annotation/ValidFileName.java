@@ -9,10 +9,9 @@ import java.lang.annotation.Target;
 import gr.evansp.momento.validator.FileNameValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
- * Annotation to validate {@link MultipartFile}.
+ * Annotation to validate file name
  */
 @Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
