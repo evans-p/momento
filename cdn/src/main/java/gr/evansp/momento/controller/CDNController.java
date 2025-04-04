@@ -1,6 +1,5 @@
 package gr.evansp.momento.controller;
 
-
 import gr.evansp.momento.dto.AssetDto;
 import gr.evansp.momento.model.Asset;
 import gr.evansp.momento.service.AssetService;
@@ -17,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * Controller
+ */
 @RestController
 @RequestMapping("cdn/v1/assets/")
 public class CDNController {
