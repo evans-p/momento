@@ -117,6 +117,15 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 		return true;
 	}
 
+	/**
+	 * Checks for mismatch between File Extension And ContentType.
+	 *
+	 * @param file
+	 *        {@link MultipartFile}.
+	 * @param context
+	 *        {@link ConstraintValidatorContext}.
+	 * @return validation check
+	 */
 	private boolean validateMatchBetweenFileExtensionAndContentType(MultipartFile file, ConstraintValidatorContext context) {
 		if ((!validFileName) || (!validContentType)) {
 			return true;
@@ -128,6 +137,14 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 		return true;
 	}
 
+	/**
+	 * validates File Content.
+	 *
+	 * @param file
+	 *        {@link MultipartFile}.
+	 * @param context
+	 *        {@link ConstraintValidatorContext}.
+	 */
 	private void validateFileContent(MultipartFile file, ConstraintValidatorContext context) {
 		byte[] data;
 		try {
@@ -151,6 +168,15 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 		}
 	}
 
+	/**
+	 * Returns {@link MediaType} extension of the file, by checking the content.
+	 *
+	 * @param imageData
+	 * 		imageData
+	 * @param file
+	 * 		file
+	 * @return {@link MediaType} extension or null.
+	 */
 	private String getContentType(byte[] imageData, MultipartFile file) {
 
 		if (imageData[0] == (byte) 0xFF && imageData[1] == (byte) 0xD8 && imageData[2] == (byte) 0xFF) {
