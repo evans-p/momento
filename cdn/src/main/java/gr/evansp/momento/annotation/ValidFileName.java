@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Documented
 public @interface ValidFileName {
 	String message() default "{faulty.file.name}";
+
 	Class<?>[] groups() default {};
+
 	Class<? extends Payload>[] payload() default {};
 }

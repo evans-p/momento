@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Documented
 public @interface ValidFile {
 	String message() default "{invalid.file}";
+
 	Class<?>[] groups() default {};
+
 	Class<? extends Payload>[] payload() default {};
 }

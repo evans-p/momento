@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Unit tests for {@link FileNameValidator}.
@@ -25,7 +25,7 @@ class TestFileNameValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_nullFileName() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			FileNameWrapper wrapper = new FileNameWrapper(null);
@@ -42,7 +42,7 @@ class TestFileNameValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_emptyFileName() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			FileNameWrapper wrapper = new FileNameWrapper("");
@@ -59,7 +59,7 @@ class TestFileNameValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_blankFileName() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			FileNameWrapper wrapper = new FileNameWrapper("     ");
@@ -76,7 +76,7 @@ class TestFileNameValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_faultyFileName() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			FileNameWrapper wrapper = new FileNameWrapper("lalala.jpg");
@@ -93,7 +93,7 @@ class TestFileNameValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_ok() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			FileNameWrapper wrapper = new FileNameWrapper("10283bb6-8664-474d-9240-2036b59b4ece-f1e8af53.jpg");
@@ -109,7 +109,7 @@ class TestFileNameValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_ok2() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			FileNameWrapper wrapper = new FileNameWrapper("10283bb6-8664-474d-9240-2036b59b4ece-f1e8af53.jpeg");
@@ -125,7 +125,7 @@ class TestFileNameValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_ok3() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			FileNameWrapper wrapper = new FileNameWrapper("10283bb6-8664-474d-9240-2036b59b4ece-f1e8af53.png");

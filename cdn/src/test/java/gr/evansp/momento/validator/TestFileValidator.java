@@ -15,7 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit tests for {@link FileValidator}.
@@ -27,7 +28,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_nullFile() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			FileWrapper wrapper = new FileWrapper(null);
@@ -45,7 +46,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_emptyFile() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", "test.jpg", "image/jpeg", (byte[]) null); // 6MB
@@ -64,7 +65,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_originalNameNull() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", null, "image/jpeg", JPG_IMAGE); // 6MB
@@ -84,7 +85,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_originalNameEmpty() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", "", "image/jpeg", JPG_IMAGE); // 6MB
@@ -104,7 +105,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_originalNameBlank() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", "   ", "image/jpeg", JPG_IMAGE); // 6MB
@@ -124,7 +125,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_originalNameNoDot() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", "Yosuke", "image/jpeg", JPG_IMAGE); // 6MB
@@ -143,7 +144,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_originalNameNoSuffix() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", "Yosuke.", "image/jpeg", JPG_IMAGE);
@@ -163,7 +164,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_nullContentType() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", null, JPG_IMAGE); // 6MB
@@ -182,7 +183,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_emptyContentType() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "", JPG_IMAGE); // 6MB
@@ -202,7 +203,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_faultyContentType() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "multipart/mixed", JPG_IMAGE); // 6MB
@@ -221,7 +222,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_mismatchBetweenFileExtensionAndContentType() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "image/png", JPG_IMAGE); // 6MB
@@ -242,7 +243,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_ok() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "image/jpeg", JPG_IMAGE); // 6MB
@@ -260,7 +261,7 @@ class TestFileValidator extends AbstractUnitTest {
 	 */
 	@Test
 	public void testIsValid_faultyFileContentType() {
-		try(ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
 			Validator validator = factory.getValidator();
 
 			MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "image/jpeg", PNG_IMAGE); // 6MB

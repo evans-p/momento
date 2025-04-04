@@ -54,7 +54,7 @@ public class AssetServiceImpl implements AssetService {
 			}
 
 			String fileExtension = file.getOriginalFilename()
-				                       .substring(file.getOriginalFilename().lastIndexOf("."));
+					                       .substring(file.getOriginalFilename().lastIndexOf("."));
 			String storedFilename = UUID.randomUUID() + "-" + contentHash.substring(0, 8) + fileExtension;
 
 			String fullPath = storageLocation + "/";
@@ -95,14 +95,14 @@ public class AssetServiceImpl implements AssetService {
 		Optional<Asset> result = assetRepository.findByFileName(name);
 
 		if (result.isEmpty()) {
-			throw new ResourceNotFoundException(ResourceNotFoundException.FILE_NOT_FOUND, new Object[] { name });
+			throw new ResourceNotFoundException(ResourceNotFoundException.FILE_NOT_FOUND, new Object[]{name});
 		}
 		Asset asset = result.get();
 
 		File file = new File(storageLocation + "/" + asset.getFileName());
 
 		if (!file.exists()) {
-			throw new ResourceNotFoundException(ResourceNotFoundException.FILE_NOT_FOUND, new Object[] { name });
+			throw new ResourceNotFoundException(ResourceNotFoundException.FILE_NOT_FOUND, new Object[]{name});
 		}
 
 		return file;

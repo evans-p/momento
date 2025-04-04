@@ -44,14 +44,14 @@ public class Asset {
 	private OffsetDateTime uploadDate;
 
 	@Override
+	public int hashCode() {
+		return Objects.hashCode(id);
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (o == null || getClass() != o.getClass()) return false;
 		Asset asset = (Asset) o;
 		return Objects.equals(id, asset.id);
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hashCode(id);
 	}
 }

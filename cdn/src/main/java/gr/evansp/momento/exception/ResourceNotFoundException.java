@@ -5,15 +5,17 @@ package gr.evansp.momento.exception;
  */
 public class ResourceNotFoundException extends AbstractException {
 
-  public static final String FILE_NOT_FOUND = "file.not.found";
+	public static final String FILE_NOT_FOUND = "file.not.found";
 
-  /**
-   * All args constructor.
-   *
-   * @param message exception Code.
-   * @param args params.
-   */
-  public ResourceNotFoundException(String message, Object[] args) {
-    super(message, args);
-  }
+	/**
+	 * All args constructor.
+	 *
+	 * @param message
+	 * 		exception Code.
+	 * @param args
+	 * 		params.
+	 */
+	public ResourceNotFoundException(String message, Object[] args) {
+		super(message, args);
+	}
 }

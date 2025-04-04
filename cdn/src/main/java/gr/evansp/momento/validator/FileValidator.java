@@ -67,6 +67,66 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 		return isValid;
 	}
 
+	/**
+	 * Build validation message.
+	 *
+	 * @param messageCode
+	 * 		messageCode
+	 * @param context
+	 * 		context
+	 * @return false
+	 */
+	private boolean buildConstraintViolationMessage(String messageCode, ConstraintValidatorContext context) {
+		context.disableDefaultConstraintViolation();
+		context.buildConstraintViolationWithTemplate(messageCode).addConstraintViolation();
+
+		return false;
+	}
+
+	/**
+	 * Validates file name.
+	 *
+	 * @param file
+	 * 		file
+	 * @param context
+	 * 		constraintValidatorContext
+	 * @return validation check
+	 */
+	private boolean validateFileName(MultipartFile file, ConstraintValidatorContext context) {
+		if (file.getOriginalFilename() == null || file.getOriginalFilename().isBlank() || !file.getOriginalFilename().contains(".") || file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1).isBlank()) {
+			isValid = buildConstraintViolationMessage("{faulty.file.name}", context);
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * Validates content type.
+	 *
+	 * @param file
+	 * 		file
+	 * @param context
+	 * 		context
+	 * @return validation check
+	 */
+	private boolean validateContentType(MultipartFile file, ConstraintValidatorContext context) {
+		if (file.getContentType() == null || !VALID_CONTENT_TYPES.containsKey(file.getContentType())) {
+			isValid = buildConstraintViolationMessage("{invalid.content.type}", context);
+			return false;
+		}
+		return true;
+	}
+
+	private boolean validateMatchBetweenFileExtensionAndContentType(MultipartFile file, ConstraintValidatorContext context) {
+		if ((!validFileName) || (!validContentType)) {
+			return true;
+		}
+		if (!VALID_CONTENT_TYPES.get(file.getContentType()).contains(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1))) {
+			isValid = buildConstraintViolationMessage("{type.mismatch}", context);
+			return false;
+		}
+		return true;
+	}
 
 	private void validateFileContent(MultipartFile file, ConstraintValidatorContext context) {
 		byte[] data;
@@ -91,7 +151,6 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 		}
 	}
 
-
 	private String getContentType(byte[] imageData, MultipartFile file) {
 
 		if (imageData[0] == (byte) 0xFF && imageData[1] == (byte) 0xD8 && imageData[2] == (byte) 0xFF) {
@@ -100,68 +159,5 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 			return MediaType.IMAGE_PNG_VALUE.equals(file.getContentType()) ? MediaType.IMAGE_PNG_VALUE : null;
 		}
 		return null;
-	}
-
-	private boolean validateMatchBetweenFileExtensionAndContentType(MultipartFile file, ConstraintValidatorContext context) {
-		if((!validFileName) || (!validContentType)) {
-			return true;
-		}
-		if (!VALID_CONTENT_TYPES.get(file.getContentType()).contains(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1))) {
-			isValid = buildConstraintViolationMessage("{type.mismatch}", context);
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Validates content type.
-	 *
-	 * @param file
-	 * 		file
-	 * @param context
-	 * 		context
-	 *
-	 * 	@return validation check
-	 */
-	private boolean validateContentType(MultipartFile file, ConstraintValidatorContext context) {
-		if (file.getContentType() == null || !VALID_CONTENT_TYPES.containsKey(file.getContentType())) {
-			isValid = buildConstraintViolationMessage("{invalid.content.type}", context);
-			return false;
-		}
-		return true;
-	}
-
-	/**
-	 * Validates file name.
-	 *
-	 * @param file
-	 * 		file
-	 * @param context
-	 * 		constraintValidatorContext
-	 * @return validation check
-	 */
-	private boolean validateFileName(MultipartFile file, ConstraintValidatorContext context) {
-		if (file.getOriginalFilename() == null || file.getOriginalFilename().isBlank() || !file.getOriginalFilename().contains(".") || file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1).isBlank()) {
-			isValid = buildConstraintViolationMessage("{faulty.file.name}", context);
-			return false;
-		}
-		return true;
-	}
-
-
-	/**
-	 * Build validation message.
-	 *
-	 * @param messageCode
-	 * 		messageCode
-	 * @param context
-	 * 		context
-	 * @return false
-	 */
-	private boolean buildConstraintViolationMessage(String messageCode, ConstraintValidatorContext context) {
-		context.disableDefaultConstraintViolation();
-		context.buildConstraintViolationWithTemplate(messageCode).addConstraintViolation();
-
-		return false;
 	}
 }

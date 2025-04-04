@@ -4,7 +4,6 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.Wait;
-import org.testcontainers.junit.jupiter.Container;
 
 /**
  * Abstract Class for Integration tests. Contains the initialization of
@@ -12,13 +11,13 @@ import org.testcontainers.junit.jupiter.Container;
  */
 public abstract class AbstractIntegrationTest extends AbstractUnitTest {
 
-	private static final PostgreSQLContainer<?> postgres =new PostgreSQLContainer<>("postgres:14")
-				.withDatabaseName("cdn")
-				.withUsername("postgres")
-				.withPassword("postgres")
-				.withExposedPorts(5432)
-                .withInitScript("sql/ddl.sql")
-				.waitingFor(Wait.forLogMessage(".*database system is ready to accept connections.*", 2));
+	private static final PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:14")
+			                                                       .withDatabaseName("cdn")
+			                                                       .withUsername("postgres")
+			                                                       .withPassword("postgres")
+			                                                       .withExposedPorts(5432)
+			                                                       .withInitScript("sql/ddl.sql")
+			                                                       .waitingFor(Wait.forLogMessage(".*database system is ready to accept connections.*", 2));
 
 	static {
 		postgres.start();
@@ -29,6 +28,6 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
 		registry.add("spring.datasource.url", postgres::getJdbcUrl);
 		registry.add("spring.datasource.username", postgres::getUsername);
 		registry.add("spring.datasource.password", postgres::getPassword);
-		registry.add("spring.jpa.properties.hibernate.dialect", ()-> "org.hibernate.dialect.PostgreSQLDialect");
+		registry.add("spring.jpa.properties.hibernate.dialect", () -> "org.hibernate.dialect.PostgreSQLDialect");
 	}
 }

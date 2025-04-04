@@ -10,8 +10,10 @@ public class InternalServiceException extends AbstractException {
 	/**
 	 * All args constructor.
 	 *
-	 * @param message exception Code.
-	 * @param args params.
+	 * @param message
+	 * 		exception Code.
+	 * @param args
+	 * 		params.
 	 */
 	public InternalServiceException(String message, Object[] args) {
 		super(message, args);

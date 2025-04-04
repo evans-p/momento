@@ -16,8 +16,8 @@ public interface AssetRepository extends JpaRepository<Asset, UUID> {
 	/**
 	 * Find asset by contentHash.
 	 *
-	 * @param contentHash contentHash
-	 *
+	 * @param contentHash
+	 * 		contentHash
 	 * @return Asset
 	 */
 	Optional<Asset> findByContentHash(String contentHash);
@@ -25,8 +25,8 @@ public interface AssetRepository extends JpaRepository<Asset, UUID> {
 	/**
 	 * Find asset by fileName.
 	 *
-	 * @param fileName fileName
-	 *
+	 * @param fileName
+	 * 		fileName
 	 * @return Asset
 	 */
 	Optional<Asset> findByFileName(String fileName);

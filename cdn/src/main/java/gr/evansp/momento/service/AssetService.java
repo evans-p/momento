@@ -4,8 +4,8 @@ import java.io.File;
 
 import gr.evansp.momento.annotation.ValidFile;
 import gr.evansp.momento.annotation.ValidFileName;
-import org.springframework.stereotype.Service;
 import gr.evansp.momento.model.Asset;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
@@ -23,9 +23,11 @@ public interface AssetService {
 	Asset uploadAsset(@ValidFile MultipartFile file);
 
 	/**
+	 * Returns the file from the filesystem.
 	 *
 	 * @param name
-	 * @return
+	 * 		file Name
+	 * @return {@link File}
 	 */
 	File getFileByName(@ValidFileName String name);
 }
