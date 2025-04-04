@@ -15,7 +15,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
- * Represents all assets, like photos, videos, etc.
+ * Represents all asset metadata like photos, videos, etc.
  */
 @Setter
 @Getter
