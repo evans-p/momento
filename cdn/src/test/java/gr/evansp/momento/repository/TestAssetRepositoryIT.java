@@ -15,6 +15,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Integration tests for {@link AssetRepository}.
@@ -58,5 +59,58 @@ public class TestAssetRepositoryIT extends AbstractIntegrationTest {
 		assertEquals(asset.getUploadDate(), assets.getFirst().getUploadDate());
 		assertEquals(asset.getFileSize(), assets.getFirst().getFileSize());
 		assertEquals(asset.getFileName(), assets.getFirst().getFileName());
+	}
+
+
+	/**
+	 * Test for {@link AssetRepository#save(Object)}
+	 */
+	@Test
+	public void testDelete() {
+		Asset asset = new Asset();
+
+		asset.setContentHash("2");
+		asset.setContentType("3");
+		asset.setUploadDate(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS));
+		asset.setFileSize(100L);
+		asset.setFileName("test.jar");
+
+		repository.save(asset);
+
+		List<Asset> assets = repository.findAll();
+
+		assertEquals(1, assets.size());
+
+		repository.delete(assets.getFirst());
+
+		assertTrue(repository.findAll().isEmpty());
+	}
+
+
+
+	/**
+	 * Test for {@link AssetRepository#save(Object)}
+	 */
+	@Test
+	public void testUpdate() {
+		Asset asset = new Asset();
+
+		asset.setContentHash("2");
+		asset.setContentType("3");
+		asset.setUploadDate(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS));
+		asset.setFileSize(100L);
+		asset.setFileName("test.jar");
+
+		repository.save(asset);
+
+		List<Asset> assets = repository.findAll();
+
+		assertEquals(1, assets.size());
+
+		OffsetDateTime dateTime = OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS);
+
+		assets.getFirst().setUploadDate(dateTime);
+
+		assertEquals(dateTime, repository.save(assets.getFirst()).getUploadDate());
 	}
 }
