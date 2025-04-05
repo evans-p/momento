@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * Implementation of {@link AssetService}.
  */
+@Validated
 @Service
 public class AssetServiceImpl implements AssetService {
 
@@ -43,7 +44,7 @@ public class AssetServiceImpl implements AssetService {
 		this.assetRepository = assetRepository;
 	}
 
-	@Validated
+
 	@Override
 	public Asset uploadAsset(@ValidFile MultipartFile file) {
 		try {
@@ -92,7 +93,7 @@ public class AssetServiceImpl implements AssetService {
 		}
 	}
 
-	@Validated
+
 	@Override
 	public FileWithContentType getFileByName(@ValidFileName String name) {
 		Optional<Asset> result = assetRepository.findByFileName(name);
