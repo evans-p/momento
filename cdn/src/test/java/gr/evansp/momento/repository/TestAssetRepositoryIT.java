@@ -6,8 +6,6 @@ import java.util.List;
 
 import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.model.Asset;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,25 +26,12 @@ public class TestAssetRepositoryIT extends AbstractIntegrationTest {
 	@Autowired
 	AssetRepository repository;
 
-
-	@BeforeEach
-	@AfterEach
-	public void cleanup() {
-		repository.deleteAll();
-	}
-
 	/**
 	 * Test for {@link AssetRepository#save(Object)}
 	 */
 	@Test
 	public void testStore() {
-		Asset asset = new Asset();
-
-		asset.setContentHash("2");
-		asset.setContentType("3");
-		asset.setUploadDate(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS));
-		asset.setFileSize(100L);
-		asset.setFileName("test.jar");
+		Asset asset = createSampleAsset();
 
 		repository.save(asset);
 
@@ -61,12 +46,7 @@ public class TestAssetRepositoryIT extends AbstractIntegrationTest {
 		assertEquals(asset.getFileName(), assets.getFirst().getFileName());
 	}
 
-
-	/**
-	 * Test for {@link AssetRepository#save(Object)}
-	 */
-	@Test
-	public void testDelete() {
+	private Asset createSampleAsset() {
 		Asset asset = new Asset();
 
 		asset.setContentHash("2");
@@ -75,7 +55,15 @@ public class TestAssetRepositoryIT extends AbstractIntegrationTest {
 		asset.setFileSize(100L);
 		asset.setFileName("test.jar");
 
-		repository.save(asset);
+		return asset;
+	}
+
+	/**
+	 * Test for {@link AssetRepository#save(Object)}
+	 */
+	@Test
+	public void testDelete() {
+		repository.save(createSampleAsset());
 
 		List<Asset> assets = repository.findAll();
 
@@ -86,22 +74,12 @@ public class TestAssetRepositoryIT extends AbstractIntegrationTest {
 		assertTrue(repository.findAll().isEmpty());
 	}
 
-
-
 	/**
 	 * Test for {@link AssetRepository#save(Object)}
 	 */
 	@Test
 	public void testUpdate() {
-		Asset asset = new Asset();
-
-		asset.setContentHash("2");
-		asset.setContentType("3");
-		asset.setUploadDate(OffsetDateTime.now().truncatedTo(ChronoUnit.MILLIS));
-		asset.setFileSize(100L);
-		asset.setFileName("test.jar");
-
-		repository.save(asset);
+		repository.save(createSampleAsset());
 
 		List<Asset> assets = repository.findAll();
 
