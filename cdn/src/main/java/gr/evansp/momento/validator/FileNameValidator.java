@@ -11,18 +11,15 @@ public class FileNameValidator implements ConstraintValidator<ValidFileName, Str
 
 	private static final String REGEX = "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}-[a-zA-Z0-9]{8}\\.(jpg|jpeg|png)$";
 
-	/**
-	 * isValid
-	 */
-	private boolean isValid = true;
 
 	@Override
 	public void initialize(ValidFileName constraintAnnotation) {
-		ConstraintValidator.super.initialize(constraintAnnotation);
+		//EMPTY
 	}
 
 	@Override
 	public boolean isValid(String name, ConstraintValidatorContext context) {
+		boolean isValid = true;
 
 		if (name == null || name.isBlank()) {
 			isValid = buildConstraintViolationMessage("{faulty.file.name}", context);
