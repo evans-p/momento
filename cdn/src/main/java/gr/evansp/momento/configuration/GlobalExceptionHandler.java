@@ -1,7 +1,5 @@
 package gr.evansp.momento.configuration;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -192,10 +190,13 @@ public class GlobalExceptionHandler {
 	 */
 	@ExceptionHandler(ConstraintViolationException.class)
 	public ResponseEntity<ConstraintViolationExceptionMessage> handleInvalid(ConstraintViolationException e) {
-		Map<String, String> messages = e.getConstraintViolations().stream().collect(Collectors.toMap(c -> {
-			List<String> paths = Arrays.asList(c.getPropertyPath().toString().split("\\."));
-			return paths.getLast();
-		}, ConstraintViolation::getMessage));
+		Map<String, String> messages =
+				e.getConstraintViolations()
+					.stream()
+                    .collect(Collectors
+                    .toMap(c ->
+						c.getMessageTemplate().replace("{", "").replace("}", ""),
+						ConstraintViolation::getMessage));
 		return new ResponseEntity<>(new ConstraintViolationExceptionMessage(messages), HttpStatus.UNPROCESSABLE_ENTITY);
 	}
 
