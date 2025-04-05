@@ -1,11 +1,12 @@
 package gr.evansp.momento.controller;
 
+import gr.evansp.momento.bean.FileWithContentType;
 import gr.evansp.momento.dto.AssetDto;
 import gr.evansp.momento.model.Asset;
 import gr.evansp.momento.service.AssetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
-import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,15 @@ public class CDNController {
 	}
 
 	@GetMapping("{fileName}")
-	public ResponseEntity<Resource> getFile(@PathVariable String fileName) {
-		return new ResponseEntity<>(new FileSystemResource(service.getFileByName(fileName)), HttpStatus.OK);
+	public ResponseEntity<FileSystemResource> getFile(@PathVariable String fileName) {
+		FileWithContentType bean = service.getFileByName(fileName);
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.setContentType(bean.contentType());
+
+		return ResponseEntity.ok()
+				       .headers(headers)
+				       .contentLength(bean.file().length())
+				       .body(new FileSystemResource(bean.file()));
 	}
 }
