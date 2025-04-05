@@ -8,10 +8,12 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.OffsetDateTime;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import gr.evansp.momento.annotation.ValidFile;
 import gr.evansp.momento.annotation.ValidFileName;
+import gr.evansp.momento.bean.FileWithContentType;
 import gr.evansp.momento.exception.InternalServiceException;
 import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.Asset;
@@ -19,6 +21,7 @@ import gr.evansp.momento.repository.AssetRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
@@ -91,7 +94,7 @@ public class AssetServiceImpl implements AssetService {
 
 	@Validated
 	@Override
-	public File getFileByName(@ValidFileName String name) {
+	public FileWithContentType getFileByName(@ValidFileName String name) {
 		Optional<Asset> result = assetRepository.findByFileName(name);
 
 		if (result.isEmpty()) {
@@ -105,6 +108,12 @@ public class AssetServiceImpl implements AssetService {
 			throw new ResourceNotFoundException(ResourceNotFoundException.FILE_NOT_FOUND, new Object[]{name});
 		}
 
-		return file;
+		String fileExtension = name.substring(name.lastIndexOf("."));
+
+		if (Set.of("jpg", "jpeg").contains(fileExtension)) {
+			return new FileWithContentType(file, MediaType.IMAGE_JPEG);
+		}
+
+		return new FileWithContentType(file, MediaType.IMAGE_PNG);
 	}
 }

@@ -1,12 +1,12 @@
 package gr.evansp.momento.service;
 
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 import gr.evansp.momento.AbstractIntegrationTest;
+import gr.evansp.momento.bean.FileWithContentType;
 import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.Asset;
 import org.junit.jupiter.api.Test;
@@ -96,9 +96,9 @@ class TestAssetServiceIT extends AbstractIntegrationTest {
 		MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "image/jpeg", JPG_IMAGE);
 		Asset asset = service.uploadAsset(file);
 
-		File result = service.getFileByName(asset.getFileName());
+		FileWithContentType result = service.getFileByName(asset.getFileName());
 
 		assertNotNull(result);
-		assertArrayEquals(file.getBytes(), Files.readAllBytes(result.toPath()));
+		assertArrayEquals(file.getBytes(), Files.readAllBytes(result.file().toPath()));
 	}
 }
