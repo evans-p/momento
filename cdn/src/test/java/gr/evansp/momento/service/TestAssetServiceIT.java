@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+
 import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.bean.FileWithContentType;
 import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.Asset;
+import jakarta.validation.ConstraintViolationException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +60,20 @@ class TestAssetServiceIT extends AbstractIntegrationTest {
 		assertNotNull(asset);
 		assertNotNull(asset.getId());
 		assertEquals(asset, duplicateAsset);
+	}
+
+	/**
+	 * Test for {@link AssetService#uploadAsset(MultipartFile)}.
+	 */
+	@Test
+	public void testUploadAsset_invalidFile() {
+		MultipartFile file = new MockMultipartFile("file", "Yosuke.png", "image/jpeg", JPG_IMAGE);
+
+		ConstraintViolationException e = assertThrows(ConstraintViolationException.class, () -> service.uploadAsset(file));
+
+		assertEquals(1, e.getConstraintViolations().size());
+
+		assertEquals("uploadAsset.file: Content type and file suffix do not match.", e.getMessage());;
 	}
 
 	/**
