@@ -16,8 +16,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 /**
  * Application Global Exception Handler.
@@ -25,12 +30,127 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
+	/**
+	 * CANNOT PROCESS REQUEST.
+	 */
+	public static final String CANNOT_PROCESS_REQUEST = "cannot.process.request";
+
+	/**
+	 * RESOURCE NOT FOUND.
+	 */
+	public static final String RESOURCE_NOT_FOUND = "resource.not.found";
+
+	/**
+	 * FAULTY MESSAGE BODY.
+	 */
+	public static final String FAULTY_MESSAGE_BODY = "faulty.message.body";
+
+	/**
+	 * MEDIA TYPE NOT SUPPORTED.
+	 */
+	public static final String MEDIA_TYPE_NOT_SUPPORTED = "media.type.not.supported";
+
+	/**
+	 * METHOD NOT SUPPORTED.
+	 */
+	public static final String METHOD_NOT_SUPPORTED = "method.not.supported";
+
+	/**
+	 * INTERNAL SERVER ERROR.
+	 */
+	public static final String INTERNAL_SERVER_ERROR = "internal.server.error";
 
 	MessageSource messageSource;
 
+	/**
+	 * Constructor.
+	 *
+	 * @param messageSource
+	 *        {@link MessageSource}.
+	 */
 	@Autowired
 	public GlobalExceptionHandler(MessageSource messageSource) {
 		this.messageSource = messageSource;
+	}
+
+	/**
+	 * Handler for {@link NoResourceFoundException}.
+	 *
+	 * @param e
+	 *        {@link NoResourceFoundException}.
+	 * @param locale
+	 * 		locale
+	 * @return error message
+	 */
+	@ExceptionHandler(NoResourceFoundException.class)
+	public ResponseEntity<ExceptionMessage> handleNoResourceFoundException(
+			NoResourceFoundException e, Locale locale) {
+		String errorMessage = messageSource.getMessage(RESOURCE_NOT_FOUND, null, locale);
+		return new ResponseEntity<>(new ExceptionMessage(errorMessage), HttpStatus.BAD_REQUEST);
+	}
+
+	/**
+	 * Handler for {@link MethodArgumentTypeMismatchException}.
+	 *
+	 * @param e
+	 *        {@link MethodArgumentTypeMismatchException}.
+	 * @param locale
+	 * 		locale
+	 * @return error message
+	 */
+	@ExceptionHandler(MethodArgumentTypeMismatchException.class)
+	public ResponseEntity<ExceptionMessage> handleMethodArgumentTypeMismatch(
+			MethodArgumentTypeMismatchException e, Locale locale) {
+		String errorMessage = messageSource.getMessage(CANNOT_PROCESS_REQUEST, null, locale);
+		return new ResponseEntity<>(new ExceptionMessage(errorMessage), HttpStatus.BAD_REQUEST);
+	}
+
+	/**
+	 * Handler for {@link HttpMessageNotReadableException}.
+	 *
+	 * @param e
+	 *        {@link HttpMessageNotReadableException}.
+	 * @param locale
+	 * 		locale
+	 * @return error message
+	 */
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public ResponseEntity<ExceptionMessage> handleHttpMessageNotReadable(
+			HttpMessageNotReadableException e, Locale locale) {
+		String errorMessage = messageSource.getMessage(FAULTY_MESSAGE_BODY, null, locale);
+		return new ResponseEntity<>(new ExceptionMessage(errorMessage), HttpStatus.BAD_REQUEST);
+	}
+
+	/**
+	 * Handler for {@link HttpMediaTypeNotSupportedException}.
+	 *
+	 * @param e
+	 *        {@link HttpMediaTypeNotSupportedException}.
+	 * @param locale
+	 * 		locale
+	 * @return error message
+	 */
+	@ExceptionHandler(HttpMediaTypeNotSupportedException.class)
+	public ResponseEntity<ExceptionMessage> handleHttpMediaTypeNotSupported(
+			HttpMediaTypeNotSupportedException e, Locale locale) {
+		String errorMessage = messageSource.getMessage(MEDIA_TYPE_NOT_SUPPORTED, null, locale);
+		return new ResponseEntity<>(new ExceptionMessage(errorMessage), HttpStatus.BAD_REQUEST);
+	}
+
+	/**
+	 * Handler for {@link HttpRequestMethodNotSupportedException}.
+	 *
+	 * @param e
+	 *        {@link HttpRequestMethodNotSupportedException}.
+	 * @param locale
+	 * 		locale
+	 * @return error message
+	 */
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	public ResponseEntity<ExceptionMessage> handleHttpRequestMethodNotSupported(
+			HttpRequestMethodNotSupportedException e, Locale locale) {
+		String errorMessage = messageSource.getMessage(METHOD_NOT_SUPPORTED, null, locale);
+		return new ResponseEntity<>(new ExceptionMessage(errorMessage), HttpStatus.METHOD_NOT_ALLOWED);
 	}
 
 	/**
@@ -77,5 +197,21 @@ public class GlobalExceptionHandler {
 			return paths.getLast();
 		}, ConstraintViolation::getMessage));
 		return new ResponseEntity<>(new ConstraintViolationExceptionMessage(messages), HttpStatus.UNPROCESSABLE_ENTITY);
+	}
+
+	/**
+	 * If none of the exceptions above work, this one takes effect.
+	 *
+	 * @param e
+	 *        {@link Exception}.
+	 * @param locale
+	 * 		locale.
+	 * @return {@link ResponseEntity}
+	 */
+	@ExceptionHandler(Exception.class)
+	public ResponseEntity<ExceptionMessage> handleGenericException(Exception e, Locale locale) {
+		String errorMessage = messageSource.getMessage(INTERNAL_SERVER_ERROR, null, locale);
+		return new ResponseEntity<>(
+				new ExceptionMessage(errorMessage), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
