@@ -10,11 +10,10 @@ Momento is a social media like app, built in java.
 
 ## Useful Resources
 
-- Static s analysis and vulnerability check
-    - https://stackoverflow.com/questions/61344217/gitlab-ci-pipeline-to-check-for-code-formatting
-    - https://www.baeldung.com/java-maven-owasp-dependency-check?ref=dailydev
-    - https://medium.com/@ksaquib/mastering-spring-boot-service-discovery-and-registration-using-spring-cloud-netflix-eureka-a-1eec70317b32
-    - https://spring.io/guides/gs/centralized-configuration
+- https://stackoverflow.com/questions/61344217/gitlab-ci-pipeline-to-check-for-code-formatting
+- https://www.baeldung.com/java-maven-owasp-dependency-check?ref=dailydev
+- https://medium.com/@ksaquib/mastering-spring-boot-service-discovery-and-registration-using-spring-cloud-netflix-eureka-a-1eec70317b32
+- https://spring.io/guides/gs/centralized-configuration
 
 ## Initial Idea
 
