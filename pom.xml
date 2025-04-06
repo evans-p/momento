@@ -36,6 +36,7 @@
 
     <modules>
         <module>cdn</module>
+        <module>gateway</module>
     </modules>
 
     <scm>
