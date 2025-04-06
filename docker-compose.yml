@@ -1,4 +1,17 @@
 services:
+
+  cdn:
+    build:
+      context: .
+      dockerfile: cdn/Dockerfile
+    container_name: cdn
+    ports:
+      - "8080:8080"
+    volumes:
+      - C:/var/cdn/storage:/var/cdn/storage
+    depends_on:
+      - db
+
   db:
     image: postgres:14
     container_name: db
