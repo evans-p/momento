@@ -160,13 +160,16 @@ Momento is a social media like app, built in java.
 ## Initial Topology
 
 ```mermaid
-graph TD
-;
-    GATEWAY --> User-Service;
-    GATEWAY --> Post-Service;
-    GATEWAY --> Feed-Service;
-    GATEWAY --> Notification-Service;
-    Notification-Service --> GATEWAY;
-    Post-Service --> Notification-Service;
-    Post-Service --> Feed-Service;
+graph TD;
+    
+CLIENT --> GATEWAY
+GATEWAY --> User-Service;
+GATEWAY --> Post-Service;
+GATEWAY --> Feed-Service;
+GATEWAY --> Notification-Service;
+GATEWAY --> Service-registry;
+User-Service --> Service-registry;
+Post-Service --> Service-registry;
+Feed-Service --> Service-registry;
+Notification-Service --> Service-registry;
 ```
