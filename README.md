@@ -14,6 +14,7 @@ Momento is a social media like app, built in java.
 - https://www.baeldung.com/java-maven-owasp-dependency-check?ref=dailydev
 - https://medium.com/@ksaquib/mastering-spring-boot-service-discovery-and-registration-using-spring-cloud-netflix-eureka-a-1eec70317b32
 - https://spring.io/guides/gs/centralized-configuration
+- https://medium.com/@ankithahjpgowda/api-gateway-in-spring-boot-3ea804003021
 
 ## Initial Idea
 
