@@ -8,6 +8,7 @@ import gr.evansp.momento.bean.ConstraintViolationExceptionMessage;
 import gr.evansp.momento.bean.ExceptionMessage;
 import gr.evansp.momento.exception.InternalServiceException;
 import gr.evansp.momento.exception.ResourceNotFoundException;
+
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,42 +23,18 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
+import static gr.evansp.momento.constants.ExceptionConstants.*;
+
 /**
  * Application Global Exception Handler.
  */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-	/**
-	 * CANNOT PROCESS REQUEST.
-	 */
-	public static final String CANNOT_PROCESS_REQUEST = "cannot.process.request";
 
 	/**
-	 * RESOURCE NOT FOUND.
+	 * {@link MessageSource}.
 	 */
-	public static final String RESOURCE_NOT_FOUND = "resource.not.found";
-
-	/**
-	 * FAULTY MESSAGE BODY.
-	 */
-	public static final String FAULTY_MESSAGE_BODY = "faulty.message.body";
-
-	/**
-	 * MEDIA TYPE NOT SUPPORTED.
-	 */
-	public static final String MEDIA_TYPE_NOT_SUPPORTED = "media.type.not.supported";
-
-	/**
-	 * METHOD NOT SUPPORTED.
-	 */
-	public static final String METHOD_NOT_SUPPORTED = "method.not.supported";
-
-	/**
-	 * INTERNAL SERVER ERROR.
-	 */
-	public static final String INTERNAL_SERVER_ERROR = "internal.server.error";
-
 	MessageSource messageSource;
 
 	/**

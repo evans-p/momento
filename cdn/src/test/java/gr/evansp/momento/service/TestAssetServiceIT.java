@@ -8,6 +8,7 @@ import java.nio.file.Path;
 
 import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.bean.FileWithContentType;
+import gr.evansp.momento.constants.ExceptionConstants;
 import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.Asset;
 import jakarta.validation.ConstraintViolationException;
@@ -73,7 +74,7 @@ class TestAssetServiceIT extends AbstractIntegrationTest {
 
 		assertEquals(1, e.getConstraintViolations().size());
 
-		assertEquals("uploadAsset.file: Content type and file suffix do not match.", e.getMessage());;
+		assertEquals("uploadAsset.file: Content type and file suffix do not match.", e.getMessage());
 	}
 
 	/**
@@ -82,7 +83,7 @@ class TestAssetServiceIT extends AbstractIntegrationTest {
 	@Test
 	public void testGetFileByName_noMetadata() {
 		ResourceNotFoundException e = assertThrows(ResourceNotFoundException.class, () -> service.getFileByName("10283bb6-8664-474d-9240-2036b59b4ece-f1e8af53.png"));
-		assertEquals(ResourceNotFoundException.FILE_NOT_FOUND, e.getMessage());
+		assertEquals(ExceptionConstants.FILE_NOT_FOUND, e.getMessage());
 	}
 
 	/**
@@ -98,7 +99,7 @@ class TestAssetServiceIT extends AbstractIntegrationTest {
 		Files.deleteIfExists(Path.of(storageLocation + "/" + asset.getFileName()));
 
 		ResourceNotFoundException e = assertThrows(ResourceNotFoundException.class, () -> service.getFileByName(asset.getFileName()));
-		assertEquals(ResourceNotFoundException.FILE_NOT_FOUND, e.getMessage());
+		assertEquals(ExceptionConstants.FILE_NOT_FOUND, e.getMessage());
 	}
 
 	/**

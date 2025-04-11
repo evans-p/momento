@@ -3,33 +3,20 @@ package gr.evansp.momento.validator;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
 
 import javax.imageio.ImageIO;
 
 import gr.evansp.momento.annotation.ValidFile;
+import gr.evansp.momento.constants.ValidationConstants;
+import gr.evansp.momento.util.FileContentTypes;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.http.MediaType;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
  * {@link ConstraintValidator} for {@link MultipartFile}.
  */
 public class FileValidator implements ConstraintValidator<ValidFile, MultipartFile> {
-
-	/**
-	 * Valid Content Types.
-	 */
-	private static final Map<String, Set<String>> VALID_CONTENT_TYPES = new HashMap<>();
-
-	static {
-		VALID_CONTENT_TYPES.put(MediaType.IMAGE_JPEG_VALUE, Set.of("jpg", "jpeg"));
-		VALID_CONTENT_TYPES.put(MediaType.IMAGE_PNG_VALUE, Set.of("png"));
-	}
-
 
 	@Override
 	public void initialize(ValidFile constraintAnnotation) {
@@ -41,20 +28,26 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 		boolean isValid = true;
 
 		if (file == null || file.isEmpty() || file.getSize() < 4) {
-			return buildConstraintViolationMessage("{empty.file}", context);
+			return buildConstraintViolationMessage(ValidationConstants.EMPTY_FILE, context);
 		}
 
 		if (file.getOriginalFilename() == null || file.getOriginalFilename().isBlank() || !file.getOriginalFilename().contains(".") || file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1).isBlank()) {
-			isValid = buildConstraintViolationMessage("{faulty.file.name}", context);
+			isValid = buildConstraintViolationMessage(ValidationConstants.FAULTY_FILE_NAME, context);
 		}
 
-		if (file.getContentType() == null || !VALID_CONTENT_TYPES.containsKey(file.getContentType())) {
-			isValid = buildConstraintViolationMessage("{invalid.content.type}", context);
+		if (file.getContentType() == null || !FileContentTypes.getValidMedia().stream().anyMatch(t->t.a.equals(file.getContentType()))) {
+			isValid = buildConstraintViolationMessage(ValidationConstants.INVALID_CONTENT_TYPE, context);
 		}
 
 		if (isValid) {
-			if (!VALID_CONTENT_TYPES.get(file.getContentType()).contains(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1))) {
-				isValid = buildConstraintViolationMessage("{type.mismatch}", context);
+			if (
+					FileContentTypes.getValidMedia().stream()
+							.filter(t -> t.a.equals(file.getContentType()))
+							.peek(System.out::println)
+							.filter(t -> t.b.contains(file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1)))
+							.count() == 0
+			) {
+				isValid = buildConstraintViolationMessage(ValidationConstants.TYPE_MISMATCH, context);
 			}
 		}
 
@@ -64,20 +57,21 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 			try {
 				data = file.getBytes();
 			} catch (IOException e) {
-				return buildConstraintViolationMessage("{invalid.file.content}", context);
+				return buildConstraintViolationMessage(ValidationConstants.INVALID_FILE_CONTENT, context);
 			}
 
 			try (ByteArrayInputStream bais = new ByteArrayInputStream(data)) {
 				BufferedImage image = ImageIO.read(bais);
 				if (image == null) {
-					isValid = buildConstraintViolationMessage("{invalid.file.content}", context);
+					isValid = buildConstraintViolationMessage(ValidationConstants.INVALID_FILE_CONTENT, context);
 
 				}
-				if (getContentType(data, file) == null) {
-					isValid = buildConstraintViolationMessage("{invalid.file.content}", context);
+
+				if (file.getContentType() != null && !file.getContentType().equals(FileContentTypes.getContentTypeAsString(data))) {
+					isValid = buildConstraintViolationMessage(ValidationConstants.INVALID_FILE_CONTENT, context);
 				}
 			} catch (IOException e) {
-				isValid = buildConstraintViolationMessage("{invalid.file.content}", context);
+				isValid = buildConstraintViolationMessage(ValidationConstants.INVALID_FILE_CONTENT, context);
 			}
 
 		}
@@ -99,25 +93,5 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
 		context.buildConstraintViolationWithTemplate(messageCode).addConstraintViolation();
 
 		return false;
-	}
-
-
-	/**
-	 * Returns {@link MediaType} extension of the file, by checking the content.
-	 *
-	 * @param imageData
-	 * 		imageData
-	 * @param file
-	 * 		file
-	 * @return {@link MediaType} extension or null.
-	 */
-	private String getContentType(byte[] imageData, MultipartFile file) {
-
-		if (imageData[0] == (byte) 0xFF && imageData[1] == (byte) 0xD8 && imageData[2] == (byte) 0xFF) {
-			return MediaType.IMAGE_JPEG_VALUE.equals(file.getContentType()) ? MediaType.IMAGE_JPEG_VALUE : null;
-		} else if (imageData[0] == (byte) 0x89 && imageData[1] == (byte) 0x50 && imageData[2] == (byte) 0x4E && imageData[3] == (byte) 0x47) {
-			return MediaType.IMAGE_PNG_VALUE.equals(file.getContentType()) ? MediaType.IMAGE_PNG_VALUE : null;
-		}
-		return null;
 	}
 }

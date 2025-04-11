@@ -14,10 +14,12 @@ import java.util.UUID;
 import gr.evansp.momento.annotation.ValidFile;
 import gr.evansp.momento.annotation.ValidFileName;
 import gr.evansp.momento.bean.FileWithContentType;
+import gr.evansp.momento.constants.ExceptionConstants;
 import gr.evansp.momento.exception.InternalServiceException;
 import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.Asset;
 import gr.evansp.momento.repository.AssetRepository;
+import gr.evansp.momento.util.FileContentTypes;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -68,7 +70,7 @@ public class AssetServiceImpl implements AssetService {
 
 			return storeAssetMetadata(file, storedFilename, contentHash);
 		} catch (IOException e) {
-			throw new InternalServiceException(InternalServiceException.FILE_PROCESS_FAILED, null);
+			throw new InternalServiceException(ExceptionConstants.FILE_PROCESS_FAILED, null);
 		}
 	}
 
@@ -87,9 +89,9 @@ public class AssetServiceImpl implements AssetService {
 			try {
 				Files.deleteIfExists(Paths.get(storageLocation + "/", storedFilename));
 			} catch (IOException ex) {
-				throw new InternalServiceException(InternalServiceException.FILE_PROCESS_FAILED, null);
+				throw new InternalServiceException(ExceptionConstants.FILE_PROCESS_FAILED, null);
 			}
-			throw new InternalServiceException(InternalServiceException.FILE_PROCESS_FAILED, null);
+			throw new InternalServiceException(ExceptionConstants.FILE_PROCESS_FAILED, null);
 		}
 	}
 
@@ -99,22 +101,16 @@ public class AssetServiceImpl implements AssetService {
 		Optional<Asset> result = assetRepository.findByFileName(name);
 
 		if (result.isEmpty()) {
-			throw new ResourceNotFoundException(ResourceNotFoundException.FILE_NOT_FOUND, new Object[]{name});
+			throw new ResourceNotFoundException(ExceptionConstants.FILE_NOT_FOUND, new Object[]{name});
 		}
 		Asset asset = result.get();
 
 		File file = new File(storageLocation + "/" + asset.getFileName());
 
 		if (!file.exists()) {
-			throw new ResourceNotFoundException(ResourceNotFoundException.FILE_NOT_FOUND, new Object[]{name});
+			throw new ResourceNotFoundException(ExceptionConstants.FILE_NOT_FOUND, new Object[]{name});
 		}
 
-		String fileExtension = name.substring(name.lastIndexOf("."));
-
-		if (Set.of("jpg", "jpeg").contains(fileExtension)) {
-			return new FileWithContentType(file, MediaType.IMAGE_JPEG);
-		}
-
-		return new FileWithContentType(file, MediaType.IMAGE_PNG);
+		return new FileWithContentType(file, FileContentTypes.getContentType(name));
 	}
 }
