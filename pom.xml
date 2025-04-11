@@ -36,8 +36,7 @@
 
     <modules>
         <module>cdn</module>
-        <module>gateway</module>
-    </modules>
+            </modules>
 
     <scm>
         <connection>scm:git:https://github.com/evans-p/momento.git</connection>
