@@ -38,8 +38,8 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
     }
 
     if (file.getContentType() == null
-        || !FileContentTypes.getValidMedia().stream()
-            .anyMatch(t -> t.a.equals(file.getContentType()))) {
+        || FileContentTypes.getValidMedia().stream()
+            .noneMatch(t -> t.a.equals(file.getContentType()))) {
       isValid = buildConstraintViolationMessage(ValidationConstants.INVALID_CONTENT_TYPE, context);
     }
 
