@@ -36,7 +36,8 @@
 
     <modules>
         <module>cdn</module>
-            </modules>
+        <module>user-management</module>
+    </modules>
 
     <scm>
         <connection>scm:git:https://github.com/evans-p/momento.git</connection>
