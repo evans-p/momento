@@ -24,29 +24,29 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("cdn/v1/assets/")
 public class CDNController {
 
-	private final AssetService service;
+  private final AssetService service;
 
-	@Autowired
-	public CDNController(AssetService service) {
-		this.service = service;
-	}
+  @Autowired
+  public CDNController(AssetService service) {
+    this.service = service;
+  }
 
-	@PostMapping("upload")
-	public ResponseEntity<AssetDto> upload(@RequestParam("file") MultipartFile file) {
-		Asset asset = service.uploadAsset(file);
-		return new ResponseEntity<>(AssetDto.of(asset), HttpStatus.OK);
-	}
+  @PostMapping("upload")
+  public ResponseEntity<AssetDto> upload(@RequestParam("file") MultipartFile file) {
+    Asset asset = service.uploadAsset(file);
+    return new ResponseEntity<>(AssetDto.of(asset), HttpStatus.OK);
+  }
 
-	@GetMapping("{fileName}")
-	public ResponseEntity<FileSystemResource> getFile(@PathVariable String fileName) {
-		FileWithContentType bean = service.getFileByName(fileName);
+  @GetMapping("{fileName}")
+  public ResponseEntity<FileSystemResource> getFile(@PathVariable String fileName) {
+    FileWithContentType bean = service.getFileByName(fileName);
 
-		HttpHeaders headers = new HttpHeaders();
-		headers.setContentType(bean.contentType());
+    HttpHeaders headers = new HttpHeaders();
+    headers.setContentType(bean.contentType());
 
-		return ResponseEntity.ok()
-				       .headers(headers)
-				       .contentLength(bean.file().length())
-				       .body(new FileSystemResource(bean.file()));
-	}
+    return ResponseEntity.ok()
+        .headers(headers)
+        .contentLength(bean.file().length())
+        .body(new FileSystemResource(bean.file()));
+  }
 }

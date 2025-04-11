@@ -1,8 +1,7 @@
 package gr.evansp.momento.bean;
 
-import java.util.Map;
-
 import jakarta.validation.ConstraintViolationException;
+import java.util.Map;
 
 /**
  * Bean record to be returned on the event of {@link ConstraintViolationException}.

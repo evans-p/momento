@@ -9,13 +9,13 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 abstract class AbstractException extends RuntimeException {
-	/**
-	 * Message code.
-	 */
-	final String message;
+  /**
+   * Message code.
+   */
+  final String message;
 
-	/**
-	 * Arguments for message.
-	 */
-	final Object[] args;
+  /**
+   * Arguments for message.
+   */
+  final Object[] args;
 }

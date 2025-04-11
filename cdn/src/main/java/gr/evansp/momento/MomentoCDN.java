@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class MomentoCDN {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MomentoCDN.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(MomentoCDN.class, args);
+  }
 }

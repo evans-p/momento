@@ -9,4 +9,4 @@ import org.springframework.http.MediaType;
  * @param file {@link File}
  * @param contentType {@link MediaType}
  */
-public record FileWithContentType(File file, MediaType contentType){}
+public record FileWithContentType(File file, MediaType contentType) {}

@@ -10,18 +10,18 @@ import org.springframework.context.support.ReloadableResourceBundleMessageSource
  */
 @Configuration
 public class MessagesConfiguration {
-	/**
-	 * Loads messages.properties as a {@link MessageSource}.
-	 *
-	 * @return {@link MessageSource}.
-	 */
-	@Bean
-	MessageSource messageSource() {
-		ReloadableResourceBundleMessageSource messageSource =
-				new ReloadableResourceBundleMessageSource();
+  /**
+   * Loads messages.properties as a {@link MessageSource}.
+   *
+   * @return {@link MessageSource}.
+   */
+  @Bean
+  MessageSource messageSource() {
+    ReloadableResourceBundleMessageSource messageSource =
+        new ReloadableResourceBundleMessageSource();
 
-		messageSource.setBasename("classpath:messages");
-		messageSource.setDefaultEncoding("UTF-8");
-		return messageSource;
-	}
+    messageSource.setBasename("classpath:messages");
+    messageSource.setDefaultEncoding("UTF-8");
+    return messageSource;
+  }
 }

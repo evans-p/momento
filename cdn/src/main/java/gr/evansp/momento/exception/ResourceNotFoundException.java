@@ -5,15 +5,15 @@ package gr.evansp.momento.exception;
  */
 public class ResourceNotFoundException extends AbstractException {
 
-	/**
-	 * All args constructor.
-	 *
-	 * @param message
-	 * 		exception Code.
-	 * @param args
-	 * 		params.
-	 */
-	public ResourceNotFoundException(String message, Object[] args) {
-		super(message, args);
-	}
+  /**
+   * All args constructor.
+   *
+   * @param message
+   * 		exception Code.
+   * @param args
+   * 		params.
+   */
+  public ResourceNotFoundException(String message, Object[] args) {
+    super(message, args);
+  }
 }

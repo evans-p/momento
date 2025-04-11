@@ -1,5 +1,16 @@
 package gr.evansp.momento.service;
 
+import static gr.evansp.momento.constants.ExceptionConstants.*;
+
+import gr.evansp.momento.annotation.ValidFile;
+import gr.evansp.momento.annotation.ValidFileName;
+import gr.evansp.momento.bean.FileWithContentType;
+import gr.evansp.momento.exception.InternalServiceException;
+import gr.evansp.momento.exception.ResourceNotFoundException;
+import gr.evansp.momento.model.Asset;
+import gr.evansp.momento.repository.AssetRepository;
+import gr.evansp.momento.util.FileContentTypes;
+import jakarta.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -8,22 +19,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.time.OffsetDateTime;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
-
-import gr.evansp.momento.annotation.ValidFile;
-import gr.evansp.momento.annotation.ValidFileName;
-import gr.evansp.momento.bean.FileWithContentType;
-import static gr.evansp.momento.constants.ExceptionConstants.*;
-import gr.evansp.momento.exception.InternalServiceException;
-import gr.evansp.momento.exception.ResourceNotFoundException;
-import gr.evansp.momento.model.Asset;
-import gr.evansp.momento.repository.AssetRepository;
-import gr.evansp.momento.util.FileContentTypes;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
@@ -36,81 +34,79 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class AssetServiceImpl implements AssetService {
 
-	@Value("${cdn.storage.location}")
-	private String storageLocation;
+  @Value("${cdn.storage.location}")
+  private String storageLocation;
 
-	private final AssetRepository assetRepository;
+  private final AssetRepository assetRepository;
 
-	@Autowired
-	public AssetServiceImpl(AssetRepository assetRepository) {
-		this.assetRepository = assetRepository;
-	}
+  @Autowired
+  public AssetServiceImpl(AssetRepository assetRepository) {
+    this.assetRepository = assetRepository;
+  }
 
+  @Override
+  public Asset uploadAsset(@ValidFile MultipartFile file) {
+    try {
+      byte[] bytes = file.getBytes();
 
-	@Override
-	public Asset uploadAsset(@ValidFile MultipartFile file) {
-		try {
-			byte[] bytes = file.getBytes();
+      String contentHash = DigestUtils.md5DigestAsHex(bytes);
 
-			String contentHash = DigestUtils.md5DigestAsHex(bytes);
+      Optional<Asset> existingAsset = assetRepository.findByContentHash(contentHash);
+      if (existingAsset.isPresent()) {
+        return existingAsset.get();
+      }
 
-			Optional<Asset> existingAsset = assetRepository.findByContentHash(contentHash);
-			if (existingAsset.isPresent()) {
-				return existingAsset.get();
-			}
+      String fileExtension =
+          file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf("."));
+      String storedFilename = UUID.randomUUID() + "-" + contentHash.substring(0, 8) + fileExtension;
 
-			String fileExtension = file.getOriginalFilename()
-					                       .substring(file.getOriginalFilename().lastIndexOf("."));
-			String storedFilename = UUID.randomUUID() + "-" + contentHash.substring(0, 8) + fileExtension;
+      String fullPath = storageLocation + "/";
 
-			String fullPath = storageLocation + "/";
+      Path targetPath = Paths.get(fullPath, storedFilename);
+      Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
 
-			Path targetPath = Paths.get(fullPath, storedFilename);
-			Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
+      return storeAssetMetadata(file, storedFilename, contentHash);
+    } catch (IOException e) {
+      throw new InternalServiceException(FILE_PROCESS_FAILED, null);
+    }
+  }
 
-			return storeAssetMetadata(file, storedFilename, contentHash);
-		} catch (IOException e) {
-			throw new InternalServiceException(FILE_PROCESS_FAILED, null);
-		}
-	}
+  @Transactional
+  private Asset storeAssetMetadata(MultipartFile file, String storedFilename, String contentHash) {
+    try {
+      Asset asset = new Asset();
+      asset.setFileName(storedFilename);
+      asset.setContentType(file.getContentType());
+      asset.setContentHash(contentHash);
+      asset.setFileSize(file.getSize());
+      asset.setUploadDate(OffsetDateTime.now());
 
-	@Transactional
-	private Asset storeAssetMetadata(MultipartFile file, String storedFilename, String contentHash) {
-		try {
-			Asset asset = new Asset();
-			asset.setFileName(storedFilename);
-			asset.setContentType(file.getContentType());
-			asset.setContentHash(contentHash);
-			asset.setFileSize(file.getSize());
-			asset.setUploadDate(OffsetDateTime.now());
+      return assetRepository.save(asset);
+    } catch (Exception e) {
+      try {
+        Files.deleteIfExists(Paths.get(storageLocation + "/", storedFilename));
+      } catch (IOException ex) {
+        throw new InternalServiceException(FILE_PROCESS_FAILED, null);
+      }
+      throw new InternalServiceException(FILE_PROCESS_FAILED, null);
+    }
+  }
 
-			return assetRepository.save(asset);
-		} catch (Exception e) {
-			try {
-				Files.deleteIfExists(Paths.get(storageLocation + "/", storedFilename));
-			} catch (IOException ex) {
-				throw new InternalServiceException(FILE_PROCESS_FAILED, null);
-			}
-			throw new InternalServiceException(FILE_PROCESS_FAILED, null);
-		}
-	}
+  @Override
+  public FileWithContentType getFileByName(@ValidFileName String name) {
+    Optional<Asset> result = assetRepository.findByFileName(name);
 
+    if (result.isEmpty()) {
+      throw new ResourceNotFoundException(FILE_NOT_FOUND, new Object[] {name});
+    }
+    Asset asset = result.get();
 
-	@Override
-	public FileWithContentType getFileByName(@ValidFileName String name) {
-		Optional<Asset> result = assetRepository.findByFileName(name);
+    File file = new File(storageLocation + "/" + asset.getFileName());
 
-		if (result.isEmpty()) {
-			throw new ResourceNotFoundException(FILE_NOT_FOUND, new Object[]{name});
-		}
-		Asset asset = result.get();
+    if (!file.exists()) {
+      throw new ResourceNotFoundException(FILE_NOT_FOUND, new Object[] {name});
+    }
 
-		File file = new File(storageLocation + "/" + asset.getFileName());
-
-		if (!file.exists()) {
-			throw new ResourceNotFoundException(FILE_NOT_FOUND, new Object[]{name});
-		}
-
-		return new FileWithContentType(file, FileContentTypes.getContentType(name));
-	}
+    return new FileWithContentType(file, FileContentTypes.getContentType(name));
+  }
 }
