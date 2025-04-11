@@ -10,5 +10,4 @@ import jakarta.validation.ConstraintViolationException;
  * @param messages
  * 		messages to be returned.
  */
-public record ConstraintViolationExceptionMessage(Map<String, String> messages) {
-}
+public record ConstraintViolationExceptionMessage(Map<String, String> messages) {}

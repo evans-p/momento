@@ -14,7 +14,7 @@ import java.util.UUID;
 import gr.evansp.momento.annotation.ValidFile;
 import gr.evansp.momento.annotation.ValidFileName;
 import gr.evansp.momento.bean.FileWithContentType;
-import gr.evansp.momento.constants.ExceptionConstants;
+import static gr.evansp.momento.constants.ExceptionConstants.*;
 import gr.evansp.momento.exception.InternalServiceException;
 import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.Asset;
@@ -70,7 +70,7 @@ public class AssetServiceImpl implements AssetService {
 
 			return storeAssetMetadata(file, storedFilename, contentHash);
 		} catch (IOException e) {
-			throw new InternalServiceException(ExceptionConstants.FILE_PROCESS_FAILED, null);
+			throw new InternalServiceException(FILE_PROCESS_FAILED, null);
 		}
 	}
 
@@ -89,9 +89,9 @@ public class AssetServiceImpl implements AssetService {
 			try {
 				Files.deleteIfExists(Paths.get(storageLocation + "/", storedFilename));
 			} catch (IOException ex) {
-				throw new InternalServiceException(ExceptionConstants.FILE_PROCESS_FAILED, null);
+				throw new InternalServiceException(FILE_PROCESS_FAILED, null);
 			}
-			throw new InternalServiceException(ExceptionConstants.FILE_PROCESS_FAILED, null);
+			throw new InternalServiceException(FILE_PROCESS_FAILED, null);
 		}
 	}
 
@@ -101,14 +101,14 @@ public class AssetServiceImpl implements AssetService {
 		Optional<Asset> result = assetRepository.findByFileName(name);
 
 		if (result.isEmpty()) {
-			throw new ResourceNotFoundException(ExceptionConstants.FILE_NOT_FOUND, new Object[]{name});
+			throw new ResourceNotFoundException(FILE_NOT_FOUND, new Object[]{name});
 		}
 		Asset asset = result.get();
 
 		File file = new File(storageLocation + "/" + asset.getFileName());
 
 		if (!file.exists()) {
-			throw new ResourceNotFoundException(ExceptionConstants.FILE_NOT_FOUND, new Object[]{name});
+			throw new ResourceNotFoundException(FILE_NOT_FOUND, new Object[]{name});
 		}
 
 		return new FileWithContentType(file, FileContentTypes.getContentType(name));

@@ -6,6 +6,4 @@ package gr.evansp.momento.bean;
  * @param message
  * 		message
  */
-public record ExceptionMessage(String message) {
-	//EMPTY
-}
+public record ExceptionMessage(String message) {}

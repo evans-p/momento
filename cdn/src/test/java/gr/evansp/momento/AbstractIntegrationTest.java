@@ -34,6 +34,7 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
 
 	@Autowired
 	protected AssetRepository repository;
+
 	@Value("${cdn.storage.location}")
 	protected String storageLocation;
 

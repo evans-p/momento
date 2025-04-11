@@ -4,7 +4,7 @@ import jakarta.validation.ConstraintViolationException;
 /**
  * Message code for {@link ConstraintViolationException}.
  */
-public enum ValidationConstants {;
+public class ValidationConstants {
 
 	/**
 	 * INVALID_FILE.
@@ -35,4 +35,11 @@ public enum ValidationConstants {;
 	 * TYPE MISMATCH.
 	 */
 	public static final String INVALID_FILE_CONTENT = "{invalid.file.content}";
+
+	/**
+	 * Private NoArgs Constructor.
+	 */
+	private ValidationConstants() {
+		//EMPTY
+	}
 }

@@ -3,7 +3,7 @@ package gr.evansp.momento.constants;
 /**
  * Message code for {@link Exception}.
  */
-public enum ExceptionConstants {;
+public class ExceptionConstants {
 	/**
 	 * FILE NOT FOUND.
 	 */
@@ -43,4 +43,11 @@ public enum ExceptionConstants {;
 	 * INTERNAL SERVER ERROR.
 	 */
 	public static final String INTERNAL_SERVER_ERROR = "internal.server.error";
+
+	/**
+	 * Private NoArgs Constructor.
+	 */
+	private ExceptionConstants() {
+		//EMPTY
+	}
 }

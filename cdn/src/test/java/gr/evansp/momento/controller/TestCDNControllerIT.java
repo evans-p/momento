@@ -107,7 +107,7 @@ class TestCDNControllerIT extends AbstractIntegrationTest {
 
 
 	/**
-	 * Test for {@link CDNController#upload(MultipartFile)}
+	 * Test for {@link CDNController#getFile(String)}.
 	 *
 	 * @throws Exception
 	 * 		Exception
@@ -130,5 +130,19 @@ class TestCDNControllerIT extends AbstractIntegrationTest {
 						MockMvcRequestBuilders.get("/cdn/v1/assets/" + asset.fileName())
 				).andExpect(status().isOk())
 				.andExpect(content().contentType(MediaType.IMAGE_PNG));
+	}
+
+	/**
+	 * Test for {@link CDNController#getFile(String)}.
+	 *
+	 * @throws Exception
+	 * 		Exception
+	 */
+	@Test
+	public void testGetFile_fileNotFound() throws Exception {
+		mockMvc.perform(
+						MockMvcRequestBuilders.get("/cdn/v1/assets/3f361ed5-39c9-4e71-a5c3-778faaf1bdf3-ab0b1b8f.png")
+				).andExpect(status().isNotFound())
+				.andExpect(content().contentType(MediaType.APPLICATION_JSON));
 	}
 }
