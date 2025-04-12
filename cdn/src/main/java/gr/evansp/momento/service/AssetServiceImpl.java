@@ -79,7 +79,6 @@ public class AssetServiceImpl implements AssetService {
       asset.setContentType(file.getContentType());
       asset.setContentHash(contentHash);
       asset.setFileSize(file.getSize());
-      asset.setUploadDate(OffsetDateTime.now());
 
       return assetRepository.save(asset);
     } catch (Exception e) {

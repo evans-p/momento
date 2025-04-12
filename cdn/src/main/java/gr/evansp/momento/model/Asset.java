@@ -39,7 +39,7 @@ public class Asset {
   private Long fileSize;
 
   @Column(name = "UPLOAD_TIME", nullable = false)
-  private OffsetDateTime uploadDate;
+  private OffsetDateTime uploadDate = OffsetDateTime.now();
 
   @Override
   public int hashCode() {
