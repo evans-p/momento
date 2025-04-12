@@ -1,10 +1,7 @@
 package gr.evansp.momento.repository;
 
 
-import java.util.Optional;
-
 import gr.evansp.momento.AbstractIntegrationTest;
-import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
