@@ -42,7 +42,7 @@ public class UserProfile {
 	private OffsetDateTime createdAt = OffsetDateTime.now();
 
 	@Column(name = "UPDATED_AT", nullable = false)
-	private OffsetDateTime updatedAt = OffsetDateTime.now();;
+	private OffsetDateTime updatedAt = OffsetDateTime.now();
 
 	@Column(name = "PROFILE_PICTURE_URL")
 	private String profilePictureUrl;
