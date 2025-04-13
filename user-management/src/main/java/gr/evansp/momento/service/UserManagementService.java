@@ -20,4 +20,14 @@ public interface UserManagementService {
 	 * 		jwtToken
 	 */
 	UserProfile register(String jwtToken);
+
+
+	/**
+	 * Gets {@link UserProfile} by user ID. Throws Exception
+	 * if the userId is not valid, meaning does not follow
+	 * the UUID pattern, or the user is not found.
+	 * @param userId userId
+	 * @return {@link UserProfile}
+	 */
+	UserProfile getUser(String userId);
 }
