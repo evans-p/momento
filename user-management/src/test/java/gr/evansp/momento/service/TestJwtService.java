@@ -76,7 +76,6 @@ public class TestJwtService extends AbstractUnitTest {
     assertEquals("https://graph.facebook.com/123456789012345/picture", info.profilePictureUrl());
   }
 
-
   /**
    * Test for {@link JwtService#extractUserProfileInfo(String)}
    */
