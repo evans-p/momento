@@ -22,9 +22,6 @@ class TestUserProfileRepositoryIT extends AbstractIntegrationTest {
   @Autowired
   UserProfileRepository repository;
 
-  @Autowired
-  UserFollowRepository followRepository;
-
   @Test
   public void testStore() {
     UserProfile userProfile = getSampleUserProfile();
