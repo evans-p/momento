@@ -14,9 +14,6 @@ public class AbstractUnitTest {
   protected static final String VALID_FACEBOOK_TOKEN =
       loadValidToken("util/facebook-jwt-token.txt");
 
-  protected static final String VALID_MICROSOFT_TOKEN =
-      loadValidToken("util/microsoft-jwt-token.txt");
-
   protected static final String VALID_LINKED_IN_TOKEN =
       loadValidToken("util/linkedin-jwt-token.txt");
 
