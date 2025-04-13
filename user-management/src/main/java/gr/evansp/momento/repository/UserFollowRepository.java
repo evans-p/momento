@@ -2,7 +2,6 @@ package gr.evansp.momento.repository;
 
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
-
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.data.domain.Page;

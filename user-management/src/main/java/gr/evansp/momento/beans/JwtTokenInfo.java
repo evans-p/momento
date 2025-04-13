@@ -16,6 +16,9 @@ import com.auth0.jwt.JWT;
  * @param profilePictureUrl
  * 		profilePictureUrl
  */
-public record JwtTokenInfo(String authenticationProviderId, String firstName, String lastName, String email,
-                           String profilePictureUrl) {
-}
+public record JwtTokenInfo(
+    String authenticationProviderId,
+    String firstName,
+    String lastName,
+    String email,
+    String profilePictureUrl) {}

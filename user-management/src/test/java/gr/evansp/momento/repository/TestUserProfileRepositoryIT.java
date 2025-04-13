@@ -1,5 +1,7 @@
 package gr.evansp.momento.repository;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.model.UserProfile;
@@ -9,9 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
 /**
  * Integration tests for {@link UserProfileRepository}.
  */
@@ -19,8 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @SpringBootTest
 class TestUserProfileRepositoryIT extends AbstractIntegrationTest {
 
-  @Autowired
-  UserProfileRepository repository;
+  @Autowired UserProfileRepository repository;
 
   @Test
   public void testStore() {
