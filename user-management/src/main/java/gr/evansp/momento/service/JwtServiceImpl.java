@@ -21,7 +21,7 @@ public class JwtServiceImpl implements JwtService {
 
   private static final Set<String> LAST_NAME_CLAIM = Set.of("family_name", "last_name", "lastName");
 
-  private static final Set<String> EMAIL_CLAIM = Set.of("email", "preferred_username");
+  private static final Set<String> EMAIL_CLAIM = Set.of("email");
 
   private static final Set<String> PROFILE_PICTURE_URL_CLAIM = Set.of("picture");
 
