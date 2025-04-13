@@ -2,6 +2,7 @@ package gr.evansp.momento.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.model.UserProfile;
@@ -20,6 +21,9 @@ class TestUserProfileRepositoryIT extends AbstractIntegrationTest {
 
   @Autowired UserProfileRepository repository;
 
+  /**
+   * Test for {@link UserProfileRepository#save(Object)}
+   */
   @Test
   public void testStore() {
     UserProfile userProfile = getSampleUserProfile();
@@ -30,6 +34,18 @@ class TestUserProfileRepositoryIT extends AbstractIntegrationTest {
     assertEquals(userProfile.getEmail(), profile.getEmail());
     assertEquals(userProfile.getLastName(), profile.getLastName());
     assertEquals(userProfile.getAuthenticationProviderId(), profile.getAuthenticationProviderId());
+  }
+
+
+  /**
+   * Test for {@link UserProfileRepository#save(Object)}
+   */
+  @Test
+  public void testFindByAuthenticationProviderId() {
+    UserProfile userProfile = getSampleUserProfile();
+    UserProfile profile = repository.save(userProfile);
+
+    assertTrue(repository.findByAuthenticationProviderId(profile.getAuthenticationProviderId()).isPresent());
   }
 
   private UserProfile getSampleUserProfile() {
