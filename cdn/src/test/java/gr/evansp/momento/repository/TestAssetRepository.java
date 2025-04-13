@@ -19,7 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-public class TestAssetRepositoryIT extends AbstractIntegrationTest {
+public class TestAssetRepository extends AbstractIntegrationTest {
 
   @Autowired AssetRepository repository;
 

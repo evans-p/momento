@@ -27,7 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class TestAssetServiceIT extends AbstractIntegrationTest {
+class TestAssetService extends AbstractIntegrationTest {
 
   @Autowired AssetService service;
 

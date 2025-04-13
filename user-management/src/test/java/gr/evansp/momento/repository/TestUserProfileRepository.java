@@ -17,7 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
  */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
-class TestUserProfileRepositoryIT extends AbstractIntegrationTest {
+class TestUserProfileRepository extends AbstractIntegrationTest {
 
   @Autowired UserProfileRepository repository;
 

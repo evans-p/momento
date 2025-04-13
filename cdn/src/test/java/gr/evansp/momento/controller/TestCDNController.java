@@ -24,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @SpringBootTest
 @AutoConfigureMockMvc
-class TestCDNControllerIT extends AbstractIntegrationTest {
+class TestCDNController extends AbstractIntegrationTest {
 
   MockMultipartFile file = new MockMultipartFile("file", "Yosuke.png", "image/png", PNG_IMAGE);
 
