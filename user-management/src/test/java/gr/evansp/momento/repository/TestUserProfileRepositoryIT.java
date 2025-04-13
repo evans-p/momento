@@ -30,8 +30,6 @@ class TestUserProfileRepositoryIT extends AbstractIntegrationTest {
     assertEquals(userProfile.getEmail(), profile.getEmail());
     assertEquals(userProfile.getLastName(), profile.getLastName());
     assertEquals(userProfile.getAuthenticationProviderId(), profile.getAuthenticationProviderId());
-
-    System.out.println(profile);
   }
 
   private UserProfile getSampleUserProfile() {

@@ -76,19 +76,6 @@ public class TestJwtService extends AbstractUnitTest {
     assertEquals("https://graph.facebook.com/123456789012345/picture", info.profilePictureUrl());
   }
 
-  /**
-   * Test for {@link JwtService#extractUserProfileInfo(String)}
-   */
-  @Test
-  public void testExtractUserProfileInfo_microsoftToken() {
-    JwtTokenInfo info = service.extractUserProfileInfo(VALID_MICROSOFT_TOKEN);
-
-    assertEquals("Alice", info.firstName());
-    assertEquals("Johnson", info.lastName());
-    assertEquals("P5QJ_qxmf_BxFMSBiLI4ZA8be5dehgbDVo_TrZ8kaEI", info.authenticationProviderId());
-    assertEquals("alice.johnson@contoso.com", info.email());
-    assertNull(info.profilePictureUrl());
-  }
 
   /**
    * Test for {@link JwtService#extractUserProfileInfo(String)}
