@@ -9,7 +9,7 @@ import org.testcontainers.containers.wait.strategy.Wait;
  * Abstract Class for Integration tests. Contains the initialization of
  * the required test containers.
  */
-public abstract class AbstractIntegrationTest {
+public abstract class AbstractIntegrationTest extends AbstractUnitTest {
 
   private static final PostgreSQLContainer<?> postgres =
       new PostgreSQLContainer<>("postgres:14")
