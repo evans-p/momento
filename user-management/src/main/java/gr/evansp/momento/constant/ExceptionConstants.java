@@ -5,9 +5,14 @@ package gr.evansp.momento.constant;
  */
 public class ExceptionConstants {
   /**
-   * FILE NOT FOUND.
+   * INVALID TOKEN.
    */
   public static final String INVALID_TOKEN = "invalid.token";
+
+  /**
+   * USER ALREADY REGISTERED.
+   */
+  public static final String USER_ALREADY_REGISTERED = "user.already.registered";
 
   /**
    * Private NoArgs Constructor.
