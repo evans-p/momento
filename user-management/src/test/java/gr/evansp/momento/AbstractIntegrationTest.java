@@ -1,5 +1,10 @@
 package gr.evansp.momento;
 
+import gr.evansp.momento.repository.UserFollowRepository;
+import gr.evansp.momento.repository.UserProfileRepository;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.testcontainers.containers.PostgreSQLContainer;
@@ -24,6 +29,13 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
     postgres.start();
   }
 
+  @Autowired
+  UserProfileRepository userProfileRepository;
+
+  @Autowired
+  UserFollowRepository userFollowRepository;
+
+
   @DynamicPropertySource
   private static void registerPgProperties(DynamicPropertyRegistry registry) {
     registry.add("spring.datasource.url", postgres::getJdbcUrl);
@@ -31,5 +43,12 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
     registry.add("spring.datasource.password", postgres::getPassword);
     registry.add(
         "spring.jpa.properties.hibernate.dialect", () -> "org.hibernate.dialect.PostgreSQLDialect");
+  }
+
+  @BeforeEach
+  @AfterEach
+  void cleanup() {
+    userFollowRepository.deleteAll();
+    userProfileRepository.deleteAll();
   }
 }
