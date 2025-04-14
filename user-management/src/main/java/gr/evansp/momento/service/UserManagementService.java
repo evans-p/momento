@@ -30,4 +30,13 @@ public interface UserManagementService {
 	 * @return {@link UserProfile}
 	 */
 	UserProfile getUser(String userId);
+
+	/**
+	 * Fetches the currently logged-in user. Said user is identified by
+	 * the JWT token provided. Throws an exception if he is non found.
+	 *
+	 * @param jwtToken jwtToken
+	 * @return {@link UserProfile}
+	 */
+	UserProfile getLoggedInUser(String jwtToken);
 }
