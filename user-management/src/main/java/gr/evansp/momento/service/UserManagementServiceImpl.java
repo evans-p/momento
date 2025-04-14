@@ -23,11 +23,9 @@ public class UserManagementServiceImpl implements UserManagementService {
 	private static final String USER_ID_REGEX = "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$";
 
 
-	@Autowired
-	JwtService jwtService;
+	@Autowired JwtService jwtService;
 
-	@Autowired
-	UserProfileRepository repository;
+	@Autowired UserProfileRepository repository;
 
 	@Transactional
 	@Override
@@ -48,6 +46,14 @@ public class UserManagementServiceImpl implements UserManagementService {
 		validateUserId(userId);
 
 		return repository.findById(UUID.fromString(userId)).orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
+	}
+
+	@Override
+	public UserProfile getLoggedInUser(String jwtToken) {
+		JwtTokenInfo tokenInfo = jwtService.extractUserProfileInfo(jwtToken);
+
+		return repository.findByAuthenticationProviderId(tokenInfo.authenticationProviderId()).orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
+
 	}
 
 	private void validateUserId(String userId) {
