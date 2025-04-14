@@ -10,9 +10,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
@@ -56,10 +56,10 @@ public class UserProfile {
   private Long followedCount = 0L;
 
   @OneToMany(mappedBy = "followed", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<UserFollow> followers = new HashSet<>();
+  private List<UserFollow> followers = new LinkedList<>();
 
   @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private Set<UserFollow> followed = new HashSet<>();
+  private List<UserFollow> followed = new LinkedList<>();
 
   @Override
   public boolean equals(Object o) {
