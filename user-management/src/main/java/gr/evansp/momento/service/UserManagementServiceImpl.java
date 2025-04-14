@@ -38,6 +38,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       throw new LogicException(USER_ALREADY_REGISTERED, null);
     }
 
+    //TODO: handle exceptions here.
     return repository.save(createUserProfileFromJwtTokenInfo(tokenInfo));
   }
 
