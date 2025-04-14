@@ -12,13 +12,16 @@ import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
+
+import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
-@Table(schema = "USER_MANAGEMENT", name = "USER_FOLLOW")
+@Table(schema = "USER_MANAGEMENT", name = "USER_FOLLOW",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"FOLLOWED_BY_ID", "FOLLOWS_ID"})})
 public class UserFollow {
 
   @Id
@@ -27,12 +30,12 @@ public class UserFollow {
   UUID id;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "FOLLOWER_ID")
-  UserProfile follower;
+  @JoinColumn(name = "FOLLOWS_ID", nullable = false)
+  UserProfile follows;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "FOLLOWED_ID")
-  UserProfile followed;
+  @JoinColumn(name = "FOLLOWED_BY_ID", nullable = false)
+  UserProfile followedBy;
 
   @Column(name = "CREATED_AT", nullable = false)
   private OffsetDateTime createdAt = OffsetDateTime.now();

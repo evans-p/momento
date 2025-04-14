@@ -37,8 +37,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertNotNull(profile.getEmail());
     assertNotNull(profile.getLastName());
     assertNotNull(profile.getAuthenticationProviderId());
-    assertEquals(0L, profile.getFollowedCount());
-    assertEquals(0L, profile.getFollowersCount());
+    assertEquals(0L, profile.getFollowsCount());
+    assertEquals(0L, profile.getFollowedByCount());
   }
 
   /**
@@ -117,8 +117,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(
         profile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS),
         fetchProfile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS));
-    assertEquals(profile.getFollowersCount(), fetchProfile.getFollowersCount());
-    assertEquals(profile.getFollowedCount(), fetchProfile.getFollowedCount());
+    assertEquals(profile.getFollowsCount(), fetchProfile.getFollowsCount());
+    assertEquals(profile.getFollowedByCount(), fetchProfile.getFollowedByCount());
   }
 
   /**
@@ -149,8 +149,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(
             profile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS),
             fetchProfile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS));
-    assertEquals(profile.getFollowersCount(), fetchProfile.getFollowersCount());
-    assertEquals(profile.getFollowedCount(), fetchProfile.getFollowedCount());
+    assertEquals(profile.getFollowsCount(), fetchProfile.getFollowsCount());
+    assertEquals(profile.getFollowedByCount(), fetchProfile.getFollowedByCount());
   }
 
 }

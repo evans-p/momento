@@ -14,6 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -34,7 +35,7 @@ public class UserProfile {
   @Column(name = "LAST_NAME", nullable = false)
   private String lastName;
 
-  @Column(name = "EMAIL", nullable = false)
+  @Column(name = "EMAIL", nullable = false, unique = true)
   private String email;
 
   @Column(name = "CREATED_AT", nullable = false)
@@ -49,17 +50,17 @@ public class UserProfile {
   @Column(name = "AUTHENTICATION_PROVIDER_ID", nullable = false, unique = true)
   private String authenticationProviderId;
 
-  @Column(name = "FOLLOWERS_COUNT", nullable = false, unique = true)
-  private Long followersCount = 0L;
+  @Column(name = "FOLLOWS_COUNT", nullable = false)
+  private Long followsCount = 0L;
 
-  @Column(name = "FOLLOWED_COUNT", nullable = false, unique = true)
-  private Long followedCount = 0L;
+  @Column(name = "FOLLOWED_BY_COUNT", nullable = false)
+  private Long followedByCount = 0L;
 
-  @OneToMany(mappedBy = "followed", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<UserFollow> followers = new LinkedList<>();
+  @OneToMany(mappedBy = "follows", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<UserFollow> followsList = new LinkedList<>();
 
-  @OneToMany(mappedBy = "follower", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<UserFollow> followed = new LinkedList<>();
+  @OneToMany(mappedBy = "followedBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<UserFollow> followedByList = new LinkedList<>();
 
   @Override
   public boolean equals(Object o) {
