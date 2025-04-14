@@ -9,6 +9,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+/**
+ * {@link Repository} for {@link UserFollow}.
+ */
 @Repository
 public interface UserFollowRepository extends JpaRepository<UserFollow, UUID> {
 
