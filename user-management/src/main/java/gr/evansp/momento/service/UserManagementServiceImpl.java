@@ -1,18 +1,23 @@
 package gr.evansp.momento.service;
 
+import static gr.evansp.momento.constant.ExceptionConstants.INVALID_PAGING;
 import static gr.evansp.momento.constant.ExceptionConstants.INVALID_USER_ID;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_ALREADY_REGISTERED;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
 
 import gr.evansp.momento.beans.JwtTokenInfo;
 import gr.evansp.momento.exception.LogicException;
+import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
+import gr.evansp.momento.repository.UserFollowRepository;
 import gr.evansp.momento.repository.UserProfileRepository;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,6 +31,8 @@ public class UserManagementServiceImpl implements UserManagementService {
 
   @Autowired UserProfileRepository repository;
 
+  @Autowired UserFollowRepository userFollowRepository;
+
   @Transactional
   @Override
   public UserProfile register(String jwtToken) {
@@ -38,7 +45,7 @@ public class UserManagementServiceImpl implements UserManagementService {
       throw new LogicException(USER_ALREADY_REGISTERED, null);
     }
 
-    //TODO: handle exceptions here.
+    // TODO: handle exceptions here.
     return repository.save(createUserProfileFromJwtTokenInfo(tokenInfo));
   }
 
@@ -60,6 +67,27 @@ public class UserManagementServiceImpl implements UserManagementService {
         .orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
   }
 
+  @Override
+  public List<UserFollow> getFollows(String userId, int page, int pageSize) {
+    validateUserId(userId);
+    validatePaging(page, pageSize);
+
+    UserProfile profile =
+        repository
+            .findById(UUID.fromString(userId))
+            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
+
+    return userFollowRepository.findByFollows(profile, PageRequest.of(page, pageSize)).getContent();
+  }
+
+  // TODO: Move to validator
+  private void validatePaging(int page, int pageSize) {
+    if (page < 0 || pageSize <= 0) {
+      throw new LogicException(INVALID_PAGING, null);
+    }
+  }
+
+  // TODO: Move to validator
   private void validateUserId(String userId) {
     if (userId == null || userId.isBlank()) {
       throw new LogicException(INVALID_USER_ID, new Object[] {userId});

@@ -1,6 +1,8 @@
 package gr.evansp.momento.service;
 
+import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
+import java.util.List;
 import org.springframework.stereotype.Service;
 
 /**
@@ -37,4 +39,13 @@ public interface UserManagementService {
    * @return {@link UserProfile}
    */
   UserProfile getLoggedInUser(String jwtToken);
+
+  /**
+   * Gets the {@link List} of users that the current user follows.
+   * @param userId userId
+   * @param page page
+   * @param pageSize pageSize
+   * @return {@link List}
+   */
+  List<UserFollow> getFollows(String userId, int page, int pageSize);
 }
