@@ -9,19 +9,20 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 import java.time.OffsetDateTime;
 import java.util.Objects;
 import java.util.UUID;
-
-import jakarta.persistence.UniqueConstraint;
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
 @Entity
-@Table(schema = "USER_MANAGEMENT", name = "USER_FOLLOW",
-        uniqueConstraints = {@UniqueConstraint(columnNames = {"FOLLOWED_BY_ID", "FOLLOWS_ID"})})
+@Table(
+    schema = "USER_MANAGEMENT",
+    name = "USER_FOLLOW",
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"FOLLOWED_BY_ID", "FOLLOWS_ID"})})
 public class UserFollow {
 
   @Id

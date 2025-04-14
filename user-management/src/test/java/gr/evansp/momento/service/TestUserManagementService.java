@@ -126,7 +126,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
    */
   @Test
   public void testGetLoggedInUser_userNotFound() {
-    LogicException exception = assertThrows(LogicException.class, () -> service.getLoggedInUser(VALID_GOOGLE_TOKEN));
+    LogicException exception =
+        assertThrows(LogicException.class, () -> service.getLoggedInUser(VALID_GOOGLE_TOKEN));
     assertEquals(USER_NOT_FOUND, exception.getMessage());
   }
 
@@ -144,13 +145,12 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(profile.getEmail(), fetchProfile.getEmail());
     assertEquals(profile.getProfilePictureUrl(), fetchProfile.getProfilePictureUrl());
     assertEquals(
-            profile.getCreatedAt().truncatedTo(ChronoUnit.MILLIS),
-            fetchProfile.getCreatedAt().truncatedTo(ChronoUnit.MILLIS));
+        profile.getCreatedAt().truncatedTo(ChronoUnit.MILLIS),
+        fetchProfile.getCreatedAt().truncatedTo(ChronoUnit.MILLIS));
     assertEquals(
-            profile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS),
-            fetchProfile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS));
+        profile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS),
+        fetchProfile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS));
     assertEquals(profile.getFollowsCount(), fetchProfile.getFollowsCount());
     assertEquals(profile.getFollowedByCount(), fetchProfile.getFollowedByCount());
   }
-
 }
