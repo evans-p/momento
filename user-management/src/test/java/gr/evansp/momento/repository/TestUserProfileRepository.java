@@ -36,7 +36,6 @@ class TestUserProfileRepository extends AbstractIntegrationTest {
     assertEquals(userProfile.getAuthenticationProviderId(), profile.getAuthenticationProviderId());
   }
 
-
   /**
    * Test for {@link UserProfileRepository#save(Object)}
    */
@@ -45,7 +44,10 @@ class TestUserProfileRepository extends AbstractIntegrationTest {
     UserProfile userProfile = getSampleUserProfile();
     UserProfile profile = repository.save(userProfile);
 
-    assertTrue(repository.findByAuthenticationProviderId(profile.getAuthenticationProviderId()).isPresent());
+    assertTrue(
+        repository
+            .findByAuthenticationProviderId(profile.getAuthenticationProviderId())
+            .isPresent());
   }
 
   private UserProfile getSampleUserProfile() {

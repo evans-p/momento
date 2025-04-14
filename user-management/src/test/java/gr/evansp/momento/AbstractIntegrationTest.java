@@ -29,12 +29,9 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
     postgres.start();
   }
 
-  @Autowired
-  UserProfileRepository userProfileRepository;
+  @Autowired UserProfileRepository userProfileRepository;
 
-  @Autowired
-  UserFollowRepository userFollowRepository;
-
+  @Autowired UserFollowRepository userFollowRepository;
 
   @DynamicPropertySource
   private static void registerPgProperties(DynamicPropertyRegistry registry) {
