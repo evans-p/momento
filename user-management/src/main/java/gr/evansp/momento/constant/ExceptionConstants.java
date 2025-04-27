@@ -20,11 +20,6 @@ public class ExceptionConstants {
   public static final String USER_NOT_FOUND = "user.not.found";
 
   /**
-   * INVALID PAGING.
-   */
-  public static final String INVALID_PAGING = "invalid.paging";
-
-  /**
    * Private NoArgs Constructor.
    */
   private ExceptionConstants() {
