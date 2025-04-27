@@ -1,4 +1,4 @@
-package gr.evansp.momento.validators;
+package gr.evansp.momento.validator;
 
 import static gr.evansp.momento.constant.ValidationConstants.INVALID_USER_ID;
 

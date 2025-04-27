@@ -2,7 +2,7 @@ package gr.evansp.momento.annotation;
 
 import static gr.evansp.momento.constant.ValidationConstants.INVALID_USER_ID;
 
-import gr.evansp.momento.validators.UserIdValidator;
+import gr.evansp.momento.validator.UserIdValidator;
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
 import java.lang.annotation.Documented;
