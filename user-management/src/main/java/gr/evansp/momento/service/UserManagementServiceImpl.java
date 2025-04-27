@@ -69,7 +69,7 @@ public class UserManagementServiceImpl implements UserManagementService {
   public UserProfile getUser(@ValidUserId String userId) {
     return repository
         .findById(UUID.fromString(userId))
-        .orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
+        .orElseThrow(() -> new LogicException(USER_NOT_FOUND, new Object[] {userId}));
   }
 
   @Override
@@ -87,7 +87,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     UserProfile profile =
         repository
             .findById(UUID.fromString(userId))
-            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
+            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, new Object[] {userId}));
 
     return userFollowRepository.findByFollows(profile, PageRequest.of(page, pageSize)).getContent();
   }
@@ -99,11 +99,43 @@ public class UserManagementServiceImpl implements UserManagementService {
     UserProfile profile =
         repository
             .findById(UUID.fromString(userId))
-            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
+            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, new Object[] {userId}));
 
     return userFollowRepository
         .findByFollowedBy(profile, PageRequest.of(page, pageSize))
         .getContent();
+  }
+
+  @Transactional
+  @Override
+  public UserFollow follow(String jwtToken, @ValidUserId String userId) {
+    UserProfile currentUser = getLoggedInUser(jwtToken);
+
+    UserProfile followedByUser =
+        repository
+            .findById(UUID.fromString(userId))
+            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, new Object[] {userId}));
+
+    Optional<UserFollow> follow =
+        userFollowRepository.findByFollowsAndFollowedBy(currentUser, followedByUser);
+
+    if (follow.isPresent()) {
+      return follow.get();
+    }
+
+    UserFollow userFollow = new UserFollow();
+    userFollow.setFollows(currentUser);
+    userFollow.setFollowedBy(followedByUser);
+
+    userFollowRepository.save(userFollow);
+
+    currentUser.setFollowsCount(currentUser.getFollowsCount() + 1);
+    repository.save(currentUser);
+
+    followedByUser.setFollowedByCount(followedByUser.getFollowedByCount() + 1);
+    repository.save(followedByUser);
+
+    return userFollowRepository.save(userFollow);
   }
 
   private UserProfile createUserProfileFromJwtTokenInfo(JwtTokenInfo tokenInfo) {
