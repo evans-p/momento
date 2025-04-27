@@ -44,7 +44,7 @@ public interface UserManagementService {
   UserProfile getLoggedInUser(String jwtToken);
 
   /**
-   * Gets the {@link List} of users that the current user follows.
+   * Gets the {@link List} of users that the given user follows.
    * @param userId userId
    * @param page page
    * @param pageSize pageSize
@@ -52,4 +52,15 @@ public interface UserManagementService {
    */
   List<UserFollow> getFollows(
       @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize);
+
+
+  /**
+   * Gets the {@link List} of users that follow the given user.
+   * @param userId userId
+   * @param page page
+   * @param pageSize pageSize
+   * @return {@link List}
+   */
+  List<UserFollow> getFollowedBy(
+          @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize);
 }
