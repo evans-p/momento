@@ -56,11 +56,10 @@ public class UserManagementServiceImpl implements UserManagementService {
       throw new LogicException(USER_ALREADY_REGISTERED, null);
     }
 
-    fetchedProfile =
-            repository.findByEmail(tokenInfo.email());
+    fetchedProfile = repository.findByEmail(tokenInfo.email());
 
     if (fetchedProfile.isPresent()) {
-      throw new LogicException(EMAIL_ALREADY_REGISTERED, new Object[]{tokenInfo.email()});
+      throw new LogicException(EMAIL_ALREADY_REGISTERED, new Object[] {tokenInfo.email()});
     }
 
     return repository.save(createUserProfileFromJwtTokenInfo(tokenInfo));

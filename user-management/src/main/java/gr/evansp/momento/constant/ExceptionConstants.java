@@ -24,7 +24,6 @@ public class ExceptionConstants {
    */
   public static final String EMAIL_ALREADY_REGISTERED = "email.already.registered";
 
-
   /**
    * Private NoArgs Constructor.
    */
