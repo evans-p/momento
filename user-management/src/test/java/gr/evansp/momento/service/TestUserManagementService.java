@@ -498,4 +498,90 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(0, profile2.getFollowsCount());
     assertEquals(1, userFollowRepository.findAll().size());
   }
+
+  /**
+   * Test for {@link UserManagementService#unfollow(String, String)}.
+   */
+  @Test
+  public void testUnfollow_loggedInUserNotFound() {
+    LogicException exception =
+            assertThrows(
+                    LogicException.class,
+                    () -> service.unfollow(VALID_GOOGLE_TOKEN, UUID.randomUUID().toString()));
+    assertEquals(USER_NOT_FOUND, exception.getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#unfollow(String, String)}.
+   */
+  @Test
+  public void testUnfollow_invalidFollowedUserId() {
+    service.register(VALID_GOOGLE_TOKEN);
+    ConstraintViolationException exception =
+            assertThrows(
+                    ConstraintViolationException.class, () -> service.unfollow(VALID_GOOGLE_TOKEN, "tinMan"));
+    assertEquals(
+            VALIDATION_MESSAGES.getString("invalid.user.id"),
+            exception.getConstraintViolations().iterator().next().getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#unfollow(String, String)}.
+   */
+  @Test
+  public void testUnfollow_followDoesNotExist() {
+    UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
+    UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
+
+    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowsCount());
+    assertEquals(0, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowsCount());
+    assertEquals(0, userFollowRepository.findAll().size());
+
+    service.unfollow(VALID_GOOGLE_TOKEN, profile2.getId().toString());
+
+    profile1 = userProfileRepository.findById(profile1.getId()).get();
+    profile2 = userProfileRepository.findById(profile2.getId()).get();
+
+    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowsCount());
+    assertEquals(0, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowsCount());
+    assertEquals(0, userFollowRepository.findAll().size());
+  }
+
+  /**
+   * Test for {@link UserManagementService#unfollow(String, String)}.
+   */
+  @Test
+  public void testUnfollow_ok() {
+    UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
+    UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
+
+    UserFollow follow = service.follow(VALID_GOOGLE_TOKEN, profile2.getId().toString());
+
+    assertEquals(profile1, follow.getFollows());
+    assertEquals(profile2, follow.getFollowedBy());
+
+    profile1 = userProfileRepository.findById(profile1.getId()).get();
+    profile2 = userProfileRepository.findById(profile2.getId()).get();
+
+    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(1, profile1.getFollowsCount());
+    assertEquals(1, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowsCount());
+    assertEquals(1, userFollowRepository.findAll().size());
+
+    service.unfollow(VALID_GOOGLE_TOKEN, profile2.getId().toString());
+
+    profile1 = userProfileRepository.findById(profile1.getId()).get();
+    profile2 = userProfileRepository.findById(profile2.getId()).get();
+
+    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowsCount());
+    assertEquals(0, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowsCount());
+    assertEquals(0, userFollowRepository.findAll().size());
+  }
 }
