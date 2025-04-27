@@ -287,4 +287,115 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(profile2, profile2Follows.getFirst().getFollows());
     assertEquals(profile1, profile2Follows.getFirst().getFollowedBy());
   }
+
+  /**
+   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   */
+  @Test
+  public void testGetFollowedBy_nullUserId() {
+    ConstraintViolationException e =
+            assertThrows(ConstraintViolationException.class, () -> service.getFollows(null, 1, 1));
+    assertEquals(
+            VALIDATION_MESSAGES.getString("invalid.user.id"),
+            e.getConstraintViolations().iterator().next().getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   */
+  @Test
+  public void testGetFollowedBy_negativePage() {
+    ConstraintViolationException e =
+            assertThrows(
+                    ConstraintViolationException.class,
+                    () -> service.getFollowedBy(UUID.randomUUID().toString(), -1, 1));
+    assertEquals(
+            VALIDATION_MESSAGES.getString("invalid.page"),
+            e.getConstraintViolations().iterator().next().getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   */
+  @Test
+  public void testGetFollowedBy_negativePageSize() {
+    ConstraintViolationException e =
+            assertThrows(
+                    ConstraintViolationException.class,
+                    () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, -1));
+    assertEquals(
+            VALIDATION_MESSAGES.getString("invalid.paging"),
+            e.getConstraintViolations().iterator().next().getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   */
+  @Test
+  public void testGetFollowedBy_zeroPageSize() {
+    ConstraintViolationException e =
+            assertThrows(
+                    ConstraintViolationException.class,
+                    () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 0));
+    assertEquals(
+            VALIDATION_MESSAGES.getString("invalid.paging"),
+            e.getConstraintViolations().iterator().next().getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   */
+  @Test
+  public void testGetFollowedBy_faultyPagination() {
+    ConstraintViolationException e =
+            assertThrows(
+                    ConstraintViolationException.class,
+                    () -> service.getFollowedBy(UUID.randomUUID().toString(), -1, -1));
+
+    assertEquals(2, e.getConstraintViolations().size());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   */
+  @Test
+  public void testGetFollowedBy_userNotFound() {
+    LogicException e =
+            assertThrows(
+                    LogicException.class, () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 1));
+    assertEquals(USER_NOT_FOUND, e.getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   */
+  @Test
+  public void testGetFollowedBy_ok() {
+    UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
+    UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
+
+    UserFollow follow = new UserFollow();
+    follow.setFollows(profile1);
+    follow.setFollowedBy(profile2);
+
+    userFollowRepository.save(follow);
+
+    UserFollow follow2 = new UserFollow();
+    follow2.setFollows(profile2);
+    follow2.setFollowedBy(profile1);
+
+    userFollowRepository.save(follow2);
+
+    List<UserFollow> profile1FollowedBy = service.getFollowedBy(profile1.getId().toString(), 0, 100);
+    List<UserFollow> profile2FollowedBy = service.getFollowedBy(profile2.getId().toString(), 0, 100);
+
+    assertEquals(1, profile1FollowedBy.size());
+    assertEquals(1, profile2FollowedBy.size());
+
+    assertEquals(profile2, profile1FollowedBy.getFirst().getFollows());
+    assertEquals(profile1, profile1FollowedBy.getFirst().getFollowedBy());
+
+    assertEquals(profile1, profile2FollowedBy.getFirst().getFollows());
+    assertEquals(profile2, profile2FollowedBy.getFirst().getFollowedBy());
+  }
 }
