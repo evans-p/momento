@@ -53,7 +53,6 @@ public interface UserManagementService {
   List<UserFollow> getFollows(
       @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize);
 
-
   /**
    * Gets the {@link List} of users that follow the given user.
    * @param userId userId
@@ -62,5 +61,5 @@ public interface UserManagementService {
    * @return {@link List}
    */
   List<UserFollow> getFollowedBy(
-          @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize);
+      @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize);
 }

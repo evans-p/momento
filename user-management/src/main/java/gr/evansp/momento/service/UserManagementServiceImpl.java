@@ -94,15 +94,16 @@ public class UserManagementServiceImpl implements UserManagementService {
 
   @Override
   public List<UserFollow> getFollowedBy(
-          @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize) {
+      @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize) {
 
     UserProfile profile =
-            repository
-                    .findById(UUID.fromString(userId))
-                    .orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
+        repository
+            .findById(UUID.fromString(userId))
+            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
 
-    return userFollowRepository.findByFollowedBy(profile, PageRequest.of(page, pageSize)).getContent();
-
+    return userFollowRepository
+        .findByFollowedBy(profile, PageRequest.of(page, pageSize))
+        .getContent();
   }
 
   private UserProfile createUserProfileFromJwtTokenInfo(JwtTokenInfo tokenInfo) {

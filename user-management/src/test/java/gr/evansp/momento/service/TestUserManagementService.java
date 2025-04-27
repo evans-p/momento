@@ -294,10 +294,10 @@ class TestUserManagementService extends AbstractIntegrationTest {
   @Test
   public void testGetFollowedBy_nullUserId() {
     ConstraintViolationException e =
-            assertThrows(ConstraintViolationException.class, () -> service.getFollows(null, 1, 1));
+        assertThrows(ConstraintViolationException.class, () -> service.getFollows(null, 1, 1));
     assertEquals(
-            VALIDATION_MESSAGES.getString("invalid.user.id"),
-            e.getConstraintViolations().iterator().next().getMessage());
+        VALIDATION_MESSAGES.getString("invalid.user.id"),
+        e.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
@@ -306,12 +306,12 @@ class TestUserManagementService extends AbstractIntegrationTest {
   @Test
   public void testGetFollowedBy_negativePage() {
     ConstraintViolationException e =
-            assertThrows(
-                    ConstraintViolationException.class,
-                    () -> service.getFollowedBy(UUID.randomUUID().toString(), -1, 1));
+        assertThrows(
+            ConstraintViolationException.class,
+            () -> service.getFollowedBy(UUID.randomUUID().toString(), -1, 1));
     assertEquals(
-            VALIDATION_MESSAGES.getString("invalid.page"),
-            e.getConstraintViolations().iterator().next().getMessage());
+        VALIDATION_MESSAGES.getString("invalid.page"),
+        e.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
@@ -320,12 +320,12 @@ class TestUserManagementService extends AbstractIntegrationTest {
   @Test
   public void testGetFollowedBy_negativePageSize() {
     ConstraintViolationException e =
-            assertThrows(
-                    ConstraintViolationException.class,
-                    () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, -1));
+        assertThrows(
+            ConstraintViolationException.class,
+            () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, -1));
     assertEquals(
-            VALIDATION_MESSAGES.getString("invalid.paging"),
-            e.getConstraintViolations().iterator().next().getMessage());
+        VALIDATION_MESSAGES.getString("invalid.paging"),
+        e.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
@@ -334,12 +334,12 @@ class TestUserManagementService extends AbstractIntegrationTest {
   @Test
   public void testGetFollowedBy_zeroPageSize() {
     ConstraintViolationException e =
-            assertThrows(
-                    ConstraintViolationException.class,
-                    () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 0));
+        assertThrows(
+            ConstraintViolationException.class,
+            () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 0));
     assertEquals(
-            VALIDATION_MESSAGES.getString("invalid.paging"),
-            e.getConstraintViolations().iterator().next().getMessage());
+        VALIDATION_MESSAGES.getString("invalid.paging"),
+        e.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
@@ -348,9 +348,9 @@ class TestUserManagementService extends AbstractIntegrationTest {
   @Test
   public void testGetFollowedBy_faultyPagination() {
     ConstraintViolationException e =
-            assertThrows(
-                    ConstraintViolationException.class,
-                    () -> service.getFollowedBy(UUID.randomUUID().toString(), -1, -1));
+        assertThrows(
+            ConstraintViolationException.class,
+            () -> service.getFollowedBy(UUID.randomUUID().toString(), -1, -1));
 
     assertEquals(2, e.getConstraintViolations().size());
   }
@@ -361,8 +361,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
   @Test
   public void testGetFollowedBy_userNotFound() {
     LogicException e =
-            assertThrows(
-                    LogicException.class, () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 1));
+        assertThrows(
+            LogicException.class, () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 1));
     assertEquals(USER_NOT_FOUND, e.getMessage());
   }
 
@@ -386,8 +386,10 @@ class TestUserManagementService extends AbstractIntegrationTest {
 
     userFollowRepository.save(follow2);
 
-    List<UserFollow> profile1FollowedBy = service.getFollowedBy(profile1.getId().toString(), 0, 100);
-    List<UserFollow> profile2FollowedBy = service.getFollowedBy(profile2.getId().toString(), 0, 100);
+    List<UserFollow> profile1FollowedBy =
+        service.getFollowedBy(profile1.getId().toString(), 0, 100);
+    List<UserFollow> profile2FollowedBy =
+        service.getFollowedBy(profile2.getId().toString(), 0, 100);
 
     assertEquals(1, profile1FollowedBy.size());
     assertEquals(1, profile2FollowedBy.size());
