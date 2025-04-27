@@ -1,7 +1,6 @@
 package gr.evansp.momento.service;
 
 import static gr.evansp.momento.constant.ExceptionConstants.INVALID_PAGING;
-import static gr.evansp.momento.constant.ExceptionConstants.INVALID_USER_ID;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_ALREADY_REGISTERED;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
 
@@ -15,8 +14,6 @@ import gr.evansp.momento.repository.UserProfileRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
