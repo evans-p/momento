@@ -1,6 +1,5 @@
 package gr.evansp.momento.service;
 
-import static gr.evansp.momento.constant.ExceptionConstants.INVALID_PAGING;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_ALREADY_REGISTERED;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
 
