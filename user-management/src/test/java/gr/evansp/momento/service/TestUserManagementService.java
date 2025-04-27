@@ -6,9 +6,12 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.exception.LogicException;
+import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
+import gr.evansp.momento.repository.UserFollowRepository;
 import jakarta.validation.ConstraintViolationException;
 import java.time.temporal.ChronoUnit;
+import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +26,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 class TestUserManagementService extends AbstractIntegrationTest {
 
+  /**
+   * {@link UserManagementService}.
+   */
   @Autowired UserManagementService service;
+
+  /**
+   * {@link UserFollowRepository}.
+   */
+  @Autowired UserFollowRepository userFollowRepository;
 
   /**
    * Test for {@link UserManagementService#register(String)}.
@@ -164,5 +175,109 @@ class TestUserManagementService extends AbstractIntegrationTest {
         fetchProfile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS));
     assertEquals(profile.getFollowsCount(), fetchProfile.getFollowsCount());
     assertEquals(profile.getFollowedByCount(), fetchProfile.getFollowedByCount());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollows(String, int, int)}.
+   */
+  @Test
+  public void testGetFollows_nullUserId() {
+    ConstraintViolationException e =
+            assertThrows(ConstraintViolationException.class, () -> service.getFollows(null, 1, 1));
+    assertEquals(
+            VALIDATION_MESSAGES.getString("invalid.user.id"),
+            e.getConstraintViolations().iterator().next().getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollows(String, int, int)}.
+   */
+  @Test
+  public void testGetFollows_negativePage() {
+    ConstraintViolationException e =
+            assertThrows(ConstraintViolationException.class, () -> service.getFollows(UUID.randomUUID().toString(), -1, 1));
+    assertEquals(
+            VALIDATION_MESSAGES.getString("invalid.page"),
+            e.getConstraintViolations().iterator().next().getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollows(String, int, int)}.
+   */
+  @Test
+  public void testGetFollows_negativePageSize() {
+    ConstraintViolationException e =
+            assertThrows(ConstraintViolationException.class, () -> service.getFollows(UUID.randomUUID().toString(), 1, -1));
+    assertEquals(
+            VALIDATION_MESSAGES.getString("invalid.paging"),
+            e.getConstraintViolations().iterator().next().getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollows(String, int, int)}.
+   */
+  @Test
+  public void testGetFollows_zeroPageSize() {
+    ConstraintViolationException e =
+            assertThrows(ConstraintViolationException.class, () -> service.getFollows(UUID.randomUUID().toString(), 1, 0));
+    assertEquals(
+            VALIDATION_MESSAGES.getString("invalid.paging"),
+            e.getConstraintViolations().iterator().next().getMessage());
+  }
+
+
+  /**
+   * Test for {@link UserManagementService#getFollows(String, int, int)}.
+   */
+  @Test
+  public void testGetFollows_faultyPagination() {
+    ConstraintViolationException e =
+            assertThrows(ConstraintViolationException.class, () -> service.getFollows(UUID.randomUUID().toString(), -1, -1));
+
+    assertEquals(2, e.getConstraintViolations().size());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollows(String, int, int)}.
+   */
+  @Test
+  public void testGetFollows_userNotFound() {
+    LogicException e =
+            assertThrows(LogicException.class, () -> service.getFollows(UUID.randomUUID().toString(), 1, 1));
+    assertEquals(USER_NOT_FOUND, e.getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getFollows(String, int, int)}.
+   */
+  @Test
+  public void testGetFollows_ok() {
+    UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
+    UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
+
+    UserFollow follow = new UserFollow();
+    follow.setFollows(profile1);
+    follow.setFollowedBy(profile2);
+
+    userFollowRepository.save(follow);
+
+
+    UserFollow follow2 = new UserFollow();
+    follow2.setFollows(profile2);
+    follow2.setFollowedBy(profile1);
+
+    userFollowRepository.save(follow2);
+
+    List<UserFollow> profile1Follows = service.getFollows(profile1.getId().toString(),0,100);
+    List<UserFollow> profile2Follows = service.getFollows(profile2.getId().toString(),0,100);
+
+    assertEquals(1, profile1Follows.size());
+    assertEquals(1, profile2Follows.size());
+
+    assertEquals(profile1, profile1Follows.getFirst().getFollows());
+    assertEquals(profile2, profile1Follows.getFirst().getFollowedBy());
+
+    assertEquals(profile2, profile2Follows.getFirst().getFollows());
+    assertEquals(profile1, profile2Follows.getFirst().getFollowedBy());
   }
 }
