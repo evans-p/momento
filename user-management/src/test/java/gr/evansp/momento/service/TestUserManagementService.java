@@ -14,7 +14,6 @@ import jakarta.validation.ConstraintViolationException;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -471,7 +470,6 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(0, profile2.getFollowsCount());
     assertEquals(1, userFollowRepository.findAll().size());
   }
-
 
   /**
    * Test for {@link UserManagementService#follow(String, String)}.
