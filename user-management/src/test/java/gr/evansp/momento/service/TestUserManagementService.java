@@ -9,10 +9,12 @@ import gr.evansp.momento.exception.LogicException;
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
 import gr.evansp.momento.repository.UserFollowRepository;
+import gr.evansp.momento.repository.UserProfileRepository;
 import jakarta.validation.ConstraintViolationException;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 /**
  * Integration tests for {@link UserManagementService}.
  */
+@SuppressWarnings("OptionalGetWithoutIsPresent")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class TestUserManagementService extends AbstractIntegrationTest {
@@ -35,6 +38,11 @@ class TestUserManagementService extends AbstractIntegrationTest {
    * {@link UserFollowRepository}.
    */
   @Autowired UserFollowRepository userFollowRepository;
+
+  /**
+   * {@link UserProfileRepository}.
+   */
+  @Autowired UserProfileRepository userProfileRepository;
 
   /**
    * Test for {@link UserManagementService#register(String)}.
@@ -399,5 +407,97 @@ class TestUserManagementService extends AbstractIntegrationTest {
 
     assertEquals(profile1, profile2FollowedBy.getFirst().getFollows());
     assertEquals(profile2, profile2FollowedBy.getFirst().getFollowedBy());
+  }
+
+  /**
+   * Test for {@link UserManagementService#follow(String, String)}.
+   */
+  @Test
+  public void testFollow_loggedInUserNotFound() {
+    LogicException exception =
+        assertThrows(
+            LogicException.class,
+            () -> service.follow(VALID_GOOGLE_TOKEN, UUID.randomUUID().toString()));
+    assertEquals(USER_NOT_FOUND, exception.getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#follow(String, String)}.
+   */
+  @Test
+  public void testFollow_invalidFollowedUserId() {
+    service.register(VALID_GOOGLE_TOKEN);
+    ConstraintViolationException exception =
+        assertThrows(
+            ConstraintViolationException.class, () -> service.follow(VALID_GOOGLE_TOKEN, "tinMan"));
+    assertEquals(
+        VALIDATION_MESSAGES.getString("invalid.user.id"),
+        exception.getConstraintViolations().iterator().next().getMessage());
+  }
+
+  /**
+   * Test for {@link UserManagementService#follow(String, String)}.
+   */
+  @Test
+  public void testFollow_followAlreadyExists() {
+    UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
+    UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
+
+    UserFollow follow = new UserFollow();
+    follow.setFollows(profile1);
+    follow.setFollowedBy(profile2);
+
+    userFollowRepository.save(follow);
+
+    profile1.setFollowsCount(profile1.getFollowsCount() + 1);
+    profile2.setFollowedByCount(profile2.getFollowedByCount() + 1);
+
+    profile1 = userProfileRepository.save(profile1);
+    profile2 = userProfileRepository.save(profile2);
+
+    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(1, profile1.getFollowsCount());
+    assertEquals(1, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowsCount());
+
+    service.follow(VALID_GOOGLE_TOKEN, profile2.getId().toString());
+
+    profile1 = userProfileRepository.findById(profile1.getId()).get();
+    profile2 = userProfileRepository.findById(profile2.getId()).get();
+
+    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(1, profile1.getFollowsCount());
+    assertEquals(1, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowsCount());
+    assertEquals(1, userFollowRepository.findAll().size());
+  }
+
+
+  /**
+   * Test for {@link UserManagementService#follow(String, String)}.
+   */
+  @Test
+  public void testFollow_ok() {
+    UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
+    UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
+
+    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowsCount());
+    assertEquals(0, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowsCount());
+
+    UserFollow follow = service.follow(VALID_GOOGLE_TOKEN, profile2.getId().toString());
+
+    assertEquals(profile1, follow.getFollows());
+    assertEquals(profile2, follow.getFollowedBy());
+
+    profile1 = userProfileRepository.findById(profile1.getId()).get();
+    profile2 = userProfileRepository.findById(profile2.getId()).get();
+
+    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(1, profile1.getFollowsCount());
+    assertEquals(1, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowsCount());
+    assertEquals(1, userFollowRepository.findAll().size());
   }
 }
