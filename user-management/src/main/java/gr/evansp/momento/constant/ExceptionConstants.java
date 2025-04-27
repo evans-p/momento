@@ -20,6 +20,12 @@ public class ExceptionConstants {
   public static final String USER_NOT_FOUND = "user.not.found";
 
   /**
+   * USER ALREADY REGISTERED.
+   */
+  public static final String EMAIL_ALREADY_REGISTERED = "email.already.registered";
+
+
+  /**
    * Private NoArgs Constructor.
    */
   private ExceptionConstants() {

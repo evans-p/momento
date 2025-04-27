@@ -1,5 +1,6 @@
 package gr.evansp.momento.service;
 
+import static gr.evansp.momento.constant.ExceptionConstants.EMAIL_ALREADY_REGISTERED;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_ALREADY_REGISTERED;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
 
@@ -55,7 +56,13 @@ public class UserManagementServiceImpl implements UserManagementService {
       throw new LogicException(USER_ALREADY_REGISTERED, null);
     }
 
-    // TODO: handle exceptions here.
+    fetchedProfile =
+            repository.findByEmail(tokenInfo.email());
+
+    if (fetchedProfile.isPresent()) {
+      throw new LogicException(EMAIL_ALREADY_REGISTERED, new Object[]{tokenInfo.email()});
+    }
+
     return repository.save(createUserProfileFromJwtTokenInfo(tokenInfo));
   }
 
