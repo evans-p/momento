@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
  */
 public interface UserManagementService {
   /**
-   * Registers new user. requires a jwt token as input
+   * Registers new user. Requires a jwt token as input
    * to get the initial profile data from it, like
    * first name, last name, email, etc. First validates
    * the given token. Then checks that the token's auth
@@ -38,7 +38,7 @@ public interface UserManagementService {
 
   /**
    * Fetches the currently logged-in user. Said user is identified by
-   * the JWT token provided. Throws an exception if he is non found.
+   * the JWT token provided. Throw an exception if he is non found.
    *
    * @param jwtToken
    * 		jwtToken
