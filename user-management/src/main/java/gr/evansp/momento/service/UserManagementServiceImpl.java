@@ -76,7 +76,8 @@ public class UserManagementServiceImpl implements UserManagementService {
   }
 
   @Override
-  public List<UserFollow> getFollows(@ValidUserId String userId, @ValidPage int page,@ValidPaging int pageSize) {
+  public List<UserFollow> getFollows(
+      @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize) {
     UserProfile profile =
         repository
             .findById(UUID.fromString(userId))

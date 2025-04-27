@@ -50,5 +50,6 @@ public interface UserManagementService {
    * @param pageSize pageSize
    * @return {@link List}
    */
-  List<UserFollow> getFollows(@ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize);
+  List<UserFollow> getFollows(
+      @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize);
 }
