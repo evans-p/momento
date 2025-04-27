@@ -19,13 +19,25 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * Implementation of {@link UserManagementService}.
+ */
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
 
+  /**
+   * {@link JwtService}.
+   */
   @Autowired JwtService jwtService;
 
+  /**
+   * {@link UserProfileRepository}.
+   */
   @Autowired UserProfileRepository repository;
 
+  /**
+   * {@link UserFollowRepository}.
+   */
   @Autowired UserFollowRepository userFollowRepository;
 
   @Transactional
