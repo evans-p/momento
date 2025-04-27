@@ -3,6 +3,7 @@ package gr.evansp.momento.service;
 import gr.evansp.momento.annotation.ValidPage;
 import gr.evansp.momento.annotation.ValidPaging;
 import gr.evansp.momento.annotation.ValidUserId;
+import gr.evansp.momento.dto.UserProfileDto;
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
 import java.util.List;
@@ -87,4 +88,12 @@ public interface UserManagementService {
    * @param userId userId
    */
   void unfollow(String jwtToken, @ValidUserId String userId);
+
+  /**
+   * Updates the profile of the currently logged-in user.
+   * @param jwtToken jwtToken
+   * @param profileDto {@link UserProfileDto}.
+   * @return {@link UserProfile}
+   */
+  UserProfile updateProfile(String jwtToken, UserProfileDto profileDto);
 }
