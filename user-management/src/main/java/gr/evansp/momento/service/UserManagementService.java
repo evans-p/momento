@@ -1,5 +1,6 @@
 package gr.evansp.momento.service;
 
+import gr.evansp.momento.annotation.ValidUserId;
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
 import java.util.List;
@@ -29,7 +30,7 @@ public interface UserManagementService {
    * @param userId userId
    * @return {@link UserProfile}
    */
-  UserProfile getUser(String userId);
+  UserProfile getUser(@ValidUserId String userId);
 
   /**
    * Fetches the currently logged-in user. Said user is identified by
@@ -47,5 +48,5 @@ public interface UserManagementService {
    * @param pageSize pageSize
    * @return {@link List}
    */
-  List<UserFollow> getFollows(String userId, int page, int pageSize);
+  List<UserFollow> getFollows(@ValidUserId String userId, int page, int pageSize);
 }

@@ -18,10 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 
 /**
  * Implementation of {@link UserManagementService}.
  */
+@Validated
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
 
