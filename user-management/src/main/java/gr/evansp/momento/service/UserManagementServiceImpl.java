@@ -92,6 +92,19 @@ public class UserManagementServiceImpl implements UserManagementService {
     return userFollowRepository.findByFollows(profile, PageRequest.of(page, pageSize)).getContent();
   }
 
+  @Override
+  public List<UserFollow> getFollowedBy(
+          @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize) {
+
+    UserProfile profile =
+            repository
+                    .findById(UUID.fromString(userId))
+                    .orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
+
+    return userFollowRepository.findByFollowedBy(profile, PageRequest.of(page, pageSize)).getContent();
+
+  }
+
   private UserProfile createUserProfileFromJwtTokenInfo(JwtTokenInfo tokenInfo) {
     UserProfile profile = new UserProfile();
 
