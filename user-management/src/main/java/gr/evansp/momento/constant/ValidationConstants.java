@@ -7,13 +7,10 @@ import jakarta.validation.ConstraintViolationException;
  */
 public class ValidationConstants {
 
-
   /**
    * INVALID_FILE.
    */
   public static final String INVALID_USER_ID = "{invalid.user.id}";
-
-
 
   /**
    * Private NoArgs Constructor.
