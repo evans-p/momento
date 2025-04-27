@@ -8,11 +8,13 @@ import gr.evansp.momento.annotation.ValidPage;
 import gr.evansp.momento.annotation.ValidPaging;
 import gr.evansp.momento.annotation.ValidUserId;
 import gr.evansp.momento.beans.JwtTokenInfo;
+import gr.evansp.momento.dto.UserProfileDto;
 import gr.evansp.momento.exception.LogicException;
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
 import gr.evansp.momento.repository.UserFollowRepository;
 import gr.evansp.momento.repository.UserProfileRepository;
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -161,6 +163,16 @@ public class UserManagementServiceImpl implements UserManagementService {
     repository.save(currentUser);
     repository.save(followedByUser);
     userFollowRepository.delete(follow.get());
+  }
+
+  @Override
+  public UserProfile updateProfile(String jwtToken, UserProfileDto profileDto) {
+    UserProfile currentUser = getLoggedInUser(jwtToken);
+    currentUser.setFirstName(profileDto.firstName());
+    currentUser.setLastName(profileDto.lastName());
+    currentUser.setProfilePictureUrl(profileDto.profilePictureUrl());
+    currentUser.setUpdatedAt(OffsetDateTime.now());
+    return repository.save(currentUser);
   }
 
   private UserProfile createUserProfileFromJwtTokenInfo(JwtTokenInfo tokenInfo) {
