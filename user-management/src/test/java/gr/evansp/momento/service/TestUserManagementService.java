@@ -505,9 +505,9 @@ class TestUserManagementService extends AbstractIntegrationTest {
   @Test
   public void testUnfollow_loggedInUserNotFound() {
     LogicException exception =
-            assertThrows(
-                    LogicException.class,
-                    () -> service.unfollow(VALID_GOOGLE_TOKEN, UUID.randomUUID().toString()));
+        assertThrows(
+            LogicException.class,
+            () -> service.unfollow(VALID_GOOGLE_TOKEN, UUID.randomUUID().toString()));
     assertEquals(USER_NOT_FOUND, exception.getMessage());
   }
 
@@ -518,11 +518,12 @@ class TestUserManagementService extends AbstractIntegrationTest {
   public void testUnfollow_invalidFollowedUserId() {
     service.register(VALID_GOOGLE_TOKEN);
     ConstraintViolationException exception =
-            assertThrows(
-                    ConstraintViolationException.class, () -> service.unfollow(VALID_GOOGLE_TOKEN, "tinMan"));
+        assertThrows(
+            ConstraintViolationException.class,
+            () -> service.unfollow(VALID_GOOGLE_TOKEN, "tinMan"));
     assertEquals(
-            VALIDATION_MESSAGES.getString("invalid.user.id"),
-            exception.getConstraintViolations().iterator().next().getMessage());
+        VALIDATION_MESSAGES.getString("invalid.user.id"),
+        exception.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
