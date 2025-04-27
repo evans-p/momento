@@ -5,6 +5,7 @@ import static gr.evansp.momento.constant.ExceptionConstants.INVALID_USER_ID;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_ALREADY_REGISTERED;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
 
+import gr.evansp.momento.annotation.ValidUserId;
 import gr.evansp.momento.beans.JwtTokenInfo;
 import gr.evansp.momento.exception.LogicException;
 import gr.evansp.momento.model.UserFollow;
@@ -23,9 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
-
-  private static final String USER_ID_REGEX =
-      "^[a-zA-Z0-9]{8}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{4}-[a-zA-Z0-9]{12}$";
 
   @Autowired JwtService jwtService;
 
@@ -50,9 +48,7 @@ public class UserManagementServiceImpl implements UserManagementService {
   }
 
   @Override
-  public UserProfile getUser(String userId) {
-    validateUserId(userId);
-
+  public UserProfile getUser(@ValidUserId String userId) {
     return repository
         .findById(UUID.fromString(userId))
         .orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
@@ -68,8 +64,7 @@ public class UserManagementServiceImpl implements UserManagementService {
   }
 
   @Override
-  public List<UserFollow> getFollows(String userId, int page, int pageSize) {
-    validateUserId(userId);
+  public List<UserFollow> getFollows(@ValidUserId String userId, int page, int pageSize) {
     validatePaging(page, pageSize);
 
     UserProfile profile =
@@ -84,19 +79,6 @@ public class UserManagementServiceImpl implements UserManagementService {
   private void validatePaging(int page, int pageSize) {
     if (page < 0 || pageSize <= 0) {
       throw new LogicException(INVALID_PAGING, null);
-    }
-  }
-
-  // TODO: Move to validator
-  private void validateUserId(String userId) {
-    if (userId == null || userId.isBlank()) {
-      throw new LogicException(INVALID_USER_ID, new Object[] {userId});
-    }
-    Pattern pattern = Pattern.compile(USER_ID_REGEX);
-    Matcher matcher = pattern.matcher(userId);
-
-    if (!matcher.matches()) {
-      throw new LogicException(INVALID_USER_ID, new Object[] {userId});
     }
   }
 
