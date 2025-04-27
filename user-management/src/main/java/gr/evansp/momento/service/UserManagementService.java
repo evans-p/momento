@@ -80,4 +80,11 @@ public interface UserManagementService {
    * @param userId userId
    */
   UserFollow follow(String jwtToken, @ValidUserId String userId);
+
+  /**
+   * The currently loggedIn user unfollows the given user.
+   * @param jwtToken jwtToken
+   * @param userId userId
+   */
+  void unfollow(String jwtToken, @ValidUserId String userId);
 }
