@@ -1,5 +1,7 @@
 package gr.evansp.momento.service;
 
+import gr.evansp.momento.annotation.ValidPage;
+import gr.evansp.momento.annotation.ValidPaging;
 import gr.evansp.momento.annotation.ValidUserId;
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
@@ -48,5 +50,5 @@ public interface UserManagementService {
    * @param pageSize pageSize
    * @return {@link List}
    */
-  List<UserFollow> getFollows(@ValidUserId String userId, int page, int pageSize);
+  List<UserFollow> getFollows(@ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize);
 }

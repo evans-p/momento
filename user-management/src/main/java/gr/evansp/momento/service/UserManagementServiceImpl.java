@@ -4,6 +4,8 @@ import static gr.evansp.momento.constant.ExceptionConstants.INVALID_PAGING;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_ALREADY_REGISTERED;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
 
+import gr.evansp.momento.annotation.ValidPage;
+import gr.evansp.momento.annotation.ValidPaging;
 import gr.evansp.momento.annotation.ValidUserId;
 import gr.evansp.momento.beans.JwtTokenInfo;
 import gr.evansp.momento.exception.LogicException;
@@ -75,22 +77,13 @@ public class UserManagementServiceImpl implements UserManagementService {
   }
 
   @Override
-  public List<UserFollow> getFollows(@ValidUserId String userId, int page, int pageSize) {
-    validatePaging(page, pageSize);
-
+  public List<UserFollow> getFollows(@ValidUserId String userId, @ValidPage int page,@ValidPaging int pageSize) {
     UserProfile profile =
         repository
             .findById(UUID.fromString(userId))
             .orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
 
     return userFollowRepository.findByFollows(profile, PageRequest.of(page, pageSize)).getContent();
-  }
-
-  // TODO: Move to validator
-  private void validatePaging(int page, int pageSize) {
-    if (page < 0 || pageSize <= 0) {
-      throw new LogicException(INVALID_PAGING, null);
-    }
   }
 
   private UserProfile createUserProfileFromJwtTokenInfo(JwtTokenInfo tokenInfo) {
