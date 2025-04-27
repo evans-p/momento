@@ -130,12 +130,37 @@ public class UserManagementServiceImpl implements UserManagementService {
     userFollowRepository.save(userFollow);
 
     currentUser.setFollowsCount(currentUser.getFollowsCount() + 1);
-    repository.save(currentUser);
-
     followedByUser.setFollowedByCount(followedByUser.getFollowedByCount() + 1);
+
+    repository.save(currentUser);
     repository.save(followedByUser);
 
     return userFollowRepository.save(userFollow);
+  }
+
+  @Transactional
+  @Override
+  public void unfollow(String jwtToken, @ValidUserId String userId) {
+    UserProfile currentUser = getLoggedInUser(jwtToken);
+
+    UserProfile followedByUser =
+        repository
+            .findById(UUID.fromString(userId))
+            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, new Object[] {userId}));
+
+    Optional<UserFollow> follow =
+        userFollowRepository.findByFollowsAndFollowedBy(currentUser, followedByUser);
+
+    if (follow.isEmpty()) {
+      return;
+    }
+
+    currentUser.setFollowsCount(currentUser.getFollowsCount() - 1);
+    followedByUser.setFollowedByCount(followedByUser.getFollowedByCount() - 1);
+
+    repository.save(currentUser);
+    repository.save(followedByUser);
+    userFollowRepository.delete(follow.get());
   }
 
   private UserProfile createUserProfileFromJwtTokenInfo(JwtTokenInfo tokenInfo) {
