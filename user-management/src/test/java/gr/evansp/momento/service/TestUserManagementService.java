@@ -1,6 +1,5 @@
 package gr.evansp.momento.service;
 
-import static gr.evansp.momento.constant.ExceptionConstants.INVALID_USER_ID;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_ALREADY_REGISTERED;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
@@ -8,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.exception.LogicException;
 import gr.evansp.momento.model.UserProfile;
+import jakarta.validation.ConstraintViolationException;
 import java.time.temporal.ChronoUnit;
 import java.util.UUID;
 import org.junit.jupiter.api.Test;
@@ -57,8 +57,11 @@ class TestUserManagementService extends AbstractIntegrationTest {
    */
   @Test
   public void testGetUser_nullUserId() {
-    LogicException e = assertThrows(LogicException.class, () -> service.getUser(null));
-    assertEquals(INVALID_USER_ID, e.getMessage());
+    ConstraintViolationException e =
+        assertThrows(ConstraintViolationException.class, () -> service.getUser(null));
+    assertEquals(
+        VALIDATION_MESSAGES.getString("invalid.user.id"),
+        e.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
@@ -66,8 +69,11 @@ class TestUserManagementService extends AbstractIntegrationTest {
    */
   @Test
   public void testGetUser_emptyUserId() {
-    LogicException e = assertThrows(LogicException.class, () -> service.getUser(""));
-    assertEquals(INVALID_USER_ID, e.getMessage());
+    ConstraintViolationException e =
+        assertThrows(ConstraintViolationException.class, () -> service.getUser(""));
+    assertEquals(
+        VALIDATION_MESSAGES.getString("invalid.user.id"),
+        e.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
@@ -75,8 +81,11 @@ class TestUserManagementService extends AbstractIntegrationTest {
    */
   @Test
   public void testGetUser_blankUserId() {
-    LogicException e = assertThrows(LogicException.class, () -> service.getUser("   "));
-    assertEquals(INVALID_USER_ID, e.getMessage());
+    ConstraintViolationException e =
+        assertThrows(ConstraintViolationException.class, () -> service.getUser("   "));
+    assertEquals(
+        VALIDATION_MESSAGES.getString("invalid.user.id"),
+        e.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
@@ -84,8 +93,11 @@ class TestUserManagementService extends AbstractIntegrationTest {
    */
   @Test
   public void testGetUser_invalidToken() {
-    LogicException e = assertThrows(LogicException.class, () -> service.getUser("GameChanger"));
-    assertEquals(INVALID_USER_ID, e.getMessage());
+    ConstraintViolationException e =
+        assertThrows(ConstraintViolationException.class, () -> service.getUser("GameChanger"));
+    assertEquals(
+        VALIDATION_MESSAGES.getString("invalid.user.id"),
+        e.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
