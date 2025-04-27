@@ -29,7 +29,9 @@ public interface UserManagementService {
    * Gets {@link UserProfile} by user ID. Throws Exception
    * if the userId is not valid, meaning does not follow
    * the UUID pattern, or the user is not found.
-   * @param userId userId
+   *
+   * @param userId
+   * 		userId
    * @return {@link UserProfile}
    */
   UserProfile getUser(@ValidUserId String userId);
@@ -38,16 +40,21 @@ public interface UserManagementService {
    * Fetches the currently logged-in user. Said user is identified by
    * the JWT token provided. Throws an exception if he is non found.
    *
-   * @param jwtToken jwtToken
+   * @param jwtToken
+   * 		jwtToken
    * @return {@link UserProfile}
    */
   UserProfile getLoggedInUser(String jwtToken);
 
   /**
    * Gets the {@link List} of users that the given user follows.
-   * @param userId userId
-   * @param page page
-   * @param pageSize pageSize
+   *
+   * @param userId
+   * 		userId
+   * @param page
+   * 		page
+   * @param pageSize
+   * 		pageSize
    * @return {@link List}
    */
   List<UserFollow> getFollows(
@@ -55,11 +62,22 @@ public interface UserManagementService {
 
   /**
    * Gets the {@link List} of users that follow the given user.
-   * @param userId userId
-   * @param page page
-   * @param pageSize pageSize
+   *
+   * @param userId
+   * 		userId
+   * @param page
+   * 		page
+   * @param pageSize
+   * 		pageSize
    * @return {@link List}
    */
   List<UserFollow> getFollowedBy(
       @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize);
+
+  /**
+   * The currently loggedIn user follows the given user.
+   * @param jwtToken jwtToken
+   * @param userId userId
+   */
+  UserFollow follow(String jwtToken, @ValidUserId String userId);
 }
