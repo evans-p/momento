@@ -72,6 +72,13 @@
                 <artifactId>java-jwt</artifactId>
                 <version>${version.java-jwt}</version>
             </dependency>
+
+            <dependency>
+                <groupId>org.owasp.encoder</groupId>
+                <artifactId>encoder</artifactId>
+                <version>${version.owasp.encoder}</version>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
