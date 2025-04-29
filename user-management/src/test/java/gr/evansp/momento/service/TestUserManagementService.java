@@ -594,7 +594,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
   public void testUpdateProfile_ok() {
     UserProfile profile = service.register(VALID_GOOGLE_TOKEN);
 
-    UserProfileDto profileDto = new UserProfileDto(
+    UserProfileDto profileDto =
+        new UserProfileDto(
             profile.getId().toString(),
             "Kendrick",
             "Lamar",

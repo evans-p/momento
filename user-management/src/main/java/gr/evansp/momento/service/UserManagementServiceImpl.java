@@ -14,12 +14,10 @@ import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
 import gr.evansp.momento.repository.UserFollowRepository;
 import gr.evansp.momento.repository.UserProfileRepository;
-
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -177,7 +175,8 @@ public class UserManagementServiceImpl implements UserManagementService {
     UserProfile currentUser = getLoggedInUser(jwtToken);
     currentUser.setFirstName(sanitizeInputService.sanitizeStringInput(profileDto.firstName()));
     currentUser.setLastName(sanitizeInputService.sanitizeStringInput(profileDto.lastName()));
-    currentUser.setProfilePictureUrl(sanitizeInputService.sanitizeUrl(profileDto.profilePictureUrl()));
+    currentUser.setProfilePictureUrl(
+        sanitizeInputService.sanitizeUrl(profileDto.profilePictureUrl()));
     currentUser.setUpdatedAt(OffsetDateTime.now());
     return repository.save(currentUser);
   }
