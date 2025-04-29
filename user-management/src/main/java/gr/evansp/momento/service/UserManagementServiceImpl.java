@@ -15,14 +15,11 @@ import gr.evansp.momento.model.UserProfile;
 import gr.evansp.momento.repository.UserFollowRepository;
 import gr.evansp.momento.repository.UserProfileRepository;
 
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import org.owasp.encoder.Encode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -45,6 +42,11 @@ public class UserManagementServiceImpl implements UserManagementService {
    * {@link UserProfileRepository}.
    */
   @Autowired UserProfileRepository repository;
+
+  /**
+   * {@link SanitizeInputService}.
+   */
+  @Autowired SanitizeInputService sanitizeInputService;
 
   /**
    * {@link UserFollowRepository}.
@@ -172,26 +174,10 @@ public class UserManagementServiceImpl implements UserManagementService {
 
   @Override
   public UserProfile updateProfile(String jwtToken, UserProfileDto profileDto) {
-
-    String sanitizedFirstName = Encode.forHtml(profileDto.firstName());
-    String sanitizedLastName = Encode.forHtml(profileDto.lastName());
-
-    // URL validation + sanitization
-    String sanitizedProfilePictureUrl = profileDto.profilePictureUrl();
-    if (sanitizedProfilePictureUrl != null) {
-      // Validate URL format before using it
-      try {
-        URI.create(sanitizedProfilePictureUrl).toURL();
-        sanitizedProfilePictureUrl = Encode.forUriComponent(sanitizedProfilePictureUrl);
-      } catch (MalformedURLException e) {
-        sanitizedProfilePictureUrl = null;
-      }
-    }
-
     UserProfile currentUser = getLoggedInUser(jwtToken);
-    currentUser.setFirstName(profileDto.firstName());
-    currentUser.setLastName(profileDto.lastName());
-    currentUser.setProfilePictureUrl(profileDto.profilePictureUrl());
+    currentUser.setFirstName(sanitizeInputService.sanitizeStringInput(profileDto.firstName()));
+    currentUser.setLastName(sanitizeInputService.sanitizeStringInput(profileDto.lastName()));
+    currentUser.setProfilePictureUrl(sanitizeInputService.sanitizeUrl(profileDto.profilePictureUrl()));
     currentUser.setUpdatedAt(OffsetDateTime.now());
     return repository.save(currentUser);
   }
