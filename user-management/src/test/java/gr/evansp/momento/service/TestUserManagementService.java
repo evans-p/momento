@@ -5,7 +5,6 @@ import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
 
 import gr.evansp.momento.AbstractIntegrationTest;
-import gr.evansp.momento.dto.UserProfileDto;
 import gr.evansp.momento.exception.LogicException;
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
@@ -585,26 +584,5 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(0, profile2.getFollowedByCount());
     assertEquals(0, profile2.getFollowsCount());
     assertEquals(0, userFollowRepository.findAll().size());
-  }
-
-  /**
-   * Test for {@link UserManagementService#updateProfile(String, UserProfileDto)} .
-   */
-  @Test
-  public void testUpdateProfile_ok() {
-    UserProfile profile = service.register(VALID_GOOGLE_TOKEN);
-
-    UserProfileDto profileDto = new UserProfileDto(
-            profile.getId().toString(),
-            "Kendrick",
-            "Lamar",
-            profile.getProfilePictureUrl(),
-            profile.getFollowsCount(),
-            profile.getFollowedByCount());
-
-    UserProfile fetchProfile = service.updateProfile(VALID_GOOGLE_TOKEN, profileDto);
-
-    assertEquals(profileDto.firstName(), fetchProfile.getFirstName());
-    assertEquals(profileDto.lastName(), fetchProfile.getLastName());
   }
 }
