@@ -18,6 +18,8 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import gr.evansp.momento.util.InputSanitizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -40,11 +42,6 @@ public class UserManagementServiceImpl implements UserManagementService {
    * {@link UserProfileRepository}.
    */
   @Autowired UserProfileRepository repository;
-
-  /**
-   * {@link SanitizeInputService}.
-   */
-  @Autowired SanitizeInputService sanitizeInputService;
 
   /**
    * {@link UserFollowRepository}.
@@ -173,10 +170,10 @@ public class UserManagementServiceImpl implements UserManagementService {
   @Override
   public UserProfile updateProfile(String jwtToken, UserProfileDto profileDto) {
     UserProfile currentUser = getLoggedInUser(jwtToken);
-    currentUser.setFirstName(sanitizeInputService.sanitizeStringInput(profileDto.firstName()));
-    currentUser.setLastName(sanitizeInputService.sanitizeStringInput(profileDto.lastName()));
+    currentUser.setFirstName(InputSanitizer.sanitizeStringInput(profileDto.firstName()));
+    currentUser.setLastName(InputSanitizer.sanitizeStringInput(profileDto.lastName()));
     currentUser.setProfilePictureUrl(
-        sanitizeInputService.sanitizeUrl(profileDto.profilePictureUrl()));
+            InputSanitizer.sanitizeUrl(profileDto.profilePictureUrl()));
     currentUser.setUpdatedAt(OffsetDateTime.now());
     return repository.save(currentUser);
   }
