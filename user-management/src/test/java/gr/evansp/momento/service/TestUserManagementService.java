@@ -127,7 +127,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
   @Test
   public void testGetUser_userNotFound() {
     ResourceNotFoundException e =
-        assertThrows(ResourceNotFoundException.class, () -> service.getUser(UUID.randomUUID().toString()));
+        assertThrows(
+            ResourceNotFoundException.class, () -> service.getUser(UUID.randomUUID().toString()));
     assertEquals(USER_NOT_FOUND, e.getMessage());
   }
 
@@ -160,7 +161,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
   @Test
   public void testGetLoggedInUser_userNotFound() {
     ResourceNotFoundException exception =
-        assertThrows(ResourceNotFoundException.class, () -> service.getLoggedInUser(VALID_GOOGLE_TOKEN));
+        assertThrows(
+            ResourceNotFoundException.class, () -> service.getLoggedInUser(VALID_GOOGLE_TOKEN));
     assertEquals(USER_NOT_FOUND, exception.getMessage());
   }
 
@@ -261,7 +263,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
   public void testGetFollows_userNotFound() {
     ResourceNotFoundException e =
         assertThrows(
-                ResourceNotFoundException.class, () -> service.getFollows(UUID.randomUUID().toString(), 1, 1));
+            ResourceNotFoundException.class,
+            () -> service.getFollows(UUID.randomUUID().toString(), 1, 1));
     assertEquals(USER_NOT_FOUND, e.getMessage());
   }
 
@@ -372,7 +375,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
   public void testGetFollowedBy_userNotFound() {
     ResourceNotFoundException e =
         assertThrows(
-                ResourceNotFoundException.class, () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 1));
+            ResourceNotFoundException.class,
+            () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 1));
     assertEquals(USER_NOT_FOUND, e.getMessage());
   }
 
@@ -416,7 +420,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
   public void testFollow_loggedInUserNotFound() {
     ResourceNotFoundException exception =
         assertThrows(
-                ResourceNotFoundException.class,
+            ResourceNotFoundException.class,
             () -> service.follow(VALID_GOOGLE_TOKEN, UUID.randomUUID().toString()));
     assertEquals(USER_NOT_FOUND, exception.getMessage());
   }
@@ -507,7 +511,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
   public void testUnfollow_loggedInUserNotFound() {
     ResourceNotFoundException exception =
         assertThrows(
-                ResourceNotFoundException.class,
+            ResourceNotFoundException.class,
             () -> service.unfollow(VALID_GOOGLE_TOKEN, UUID.randomUUID().toString()));
     assertEquals(USER_NOT_FOUND, exception.getMessage());
   }

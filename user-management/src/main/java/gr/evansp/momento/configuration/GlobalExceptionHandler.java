@@ -168,7 +168,6 @@ public class GlobalExceptionHandler {
         new ExceptionMessage(Map.of(e.getMessage(), errorMessage)), HttpStatus.BAD_REQUEST);
   }
 
-
   /**
    * Handler for {@link LogicException}.
    *
@@ -180,10 +179,10 @@ public class GlobalExceptionHandler {
    */
   @ExceptionHandler(ResourceNotFoundException.class)
   public ResponseEntity<ExceptionMessage> handleInternalServiceException(
-          ResourceNotFoundException e, Locale locale) {
+      ResourceNotFoundException e, Locale locale) {
     String errorMessage = messageSource.getMessage(e.getMessage(), e.getArgs(), locale);
     return new ResponseEntity<>(
-            new ExceptionMessage(Map.of(e.getMessage(), errorMessage)), HttpStatus.NOT_FOUND);
+        new ExceptionMessage(Map.of(e.getMessage(), errorMessage)), HttpStatus.NOT_FOUND);
   }
 
   /**

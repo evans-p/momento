@@ -107,7 +107,8 @@ public class UserManagementServiceImpl implements UserManagementService {
     UserProfile profile =
         repository
             .findById(UUID.fromString(userId))
-            .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
+            .orElseThrow(
+                () -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
 
     return userFollowRepository.findByFollows(profile, PageRequest.of(page, pageSize)).getContent();
   }
@@ -119,7 +120,8 @@ public class UserManagementServiceImpl implements UserManagementService {
     UserProfile profile =
         repository
             .findById(UUID.fromString(userId))
-            .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
+            .orElseThrow(
+                () -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
 
     return userFollowRepository
         .findByFollowedBy(profile, PageRequest.of(page, pageSize))
@@ -134,7 +136,8 @@ public class UserManagementServiceImpl implements UserManagementService {
     UserProfile followedByUser =
         repository
             .findById(UUID.fromString(userId))
-            .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
+            .orElseThrow(
+                () -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
 
     Optional<UserFollow> follow =
         userFollowRepository.findByFollowsAndFollowedBy(currentUser, followedByUser);
@@ -166,7 +169,8 @@ public class UserManagementServiceImpl implements UserManagementService {
     UserProfile followedByUser =
         repository
             .findById(UUID.fromString(userId))
-            .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
+            .orElseThrow(
+                () -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
 
     Optional<UserFollow> follow =
         userFollowRepository.findByFollowsAndFollowedBy(currentUser, followedByUser);
