@@ -132,8 +132,6 @@ public class GlobalExceptionHandler {
         HttpStatus.METHOD_NOT_ALLOWED);
   }
 
-
-
   /**
    * Handler for {@link HttpRequestMethodNotSupportedException}.
    *
@@ -145,11 +143,11 @@ public class GlobalExceptionHandler {
    */
   @ExceptionHandler(MissingRequestHeaderException.class)
   public ResponseEntity<ExceptionMessage> handleHttpRequestMethodNotSupported(
-          MissingRequestHeaderException e, Locale locale) {
+      MissingRequestHeaderException e, Locale locale) {
     String errorMessage = messageSource.getMessage(AUTHORIZATION_HEADER_NOT_PRESENT, null, locale);
     return new ResponseEntity<>(
-            new ExceptionMessage(Map.of(AUTHORIZATION_HEADER_NOT_PRESENT, errorMessage)),
-            HttpStatus.BAD_REQUEST);
+        new ExceptionMessage(Map.of(AUTHORIZATION_HEADER_NOT_PRESENT, errorMessage)),
+        HttpStatus.BAD_REQUEST);
   }
 
   /**
@@ -166,8 +164,7 @@ public class GlobalExceptionHandler {
       LogicException e, Locale locale) {
     String errorMessage = messageSource.getMessage(e.getMessage(), e.getArgs(), locale);
     return new ResponseEntity<>(
-        new ExceptionMessage(Map.of(e.getMessage(), errorMessage)),
-        HttpStatus.BAD_REQUEST);
+        new ExceptionMessage(Map.of(e.getMessage(), errorMessage)), HttpStatus.BAD_REQUEST);
   }
 
   /**
