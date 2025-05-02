@@ -8,6 +8,11 @@
 
 Momento is a social media like app, built in java.
 
+## Todos
+- Add logging.
+- Add caching with redis.
+- Add documentation with swagger/OpenAPI.
+
 ## Useful Resources
 
 - https://stackoverflow.com/questions/61344217/gitlab-ci-pipeline-to-check-for-code-formatting
