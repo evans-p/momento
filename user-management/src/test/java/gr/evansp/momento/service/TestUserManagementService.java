@@ -3,6 +3,7 @@ package gr.evansp.momento.service;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_ALREADY_REGISTERED;
 import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.dto.UpdateUserProfileDto;
@@ -283,8 +284,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
 
     userFollowRepository.save(follow2);
 
-    List<UserFollow> profile1Follows = service.getFollows(profile1.getId().toString(), 0, 100);
-    List<UserFollow> profile2Follows = service.getFollows(profile2.getId().toString(), 0, 100);
+    List<UserFollow> profile1Follows = service.getFollows(profile1.getId().toString(), 0, 30);
+    List<UserFollow> profile2Follows = service.getFollows(profile2.getId().toString(), 0, 30);
 
     assertEquals(1, profile1Follows.size());
     assertEquals(1, profile2Follows.size());
@@ -395,9 +396,9 @@ class TestUserManagementService extends AbstractIntegrationTest {
     userFollowRepository.save(follow2);
 
     List<UserFollow> profile1FollowedBy =
-        service.getFollowedBy(profile1.getId().toString(), 0, 100);
+        service.getFollowedBy(profile1.getId().toString(), 0, 30);
     List<UserFollow> profile2FollowedBy =
-        service.getFollowedBy(profile2.getId().toString(), 0, 100);
+        service.getFollowedBy(profile2.getId().toString(), 0, 30);
 
     assertEquals(1, profile1FollowedBy.size());
     assertEquals(1, profile2FollowedBy.size());
@@ -601,5 +602,61 @@ class TestUserManagementService extends AbstractIntegrationTest {
 
     assertEquals(profileDto.firstName(), fetchProfile.getFirstName());
     assertEquals(profileDto.lastName(), fetchProfile.getLastName());
+  }
+
+  /**
+   * Test for {@link UserManagementService#getLoggedInUserFollows(String, int, int)}.
+   */
+  @Test
+  public void testGetLoggedInUserFollows_ok() {
+    UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
+    UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
+
+    UserFollow follow = new UserFollow();
+    follow.setFollows(profile1);
+    follow.setFollowedBy(profile2);
+
+    userFollowRepository.save(follow);
+
+    UserFollow follow2 = new UserFollow();
+    follow2.setFollows(profile2);
+    follow2.setFollowedBy(profile1);
+
+    userFollowRepository.save(follow2);
+
+    List<UserFollow> follows = service.getLoggedInUserFollows(VALID_GOOGLE_TOKEN, 0, 30);
+
+    assertEquals(1, follows.size());
+    assertEquals(profile1, follows.getFirst().getFollows());
+    assertEquals(profile2, follows.getFirst().getFollowedBy());
+  }
+
+
+
+  /**
+   * Test for {@link UserManagementService#getLoggedInUserFollows(String, int, int)}.
+   */
+  @Test
+  public void testGetLoggedInUserFollowedBy_ok() {
+    UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
+    UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
+
+    UserFollow follow = new UserFollow();
+    follow.setFollows(profile1);
+    follow.setFollowedBy(profile2);
+
+    userFollowRepository.save(follow);
+
+    UserFollow follow2 = new UserFollow();
+    follow2.setFollows(profile2);
+    follow2.setFollowedBy(profile1);
+
+    userFollowRepository.save(follow2);
+
+    List<UserFollow> follows = service.getLoggedInUserFollowedBy(VALID_GOOGLE_TOKEN, 0, 30);
+
+    assertEquals(1, follows.size());
+    assertEquals(profile2, follows.getFirst().getFollows());
+    assertEquals(profile1, follows.getFirst().getFollowedBy());
   }
 }
