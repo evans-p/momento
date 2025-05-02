@@ -55,6 +55,11 @@ public class ExceptionConstants {
   public static final String INTERNAL_SERVER_ERROR = "internal.server.error";
 
   /**
+   * AUTHORIZATION HEADER NOT PRESENT.
+   */
+  public static final String AUTHORIZATION_HEADER_NOT_PRESENT = "authorization.header.not.present";
+
+  /**
    * Private NoArgs Constructor.
    */
   private ExceptionConstants() {

@@ -16,6 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -131,6 +132,26 @@ public class GlobalExceptionHandler {
         HttpStatus.METHOD_NOT_ALLOWED);
   }
 
+
+
+  /**
+   * Handler for {@link HttpRequestMethodNotSupportedException}.
+   *
+   * @param e
+   *        {@link HttpRequestMethodNotSupportedException}.
+   * @param locale
+   * 		locale
+   * @return error message
+   */
+  @ExceptionHandler(MissingRequestHeaderException.class)
+  public ResponseEntity<ExceptionMessage> handleHttpRequestMethodNotSupported(
+          MissingRequestHeaderException e, Locale locale) {
+    String errorMessage = messageSource.getMessage(AUTHORIZATION_HEADER_NOT_PRESENT, null, locale);
+    return new ResponseEntity<>(
+            new ExceptionMessage(Map.of(AUTHORIZATION_HEADER_NOT_PRESENT, errorMessage)),
+            HttpStatus.BAD_REQUEST);
+  }
+
   /**
    * Handler for {@link LogicException}.
    *
@@ -146,7 +167,7 @@ public class GlobalExceptionHandler {
     String errorMessage = messageSource.getMessage(e.getMessage(), e.getArgs(), locale);
     return new ResponseEntity<>(
         new ExceptionMessage(Map.of(e.getMessage(), errorMessage)),
-        HttpStatus.INTERNAL_SERVER_ERROR);
+        HttpStatus.BAD_REQUEST);
   }
 
   /**
@@ -180,7 +201,7 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ExceptionMessage> handleGenericException(Exception e, Locale locale) {
     String errorMessage = messageSource.getMessage(INTERNAL_SERVER_ERROR, null, locale);
     return new ResponseEntity<>(
-        new ExceptionMessage(Map.of(e.getMessage(), errorMessage)),
+        new ExceptionMessage(Map.of(INTERNAL_SERVER_ERROR, errorMessage)),
         HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
