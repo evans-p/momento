@@ -79,6 +79,44 @@ public class TestPagingValidator extends AbstractUnitTest {
     }
   }
 
+
+  /**
+   * Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}.
+   */
+  @Test
+  public void testIsValid_maxPaging() {
+    try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+      Validator validator = factory.getValidator();
+
+      PagingWrapper wrapper = new PagingWrapper(30);
+
+      Set<ConstraintViolation<PagingWrapper>> violations = validator.validate(wrapper);
+
+      assertEquals(0, violations.size());
+    }
+  }
+
+
+  /**
+   * Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}.
+   */
+  @Test
+  public void testIsValid_tooBigPaging() {
+    try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+      Validator validator = factory.getValidator();
+
+      PagingWrapper wrapper = new PagingWrapper(31);
+
+      Set<ConstraintViolation<PagingWrapper>> violations = validator.validate(wrapper);
+
+      assertEquals(1, violations.size());
+
+      assertEquals(
+              VALIDATION_MESSAGES.getString("invalid.paging"),
+              violations.iterator().next().getMessage());
+    }
+  }
+
   /**
    * Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}.
    */
