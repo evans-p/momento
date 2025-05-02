@@ -58,6 +58,23 @@ class TestCDNController extends AbstractIntegrationTest {
                     "{\"message\":\"Δε βρέθηκε περιεχόμενο στο συγκεκριμένο URL.\"}".getBytes()));
   }
 
+
+  @Test
+  public void testFaultyUrl_french() throws Exception {
+    mockMvc
+            .perform(
+                    MockMvcRequestBuilders.multipart("/faulty")
+                            .file(file)
+                            .header("Accept-Language", "fr-FR"))
+            .andExpect(status().is(400))
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+            .andExpect(
+                    content()
+                            .bytes(
+                                    "{\"message\":\"No content found at the specified URL.\"}".getBytes()));
+  }
+
+
   /**
    * Test for {@link CDNController#upload(MultipartFile)}
    *
