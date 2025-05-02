@@ -56,28 +56,28 @@ public class UserManagementController {
 
   @GetMapping("followers")
   public ResponseEntity<List<UserProfileDto>> getLoggedInUserFollowers(
-          @RequestHeader("Authorization") String authorizationHeader,
-          @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "10") int size) {
+      @RequestHeader("Authorization") String authorizationHeader,
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size) {
     String jwtToken = extractJwtToken(authorizationHeader);
     List<UserFollow> follows = service.getLoggedInUserFollowedBy(jwtToken, page, size);
 
     List<UserProfileDto> followers =
-            follows.stream().map(UserFollow::getFollowedBy).map(UserProfileDto::of).toList();
+        follows.stream().map(UserFollow::getFollowedBy).map(UserProfileDto::of).toList();
 
     return new ResponseEntity<>(followers, HttpStatus.OK);
   }
 
   @GetMapping("follows")
   public ResponseEntity<List<UserProfileDto>> getLoggedInUserFollows(
-          @RequestHeader("Authorization") String authorizationHeader,
-          @RequestParam(defaultValue = "0") int page,
-          @RequestParam(defaultValue = "10") int size) {
+      @RequestHeader("Authorization") String authorizationHeader,
+      @RequestParam(defaultValue = "0") int page,
+      @RequestParam(defaultValue = "10") int size) {
     String jwtToken = extractJwtToken(authorizationHeader);
     List<UserFollow> follows = service.getLoggedInUserFollows(jwtToken, page, size);
 
     List<UserProfileDto> followers =
-            follows.stream().map(UserFollow::getFollowedBy).map(UserProfileDto::of).toList();
+        follows.stream().map(UserFollow::getFollowedBy).map(UserProfileDto::of).toList();
 
     return new ResponseEntity<>(followers, HttpStatus.OK);
   }

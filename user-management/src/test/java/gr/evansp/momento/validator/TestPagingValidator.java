@@ -79,7 +79,6 @@ public class TestPagingValidator extends AbstractUnitTest {
     }
   }
 
-
   /**
    * Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}.
    */
@@ -96,7 +95,6 @@ public class TestPagingValidator extends AbstractUnitTest {
     }
   }
 
-
   /**
    * Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}.
    */
@@ -112,8 +110,8 @@ public class TestPagingValidator extends AbstractUnitTest {
       assertEquals(1, violations.size());
 
       assertEquals(
-              VALIDATION_MESSAGES.getString("invalid.paging"),
-              violations.iterator().next().getMessage());
+          VALIDATION_MESSAGES.getString("invalid.paging"),
+          violations.iterator().next().getMessage());
     }
   }
 

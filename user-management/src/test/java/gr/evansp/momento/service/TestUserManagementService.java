@@ -395,10 +395,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
 
     userFollowRepository.save(follow2);
 
-    List<UserFollow> profile1FollowedBy =
-        service.getFollowedBy(profile1.getId().toString(), 0, 30);
-    List<UserFollow> profile2FollowedBy =
-        service.getFollowedBy(profile2.getId().toString(), 0, 30);
+    List<UserFollow> profile1FollowedBy = service.getFollowedBy(profile1.getId().toString(), 0, 30);
+    List<UserFollow> profile2FollowedBy = service.getFollowedBy(profile2.getId().toString(), 0, 30);
 
     assertEquals(1, profile1FollowedBy.size());
     assertEquals(1, profile2FollowedBy.size());
@@ -630,8 +628,6 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(profile1, follows.getFirst().getFollows());
     assertEquals(profile2, follows.getFirst().getFollowedBy());
   }
-
-
 
   /**
    * Test for {@link UserManagementService#getLoggedInUserFollows(String, int, int)}.
