@@ -235,7 +235,6 @@ class TestUserProfileDtoValidator extends AbstractUnitTest {
 	}
 
 
-
 	/**
 	 * Test for {@link UserProfileDtoValidator#isValid(UserProfileDto, ConstraintValidatorContext)}.
 	 */
@@ -257,6 +256,22 @@ class TestUserProfileDtoValidator extends AbstractUnitTest {
 			assertEquals(VALIDATION_MESSAGES.getString("last.name.contains.invalid.characters"),
 					violationsMap.get("{last.name.contains.invalid.characters}"));
 
+		}
+	}
+
+	/**
+	 * Test for {@link UserProfileDtoValidator#isValid(UserProfileDto, ConstraintValidatorContext)}.
+	 */
+	@Test
+	public void testIsValid_invalidCharactersFirstNameLastName6() {
+		try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
+			Validator validator = factory.getValidator();
+
+			ProfileDtoWrapper wrapper = new ProfileDtoWrapper(new UserProfileDto("John Doe","John Doe", null));
+
+			Set<ConstraintViolation<ProfileDtoWrapper>> violations = validator.validate(wrapper);
+
+			assertEquals(0, violations.size());
 		}
 	}
 
