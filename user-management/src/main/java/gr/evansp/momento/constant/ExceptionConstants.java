@@ -24,7 +24,6 @@ public class ExceptionConstants {
    */
   public static final String EMAIL_ALREADY_REGISTERED = "email.already.registered";
 
-
   /**
    * CANNOT PROCESS REQUEST.
    */
@@ -54,6 +53,7 @@ public class ExceptionConstants {
    * INTERNAL SERVER ERROR.
    */
   public static final String INTERNAL_SERVER_ERROR = "internal.server.error";
+
   /**
    * Private NoArgs Constructor.
    */

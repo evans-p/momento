@@ -348,13 +348,13 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
       Validator validator = factory.getValidator();
 
       ProfileDtoWrapper wrapper =
-              new ProfileDtoWrapper(new UpdateUserProfileDto("John Doe", "John Doe", ""));
+          new ProfileDtoWrapper(new UpdateUserProfileDto("John Doe", "John Doe", ""));
 
       Set<ConstraintViolation<ProfileDtoWrapper>> violations = validator.validate(wrapper);
 
       assertEquals(1, violations.size());
-      assertEquals(VALIDATION_MESSAGES.getString("invalid.url"), violations.iterator().next().getMessage());
-
+      assertEquals(
+          VALIDATION_MESSAGES.getString("invalid.url"), violations.iterator().next().getMessage());
     }
   }
 
@@ -367,17 +367,15 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
       Validator validator = factory.getValidator();
 
       ProfileDtoWrapper wrapper =
-              new ProfileDtoWrapper(new UpdateUserProfileDto("John Doe", "John Doe", "    "));
+          new ProfileDtoWrapper(new UpdateUserProfileDto("John Doe", "John Doe", "    "));
 
       Set<ConstraintViolation<ProfileDtoWrapper>> violations = validator.validate(wrapper);
 
       assertEquals(1, violations.size());
-      assertEquals(VALIDATION_MESSAGES.getString("invalid.url"), violations.iterator().next().getMessage());
-
+      assertEquals(
+          VALIDATION_MESSAGES.getString("invalid.url"), violations.iterator().next().getMessage());
     }
   }
-
-
 
   /**
    * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
@@ -388,28 +386,23 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
       Validator validator = factory.getValidator();
 
       ProfileDtoWrapper wrapper =
-              new ProfileDtoWrapper(new UpdateUserProfileDto("John Doe", "John Doe", "a".repeat(2048)));
+          new ProfileDtoWrapper(new UpdateUserProfileDto("John Doe", "John Doe", "a".repeat(2048)));
 
       Set<ConstraintViolation<ProfileDtoWrapper>> violations = validator.validate(wrapper);
 
       assertEquals(2, violations.size());
       Map<String, String> violationsMap =
-              violations.stream()
-                      .collect(
-                              Collectors.toMap(
-                                      ConstraintViolation::getMessageTemplate, ConstraintViolation::getMessage));
+          violations.stream()
+              .collect(
+                  Collectors.toMap(
+                      ConstraintViolation::getMessageTemplate, ConstraintViolation::getMessage));
 
       assertEquals(
-              VALIDATION_MESSAGES.getString("invalid.url"),
-              violationsMap.get("{invalid.url}"));
+          VALIDATION_MESSAGES.getString("invalid.url"), violationsMap.get("{invalid.url}"));
       assertEquals(
-              VALIDATION_MESSAGES.getString("url.too.long"),
-              violationsMap.get("{url.too.long}"));
-
+          VALIDATION_MESSAGES.getString("url.too.long"), violationsMap.get("{url.too.long}"));
     }
   }
-
-
 
   /**
    * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
@@ -421,14 +414,15 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
 
       JwtTokenInfo tokenInfo = service.extractUserProfileInfo(VALID_GOOGLE_TOKEN);
       ProfileDtoWrapper wrapper =
-              new ProfileDtoWrapper(new UpdateUserProfileDto(tokenInfo.firstName(), tokenInfo.lastName(), tokenInfo.profilePictureUrl()));
+          new ProfileDtoWrapper(
+              new UpdateUserProfileDto(
+                  tokenInfo.firstName(), tokenInfo.lastName(), tokenInfo.profilePictureUrl()));
 
       Set<ConstraintViolation<ProfileDtoWrapper>> violations = validator.validate(wrapper);
 
       assertEquals(0, violations.size());
     }
   }
-
 
   /**
    * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
@@ -440,14 +434,15 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
 
       JwtTokenInfo tokenInfo = service.extractUserProfileInfo(VALID_KEYCLOAK_TOKEN);
       ProfileDtoWrapper wrapper =
-              new ProfileDtoWrapper(new UpdateUserProfileDto(tokenInfo.firstName(), tokenInfo.lastName(), tokenInfo.profilePictureUrl()));
+          new ProfileDtoWrapper(
+              new UpdateUserProfileDto(
+                  tokenInfo.firstName(), tokenInfo.lastName(), tokenInfo.profilePictureUrl()));
 
       Set<ConstraintViolation<ProfileDtoWrapper>> violations = validator.validate(wrapper);
 
       assertEquals(0, violations.size());
     }
   }
-
 
   /**
    * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
@@ -459,14 +454,15 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
 
       JwtTokenInfo tokenInfo = service.extractUserProfileInfo(VALID_FACEBOOK_TOKEN);
       ProfileDtoWrapper wrapper =
-              new ProfileDtoWrapper(new UpdateUserProfileDto(tokenInfo.firstName(), tokenInfo.lastName(), tokenInfo.profilePictureUrl()));
+          new ProfileDtoWrapper(
+              new UpdateUserProfileDto(
+                  tokenInfo.firstName(), tokenInfo.lastName(), tokenInfo.profilePictureUrl()));
 
       Set<ConstraintViolation<ProfileDtoWrapper>> violations = validator.validate(wrapper);
 
       assertEquals(0, violations.size());
     }
   }
-
 
   /**
    * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
@@ -478,14 +474,15 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
 
       JwtTokenInfo tokenInfo = service.extractUserProfileInfo(VALID_LINKED_IN_TOKEN);
       ProfileDtoWrapper wrapper =
-              new ProfileDtoWrapper(new UpdateUserProfileDto(tokenInfo.firstName(), tokenInfo.lastName(), tokenInfo.profilePictureUrl()));
+          new ProfileDtoWrapper(
+              new UpdateUserProfileDto(
+                  tokenInfo.firstName(), tokenInfo.lastName(), tokenInfo.profilePictureUrl()));
 
       Set<ConstraintViolation<ProfileDtoWrapper>> violations = validator.validate(wrapper);
 
       assertEquals(0, violations.size());
     }
   }
-
 
   @Setter
   @Getter

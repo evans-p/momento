@@ -40,7 +40,10 @@ class TestCDNController extends AbstractIntegrationTest {
         .andExpect(status().is(400))
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(
-            content().bytes("{\"messages\":{\"resource.not.found\":\"No content found at the specified URL.\"}}".getBytes()));
+            content()
+                .bytes(
+                    "{\"messages\":{\"resource.not.found\":\"No content found at the specified URL.\"}}"
+                        .getBytes()));
   }
 
   @Test
@@ -55,25 +58,25 @@ class TestCDNController extends AbstractIntegrationTest {
         .andExpect(
             content()
                 .bytes(
-                    "{\"messages\":{\"resource.not.found\":\"Δε βρέθηκε περιεχόμενο στο συγκεκριμένο URL.\"}}".getBytes()));
+                    "{\"messages\":{\"resource.not.found\":\"Δε βρέθηκε περιεχόμενο στο συγκεκριμένο URL.\"}}"
+                        .getBytes()));
   }
-
 
   @Test
   public void testFaultyUrl_french() throws Exception {
     mockMvc
-            .perform(
-                    MockMvcRequestBuilders.multipart("/faulty")
-                            .file(file)
-                            .header("Accept-Language", "fr-FR"))
-            .andExpect(status().is(400))
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(
-                    content()
-                            .bytes(
-                                    "{\"messages\":{\"resource.not.found\":\"No content found at the specified URL.\"}}".getBytes()));
+        .perform(
+            MockMvcRequestBuilders.multipart("/faulty")
+                .file(file)
+                .header("Accept-Language", "fr-FR"))
+        .andExpect(status().is(400))
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(
+            content()
+                .bytes(
+                    "{\"messages\":{\"resource.not.found\":\"No content found at the specified URL.\"}}"
+                        .getBytes()));
   }
-
 
   /**
    * Test for {@link CDNController#upload(MultipartFile)}
