@@ -40,7 +40,7 @@ class TestCDNController extends AbstractIntegrationTest {
         .andExpect(status().is(400))
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(
-            content().bytes("{\"message\":\"No content found at the specified URL.\"}".getBytes()));
+            content().bytes("{\"messages\":{\"resource.not.found\":\"No content found at the specified URL.\"}}".getBytes()));
   }
 
   @Test
@@ -55,7 +55,7 @@ class TestCDNController extends AbstractIntegrationTest {
         .andExpect(
             content()
                 .bytes(
-                    "{\"message\":\"Δε βρέθηκε περιεχόμενο στο συγκεκριμένο URL.\"}".getBytes()));
+                    "{\"messages\":{\"resource.not.found\":\"Δε βρέθηκε περιεχόμενο στο συγκεκριμένο URL.\"}}".getBytes()));
   }
 
 
@@ -71,7 +71,7 @@ class TestCDNController extends AbstractIntegrationTest {
             .andExpect(
                     content()
                             .bytes(
-                                    "{\"message\":\"No content found at the specified URL.\"}".getBytes()));
+                                    "{\"messages\":{\"resource.not.found\":\"No content found at the specified URL.\"}}".getBytes()));
   }
 
 
