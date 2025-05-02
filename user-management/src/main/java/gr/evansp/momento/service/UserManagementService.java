@@ -3,6 +3,7 @@ package gr.evansp.momento.service;
 import gr.evansp.momento.annotation.ValidPage;
 import gr.evansp.momento.annotation.ValidPaging;
 import gr.evansp.momento.annotation.ValidUserId;
+import gr.evansp.momento.annotation.ValidUserProfileDto;
 import gr.evansp.momento.dto.UserProfileDto;
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
@@ -95,5 +96,5 @@ public interface UserManagementService {
    * @param profileDto {@link UserProfileDto}.
    * @return {@link UserProfile}
    */
-  UserProfile updateProfile(String jwtToken, UserProfileDto profileDto);
+  UserProfile updateProfile(String jwtToken, @ValidUserProfileDto UserProfileDto profileDto);
 }
