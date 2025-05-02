@@ -61,6 +61,13 @@
 
     <dependencyManagement>
         <dependencies>
+
+            <dependency>
+                <groupId>org.owasp.encoder</groupId>
+                <artifactId>encoder</artifactId>
+                <version>${version.owasp.encoder}</version>
+            </dependency>
+
             <dependency>
                 <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
                 <artifactId>owasp-java-html-sanitizer</artifactId>
