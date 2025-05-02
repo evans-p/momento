@@ -19,7 +19,6 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -168,7 +167,8 @@ public class UserManagementServiceImpl implements UserManagementService {
   }
 
   @Override
-  public UserProfile updateProfile(String jwtToken, @ValidUserProfileDto UserProfileDto profileDto) {
+  public UserProfile updateProfile(
+      String jwtToken, @ValidUserProfileDto UserProfileDto profileDto) {
     UserProfile currentUser = getLoggedInUser(jwtToken);
     currentUser.setFirstName(profileDto.firstName());
     currentUser.setLastName(profileDto.lastName());

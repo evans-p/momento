@@ -55,7 +55,9 @@ public class ValidationConstants {
   /**
    * FIELD CONTAINS INVALID CHARACTERS.
    */
-  public static final String FIELD_CONTAINS_INVALID_CHARACTERS = "{field.contains.invalid.characters}";
+  public static final String FIELD_CONTAINS_INVALID_CHARACTERS =
+      "{field.contains.invalid.characters}";
+
   /**
    * Private NoArgs Constructor.
    */

@@ -5,10 +5,9 @@ import static gr.evansp.momento.constant.ValidationConstants.INVALID_USER_ID;
 import gr.evansp.momento.annotation.ValidUserId;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import org.springframework.stereotype.Component;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.springframework.stereotype.Component;
 
 @Component
 public class UserIdValidator implements ConstraintValidator<ValidUserId, String> {
