@@ -85,6 +85,18 @@ public class UserManagementServiceImpl implements UserManagementService {
   }
 
   @Override
+  public List<UserFollow> getLoggedInUserFollows(String jwtToken, @ValidPage int page, @ValidPaging int pageSize) {
+    UserProfile profile = getLoggedInUser(jwtToken);
+    return userFollowRepository.findByFollows(profile, PageRequest.of(page, pageSize)).getContent();
+  }
+
+  @Override
+  public List<UserFollow> getLoggedInUserFollowedBy(String jwtToken, @ValidPage int page, @ValidPaging int pageSize) {
+    UserProfile profile = getLoggedInUser(jwtToken);
+    return userFollowRepository.findByFollowedBy(profile, PageRequest.of(page, pageSize)).getContent();
+  }
+
+  @Override
   public List<UserFollow> getFollows(
       @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize) {
     UserProfile profile =
