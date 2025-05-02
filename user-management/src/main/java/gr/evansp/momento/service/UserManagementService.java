@@ -3,8 +3,8 @@ package gr.evansp.momento.service;
 import gr.evansp.momento.annotation.ValidPage;
 import gr.evansp.momento.annotation.ValidPaging;
 import gr.evansp.momento.annotation.ValidUserId;
-import gr.evansp.momento.annotation.ValidUserProfileDto;
-import gr.evansp.momento.dto.UserProfileDto;
+import gr.evansp.momento.annotation.ValidUpdateUserProfileDto;
+import gr.evansp.momento.dto.UpdateUserProfileDto;
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
 import java.util.List;
@@ -93,8 +93,8 @@ public interface UserManagementService {
   /**
    * Updates the profile of the currently logged-in user.
    * @param jwtToken jwtToken
-   * @param profileDto {@link UserProfileDto}.
+   * @param profileDto {@link UpdateUserProfileDto}.
    * @return {@link UserProfile}
    */
-  UserProfile updateProfile(String jwtToken, @ValidUserProfileDto UserProfileDto profileDto);
+  UserProfile updateProfile(String jwtToken, @ValidUpdateUserProfileDto UpdateUserProfileDto profileDto);
 }

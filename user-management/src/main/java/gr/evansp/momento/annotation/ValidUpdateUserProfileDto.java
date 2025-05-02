@@ -15,7 +15,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = UserProfileDtoValidator.class)
 @Documented
-public @interface ValidUserProfileDto {
+public @interface ValidUpdateUserProfileDto {
   String message() default INVALID_INPUT;
 
   Class<?>[] groups() default {};

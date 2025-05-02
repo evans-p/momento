@@ -7,9 +7,9 @@ import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
 import gr.evansp.momento.annotation.ValidPage;
 import gr.evansp.momento.annotation.ValidPaging;
 import gr.evansp.momento.annotation.ValidUserId;
-import gr.evansp.momento.annotation.ValidUserProfileDto;
+import gr.evansp.momento.annotation.ValidUpdateUserProfileDto;
 import gr.evansp.momento.beans.JwtTokenInfo;
-import gr.evansp.momento.dto.UserProfileDto;
+import gr.evansp.momento.dto.UpdateUserProfileDto;
 import gr.evansp.momento.exception.LogicException;
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
@@ -168,7 +168,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
   @Override
   public UserProfile updateProfile(
-      String jwtToken, @ValidUserProfileDto UserProfileDto profileDto) {
+      String jwtToken, @ValidUpdateUserProfileDto UpdateUserProfileDto profileDto) {
     UserProfile currentUser = getLoggedInUser(jwtToken);
     currentUser.setFirstName(profileDto.firstName());
     currentUser.setLastName(profileDto.lastName());

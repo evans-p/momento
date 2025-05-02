@@ -2,8 +2,8 @@ package gr.evansp.momento.validator;
 
 import static gr.evansp.momento.constant.ValidationConstants.*;
 
-import gr.evansp.momento.annotation.ValidUserProfileDto;
-import gr.evansp.momento.dto.UserProfileDto;
+import gr.evansp.momento.annotation.ValidUpdateUserProfileDto;
+import gr.evansp.momento.dto.UpdateUserProfileDto;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.regex.Matcher;
@@ -16,7 +16,7 @@ import org.owasp.encoder.Encode;
 
 @SuppressWarnings({"RegExpUnnecessaryNonCapturingGroup", "RegExpRedundantEscape"})
 public class UserProfileDtoValidator
-    implements ConstraintValidator<ValidUserProfileDto, UserProfileDto> {
+    implements ConstraintValidator<ValidUpdateUserProfileDto, UpdateUserProfileDto> {
 
   private static final PolicyFactory POLICY =
       Sanitizers.FORMATTING
@@ -40,12 +40,12 @@ public class UserProfileDtoValidator
 
 
   @Override
-  public void initialize(ValidUserProfileDto constraintAnnotation) {
+  public void initialize(ValidUpdateUserProfileDto constraintAnnotation) {
     // EMPTY
   }
 
   @Override
-  public boolean isValid(UserProfileDto profileDto, ConstraintValidatorContext context) {
+  public boolean isValid(UpdateUserProfileDto profileDto, ConstraintValidatorContext context) {
 
     if (profileDto == null) {
       return buildConstraintViolationMessage(INVALID_INPUT, context);

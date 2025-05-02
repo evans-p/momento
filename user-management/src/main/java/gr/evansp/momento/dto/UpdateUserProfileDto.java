@@ -12,7 +12,7 @@ import gr.evansp.momento.model.UserProfile;
  * @param profilePictureUrl
  * 		profilePictureUrl
  */
-public record UserProfileDto(
+public record UpdateUserProfileDto(
     String firstName,
     String lastName,
     String profilePictureUrl) {
