@@ -7,6 +7,7 @@ import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
 import gr.evansp.momento.annotation.ValidPage;
 import gr.evansp.momento.annotation.ValidPaging;
 import gr.evansp.momento.annotation.ValidUserId;
+import gr.evansp.momento.annotation.ValidUserProfileDto;
 import gr.evansp.momento.beans.JwtTokenInfo;
 import gr.evansp.momento.dto.UserProfileDto;
 import gr.evansp.momento.exception.LogicException;
@@ -19,7 +20,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import gr.evansp.momento.util.InputSanitizer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -168,12 +168,11 @@ public class UserManagementServiceImpl implements UserManagementService {
   }
 
   @Override
-  public UserProfile updateProfile(String jwtToken, UserProfileDto profileDto) {
+  public UserProfile updateProfile(String jwtToken, @ValidUserProfileDto UserProfileDto profileDto) {
     UserProfile currentUser = getLoggedInUser(jwtToken);
-    currentUser.setFirstName(InputSanitizer.sanitizeStringInput(profileDto.firstName()));
-    currentUser.setLastName(InputSanitizer.sanitizeStringInput(profileDto.lastName()));
-    currentUser.setProfilePictureUrl(
-            InputSanitizer.sanitizeUrl(profileDto.profilePictureUrl()));
+    currentUser.setFirstName(profileDto.firstName());
+    currentUser.setLastName(profileDto.lastName());
+    currentUser.setProfilePictureUrl(profileDto.profilePictureUrl());
     currentUser.setUpdatedAt(OffsetDateTime.now());
     return repository.save(currentUser);
   }
