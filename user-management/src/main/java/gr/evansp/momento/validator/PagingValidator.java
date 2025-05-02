@@ -13,7 +13,7 @@ public class PagingValidator implements ConstraintValidator<ValidPaging, Integer
 
   @Override
   public boolean isValid(Integer paging, ConstraintValidatorContext constraintValidatorContext) {
-    if (paging == null || paging <= 0) {
+    if (paging == null || paging <= 0 || paging > 30) {
       return buildConstraintViolationMessage(
           ValidationConstants.INVALID_PAGING, constraintValidatorContext);
     }
