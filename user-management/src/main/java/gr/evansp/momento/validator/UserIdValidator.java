@@ -7,9 +7,8 @@ import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.springframework.stereotype.Component;
 
-@Component
+
 public class UserIdValidator implements ConstraintValidator<ValidUserId, String> {
 
   private static final String USER_ID_REGEX =
