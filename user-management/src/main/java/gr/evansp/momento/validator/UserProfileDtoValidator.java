@@ -11,6 +11,8 @@ import java.util.regex.Pattern;
 import org.hibernate.validator.internal.util.DomainNameUtil;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
+import org.owasp.encoder.Encode;
+
 
 @SuppressWarnings({"RegExpUnnecessaryNonCapturingGroup", "RegExpRedundantEscape"})
 public class UserProfileDtoValidator
@@ -129,7 +131,7 @@ public class UserProfileDtoValidator
         isValid = buildConstraintViolationMessage(tooLongCode, context);
       }
 
-      if (!POLICY.sanitize(name).equals(name)) {
+      if (!POLICY.sanitize(name).equals(name) || !Encode.forHtml(name).equals(name)) {
         isValid = buildConstraintViolationMessage(invalidCharactersCode, context);
       }
     }
