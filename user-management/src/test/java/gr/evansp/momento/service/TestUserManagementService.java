@@ -595,10 +595,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     UserProfile profile = service.register(VALID_GOOGLE_TOKEN);
 
     UpdateUserProfileDto profileDto =
-        new UpdateUserProfileDto(
-            "Kendrick",
-            "Lamar",
-            profile.getProfilePictureUrl());
+        new UpdateUserProfileDto("Kendrick", "Lamar", profile.getProfilePictureUrl());
 
     UserProfile fetchProfile = service.updateProfile(VALID_GOOGLE_TOKEN, profileDto);
 

@@ -72,7 +72,7 @@ public class ValidationConstants {
    * FIRST NAME CONTAINS INVALID CHARACTERS.
    */
   public static final String LAST_NAME_CONTAINS_INVALID_CHARACTERS =
-          "{last.name.contains.invalid.characters}";
+      "{last.name.contains.invalid.characters}";
 
   /**
    * Private NoArgs Constructor.
