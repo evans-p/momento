@@ -43,20 +43,36 @@ public class ValidationConstants {
   public static final String INVALID_DOMAIN_ADDRESS = "{invalid.domain.address}";
 
   /**
-   * FIELD CANNOT BE EMPTY.
+   * FIRST NAME CANNOT BE EMPTY.
    */
-  public static final String FIELD_CANNOT_BE_EMPTY = "{field.cannot.be.empty}";
+  public static final String FIRST_NAME_CANNOT_BE_EMPTY = "{first.name.cannot.be.empty}";
 
   /**
-   * FIELD TOO LONG.
+   * FIRST NAME TOO LONG.
    */
-  public static final String FIELD_TOO_LONG = "{field.too.long}";
+  public static final String FIRST_NAME_TOO_LONG = "{first.name.too.long}";
 
   /**
-   * FIELD CONTAINS INVALID CHARACTERS.
+   * FIRST NAME CONTAINS INVALID CHARACTERS.
    */
-  public static final String FIELD_CONTAINS_INVALID_CHARACTERS =
-      "{field.contains.invalid.characters}";
+  public static final String FIRST_NAME_CONTAINS_INVALID_CHARACTERS =
+      "{first.name.contains.invalid.characters}";
+
+  /**
+   * FIRST NAME CANNOT BE EMPTY.
+   */
+  public static final String LAST_NAME_CANNOT_BE_EMPTY = "{last.name.cannot.be.empty}";
+
+  /**
+   * FIRST NAME TOO LONG.
+   */
+  public static final String LAST_NAME_TOO_LONG = "{last.name.too.long}";
+
+  /**
+   * FIRST NAME CONTAINS INVALID CHARACTERS.
+   */
+  public static final String LAST_NAME_CONTAINS_INVALID_CHARACTERS =
+          "{last.name.contains.invalid.characters}";
 
   /**
    * Private NoArgs Constructor.

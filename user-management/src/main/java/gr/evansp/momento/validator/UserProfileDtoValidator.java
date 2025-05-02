@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 import org.hibernate.validator.internal.util.DomainNameUtil;
 import org.owasp.html.PolicyFactory;
 import org.owasp.html.Sanitizers;
-import org.springframework.beans.factory.annotation.Autowired;
 
 @SuppressWarnings({"RegExpUnnecessaryNonCapturingGroup", "RegExpRedundantEscape"})
 public class UserProfileDtoValidator
@@ -37,10 +36,6 @@ public class UserProfileDtoValidator
               + // port
               "(?:\\/(?:(?:%[0-9a-f][0-9a-f]|[-a-z0-9\\._~\\x{A0}-\\x{D7FF}\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFEF}\\x{10000}-\\x{1FFFD}\\x{20000}-\\x{2FFFD}\\x{30000}-\\x{3FFFD}\\x{40000}-\\x{4FFFD}\\x{50000}-\\x{5FFFD}\\x{60000}-\\x{6FFFD}\\x{70000}-\\x{7FFFD}\\x{80000}-\\x{8FFFD}\\x{90000}-\\x{9FFFD}\\x{A0000}-\\x{AFFFD}\\x{B0000}-\\x{BFFFD}\\x{C0000}-\\x{CFFFD}\\x{D0000}-\\x{DFFFD}\\x{E1000}-\\x{EFFFD}!\\$&'\\(\\)\\*\\+,;=:@]))*)*|\\/(?:(?:(?:(?:%[0-9a-f][0-9a-f]|[-a-z0-9\\._~\\x{A0}-\\x{D7FF}\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFEF}\\x{10000}-\\x{1FFFD}\\x{20000}-\\x{2FFFD}\\x{30000}-\\x{3FFFD}\\x{40000}-\\x{4FFFD}\\x{50000}-\\x{5FFFD}\\x{60000}-\\x{6FFFD}\\x{70000}-\\x{7FFFD}\\x{80000}-\\x{8FFFD}\\x{90000}-\\x{9FFFD}\\x{A0000}-\\x{AFFFD}\\x{B0000}-\\x{BFFFD}\\x{C0000}-\\x{CFFFD}\\x{D0000}-\\x{DFFFD}\\x{E1000}-\\x{EFFFD}!\\$&'\\(\\)\\*\\+,;=:@]))+)(?:\\/(?:(?:%[0-9a-f][0-9a-f]|[-a-z0-9\\._~\\x{A0}-\\x{D7FF}\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFEF}\\x{10000}-\\x{1FFFD}\\x{20000}-\\x{2FFFD}\\x{30000}-\\x{3FFFD}\\x{40000}-\\x{4FFFD}\\x{50000}-\\x{5FFFD}\\x{60000}-\\x{6FFFD}\\x{70000}-\\x{7FFFD}\\x{80000}-\\x{8FFFD}\\x{90000}-\\x{9FFFD}\\x{A0000}-\\x{AFFFD}\\x{B0000}-\\x{BFFFD}\\x{C0000}-\\x{CFFFD}\\x{D0000}-\\x{DFFFD}\\x{E1000}-\\x{EFFFD}!\\$&'\\(\\)\\*\\+,;=:@]))*)*)?|(?:(?:(?:%[0-9a-f][0-9a-f]|[-a-z0-9\\._~\\x{A0}-\\x{D7FF}\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFEF}\\x{10000}-\\x{1FFFD}\\x{20000}-\\x{2FFFD}\\x{30000}-\\x{3FFFD}\\x{40000}-\\x{4FFFD}\\x{50000}-\\x{5FFFD}\\x{60000}-\\x{6FFFD}\\x{70000}-\\x{7FFFD}\\x{80000}-\\x{8FFFD}\\x{90000}-\\x{9FFFD}\\x{A0000}-\\x{AFFFD}\\x{B0000}-\\x{BFFFD}\\x{C0000}-\\x{CFFFD}\\x{D0000}-\\x{DFFFD}\\x{E1000}-\\x{EFFFD}!\\$&'\\(\\)\\*\\+,;=:@]))+)(?:\\/(?:(?:%[0-9a-f][0-9a-f]|[-a-z0-9\\._~\\x{A0}-\\x{D7FF}\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFEF}\\x{10000}-\\x{1FFFD}\\x{20000}-\\x{2FFFD}\\x{30000}-\\x{3FFFD}\\x{40000}-\\x{4FFFD}\\x{50000}-\\x{5FFFD}\\x{60000}-\\x{6FFFD}\\x{70000}-\\x{7FFFD}\\x{80000}-\\x{8FFFD}\\x{90000}-\\x{9FFFD}\\x{A0000}-\\x{AFFFD}\\x{B0000}-\\x{BFFFD}\\x{C0000}-\\x{CFFFD}\\x{D0000}-\\x{DFFFD}\\x{E1000}-\\x{EFFFD}!\\$&'\\(\\)\\*\\+,;=:@]))*)*|(?!(?:%[0-9a-f][0-9a-f]|[-a-z0-9\\._~\\x{A0}-\\x{D7FF}\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFEF}\\x{10000}-\\x{1FFFD}\\x{20000}-\\x{2FFFD}\\x{30000}-\\x{3FFFD}\\x{40000}-\\x{4FFFD}\\x{50000}-\\x{5FFFD}\\x{60000}-\\x{6FFFD}\\x{70000}-\\x{7FFFD}\\x{80000}-\\x{8FFFD}\\x{90000}-\\x{9FFFD}\\x{A0000}-\\x{AFFFD}\\x{B0000}-\\x{BFFFD}\\x{C0000}-\\x{CFFFD}\\x{D0000}-\\x{DFFFD}\\x{E1000}-\\x{EFFFD}!\\$&'\\(\\)\\*\\+,;=:@])))(?:\\?(?:(?:%[0-9a-f][0-9a-f]|[-a-z0-9\\._~\\x{A0}-\\x{D7FF}\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFEF}\\x{10000}-\\x{1FFFD}\\x{20000}-\\x{2FFFD}\\x{30000}-\\x{3FFFD}\\x{40000}-\\x{4FFFD}\\x{50000}-\\x{5FFFD}\\x{60000}-\\x{6FFFD}\\x{70000}-\\x{7FFFD}\\x{80000}-\\x{8FFFD}\\x{90000}-\\x{9FFFD}\\x{A0000}-\\x{AFFFD}\\x{B0000}-\\x{BFFFD}\\x{C0000}-\\x{CFFFD}\\x{D0000}-\\x{DFFFD}\\x{E1000}-\\x{EFFFD}!\\$&'\\(\\)\\*\\+,;=:@])|[\\x{E000}-\\x{F8FF}\\x{F0000}-\\x{FFFFD}|\\x{100000}-\\x{10FFFD}\\/\\?])*)?(?:\\#(?:(?:%[0-9a-f][0-9a-f]|[-a-z0-9\\._~\\x{A0}-\\x{D7FF}\\x{F900}-\\x{FDCF}\\x{FDF0}-\\x{FFEF}\\x{10000}-\\x{1FFFD}\\x{20000}-\\x{2FFFD}\\x{30000}-\\x{3FFFD}\\x{40000}-\\x{4FFFD}\\x{50000}-\\x{5FFFD}\\x{60000}-\\x{6FFFD}\\x{70000}-\\x{7FFFD}\\x{80000}-\\x{8FFFD}\\x{90000}-\\x{9FFFD}\\x{A0000}-\\x{AFFFD}\\x{B0000}-\\x{BFFFD}\\x{C0000}-\\x{CFFFD}\\x{D0000}-\\x{DFFFD}\\x{E1000}-\\x{EFFFD}!\\$&'\\(\\)\\*\\+,;=:@])|[\\/\\?])*)?$");
 
-  /**
-   * {@link UserIdValidator}.
-   */
-  @Autowired UserIdValidator validator;
 
   @Override
   public void initialize(ValidUserProfileDto constraintAnnotation) {
@@ -54,14 +49,11 @@ public class UserProfileDtoValidator
       return buildConstraintViolationMessage(INVALID_INPUT, context);
     }
 
-    boolean isValid = validator.isValid(profileDto.userId(), context);
+    boolean validateFirstName =  validateName(profileDto.firstName(), context, FIRST_NAME_CANNOT_BE_EMPTY, FIRST_NAME_TOO_LONG, FIRST_NAME_CONTAINS_INVALID_CHARACTERS);
+    boolean validateLastName = validateName(profileDto.lastName(), context, LAST_NAME_CANNOT_BE_EMPTY, LAST_NAME_TOO_LONG, LAST_NAME_CONTAINS_INVALID_CHARACTERS);
+    boolean validateProfileUrl =  validateProfileUrl(profileDto.profilePictureUrl(), context);
 
-    isValid = isValid && validateName(profileDto.firstName(), context);
-    isValid = isValid && validateName(profileDto.lastName(), context);
-
-    isValid = isValid && validateProfileUrl(profileDto.profilePictureUrl(), context);
-
-    return isValid;
+    return validateFirstName && validateLastName && validateProfileUrl;
   }
 
   /**
@@ -72,7 +64,6 @@ public class UserProfileDtoValidator
    */
   private boolean validateProfileUrl(String value, ConstraintValidatorContext context) {
     // TODO: add validation check with a whitelist of acceptable domains for the profile picture
-    // url.
     if (value == null) {
       return true;
     }
@@ -129,17 +120,17 @@ public class UserProfileDtoValidator
    * @param context {@link ConstraintValidatorContext}.
    * @return is valid or not
    */
-  private boolean validateName(String name, ConstraintValidatorContext context) {
+  private boolean validateName(String name, ConstraintValidatorContext context, String emptyCode, String tooLongCode, String invalidCharactersCode) {
     boolean isValid = true;
     if (name == null || name.isBlank()) {
-      isValid = buildConstraintViolationMessage(FIELD_CANNOT_BE_EMPTY, context);
+      isValid = buildConstraintViolationMessage(emptyCode, context);
     } else {
       if (name.length() >= 512) {
-        isValid = buildConstraintViolationMessage(FIELD_TOO_LONG, context);
+        isValid = buildConstraintViolationMessage(tooLongCode, context);
       }
 
       if (!POLICY.sanitize(name).equals(name)) {
-        isValid = buildConstraintViolationMessage(FIELD_CONTAINS_INVALID_CHARACTERS, context);
+        isValid = buildConstraintViolationMessage(invalidCharactersCode, context);
       }
     }
 
