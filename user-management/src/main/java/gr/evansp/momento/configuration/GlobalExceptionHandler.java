@@ -4,6 +4,7 @@ import static gr.evansp.momento.constant.ExceptionConstants.*;
 
 import gr.evansp.momento.beans.ExceptionMessage;
 import gr.evansp.momento.exception.LogicException;
+import gr.evansp.momento.exception.ResourceNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.Locale;
@@ -165,6 +166,24 @@ public class GlobalExceptionHandler {
     String errorMessage = messageSource.getMessage(e.getMessage(), e.getArgs(), locale);
     return new ResponseEntity<>(
         new ExceptionMessage(Map.of(e.getMessage(), errorMessage)), HttpStatus.BAD_REQUEST);
+  }
+
+
+  /**
+   * Handler for {@link LogicException}.
+   *
+   * @param e
+   *        {@link LogicException}.
+   * @param locale
+   * 		locale
+   * @return error message
+   */
+  @ExceptionHandler(ResourceNotFoundException.class)
+  public ResponseEntity<ExceptionMessage> handleInternalServiceException(
+          ResourceNotFoundException e, Locale locale) {
+    String errorMessage = messageSource.getMessage(e.getMessage(), e.getArgs(), locale);
+    return new ResponseEntity<>(
+            new ExceptionMessage(Map.of(e.getMessage(), errorMessage)), HttpStatus.NOT_FOUND);
   }
 
   /**

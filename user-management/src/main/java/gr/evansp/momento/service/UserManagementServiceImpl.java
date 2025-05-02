@@ -11,6 +11,7 @@ import gr.evansp.momento.annotation.ValidUserId;
 import gr.evansp.momento.beans.JwtTokenInfo;
 import gr.evansp.momento.dto.UpdateUserProfileDto;
 import gr.evansp.momento.exception.LogicException;
+import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
 import gr.evansp.momento.repository.UserFollowRepository;
@@ -72,7 +73,7 @@ public class UserManagementServiceImpl implements UserManagementService {
   public UserProfile getUser(@ValidUserId String userId) {
     return repository
         .findById(UUID.fromString(userId))
-        .orElseThrow(() -> new LogicException(USER_NOT_FOUND, new Object[] {userId}));
+        .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
   }
 
   @Override
@@ -81,7 +82,7 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     return repository
         .findByAuthenticationProviderId(tokenInfo.authenticationProviderId())
-        .orElseThrow(() -> new LogicException(USER_NOT_FOUND, null));
+        .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {""}));
   }
 
   @Override
@@ -106,7 +107,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     UserProfile profile =
         repository
             .findById(UUID.fromString(userId))
-            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, new Object[] {userId}));
+            .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
 
     return userFollowRepository.findByFollows(profile, PageRequest.of(page, pageSize)).getContent();
   }
@@ -118,7 +119,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     UserProfile profile =
         repository
             .findById(UUID.fromString(userId))
-            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, new Object[] {userId}));
+            .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
 
     return userFollowRepository
         .findByFollowedBy(profile, PageRequest.of(page, pageSize))
@@ -133,7 +134,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     UserProfile followedByUser =
         repository
             .findById(UUID.fromString(userId))
-            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, new Object[] {userId}));
+            .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
 
     Optional<UserFollow> follow =
         userFollowRepository.findByFollowsAndFollowedBy(currentUser, followedByUser);
@@ -165,7 +166,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     UserProfile followedByUser =
         repository
             .findById(UUID.fromString(userId))
-            .orElseThrow(() -> new LogicException(USER_NOT_FOUND, new Object[] {userId}));
+            .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
 
     Optional<UserFollow> follow =
         userFollowRepository.findByFollowsAndFollowedBy(currentUser, followedByUser);

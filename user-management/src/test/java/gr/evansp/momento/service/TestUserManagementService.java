@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.dto.UpdateUserProfileDto;
 import gr.evansp.momento.exception.LogicException;
+import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.UserFollow;
 import gr.evansp.momento.model.UserProfile;
 import gr.evansp.momento.repository.UserFollowRepository;
@@ -125,8 +126,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
    */
   @Test
   public void testGetUser_userNotFound() {
-    LogicException e =
-        assertThrows(LogicException.class, () -> service.getUser(UUID.randomUUID().toString()));
+    ResourceNotFoundException e =
+        assertThrows(ResourceNotFoundException.class, () -> service.getUser(UUID.randomUUID().toString()));
     assertEquals(USER_NOT_FOUND, e.getMessage());
   }
 
@@ -158,8 +159,8 @@ class TestUserManagementService extends AbstractIntegrationTest {
    */
   @Test
   public void testGetLoggedInUser_userNotFound() {
-    LogicException exception =
-        assertThrows(LogicException.class, () -> service.getLoggedInUser(VALID_GOOGLE_TOKEN));
+    ResourceNotFoundException exception =
+        assertThrows(ResourceNotFoundException.class, () -> service.getLoggedInUser(VALID_GOOGLE_TOKEN));
     assertEquals(USER_NOT_FOUND, exception.getMessage());
   }
 
@@ -258,9 +259,9 @@ class TestUserManagementService extends AbstractIntegrationTest {
    */
   @Test
   public void testGetFollows_userNotFound() {
-    LogicException e =
+    ResourceNotFoundException e =
         assertThrows(
-            LogicException.class, () -> service.getFollows(UUID.randomUUID().toString(), 1, 1));
+                ResourceNotFoundException.class, () -> service.getFollows(UUID.randomUUID().toString(), 1, 1));
     assertEquals(USER_NOT_FOUND, e.getMessage());
   }
 
@@ -369,9 +370,9 @@ class TestUserManagementService extends AbstractIntegrationTest {
    */
   @Test
   public void testGetFollowedBy_userNotFound() {
-    LogicException e =
+    ResourceNotFoundException e =
         assertThrows(
-            LogicException.class, () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 1));
+                ResourceNotFoundException.class, () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 1));
     assertEquals(USER_NOT_FOUND, e.getMessage());
   }
 
@@ -413,9 +414,9 @@ class TestUserManagementService extends AbstractIntegrationTest {
    */
   @Test
   public void testFollow_loggedInUserNotFound() {
-    LogicException exception =
+    ResourceNotFoundException exception =
         assertThrows(
-            LogicException.class,
+                ResourceNotFoundException.class,
             () -> service.follow(VALID_GOOGLE_TOKEN, UUID.randomUUID().toString()));
     assertEquals(USER_NOT_FOUND, exception.getMessage());
   }
@@ -504,9 +505,9 @@ class TestUserManagementService extends AbstractIntegrationTest {
    */
   @Test
   public void testUnfollow_loggedInUserNotFound() {
-    LogicException exception =
+    ResourceNotFoundException exception =
         assertThrows(
-            LogicException.class,
+                ResourceNotFoundException.class,
             () -> service.unfollow(VALID_GOOGLE_TOKEN, UUID.randomUUID().toString()));
     assertEquals(USER_NOT_FOUND, exception.getMessage());
   }
