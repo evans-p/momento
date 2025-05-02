@@ -3,7 +3,7 @@ package gr.evansp.momento.dto;
 import gr.evansp.momento.model.UserProfile;
 
 /**
- * Data transfer object for {@link UserProfile}.
+ * Data transfer object for updating {@link UserProfile}.
  *
  * @param firstName
  * 		firstName
