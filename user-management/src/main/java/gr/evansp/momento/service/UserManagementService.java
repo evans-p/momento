@@ -48,6 +48,26 @@ public interface UserManagementService {
    */
   UserProfile getLoggedInUser(String jwtToken);
 
+
+  /**
+   * Gets the {@link List} of users that the currently logged-in user follows.
+   *
+   * @param jwtToken
+   * 		jwtToken
+   * @return {@link UserProfile}
+   */
+  List<UserFollow> getLoggedInUserFollows(String jwtToken, @ValidPage int page, @ValidPaging int pageSize);
+
+
+  /**
+   * Gets the {@link List} of users that the currently logged-in user is followedBy.
+   *
+   * @param jwtToken
+   * 		jwtToken
+   * @return {@link UserProfile}
+   */
+  List<UserFollow> getLoggedInUserFollowedBy(String jwtToken, @ValidPage int page, @ValidPaging int pageSize);
+
   /**
    * Gets the {@link List} of users that the given user follows.
    *
