@@ -63,7 +63,7 @@ public class UserManagementController {
     List<UserFollow> follows = service.getLoggedInUserFollowedBy(jwtToken, page, size);
 
     List<UserProfileDto> followers =
-        follows.stream().map(UserFollow::getFollowedBy).map(UserProfileDto::of).toList();
+        follows.stream().map(UserFollow::getFollows).map(UserProfileDto::of).toList();
 
     return new ResponseEntity<>(followers, HttpStatus.OK);
   }
