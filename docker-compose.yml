@@ -8,13 +8,29 @@ services:
     env_file:
       - .env
     environment:
-      - SPRING_DATASOURCE_URL={POSTGRES_URL}
-      - SPRING_DATASOURCE_USERNAME={POSTGRES_USER}
-      - SPRING_DATASOURCE_PASSWORD={POSTGRES_PASSWORD}
+      - SPRING_DATASOURCE_URL=${POSTGRES_URL}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
     ports:
       - "8080:8080"
     volumes:
       - C:/var/cdn/storage:/var/cdn/storage
+    depends_on:
+      - db
+
+  user-management:
+    build:
+      context: .
+      dockerfile: user-management/Dockerfile
+    container_name: user-management
+    env_file:
+      - .env
+    environment:
+      - SPRING_DATASOURCE_URL=${POSTGRES_URL}
+      - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
+      - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "8081:8080"
     depends_on:
       - db
 
