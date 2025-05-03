@@ -60,6 +60,11 @@ public class ExceptionConstants {
   public static final String AUTHORIZATION_HEADER_NOT_PRESENT = "authorization.header.not.present";
 
   /**
+   * CANNOT FOLLOW SELF.
+   */
+  public static final String CANNOT_FOLLOW_SELF = "cannot.follow.self";
+
+  /**
    * Private NoArgs Constructor.
    */
   private ExceptionConstants() {

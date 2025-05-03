@@ -1,9 +1,6 @@
 package gr.evansp.momento.service;
 
-import static gr.evansp.momento.constant.ExceptionConstants.EMAIL_ALREADY_REGISTERED;
-import static gr.evansp.momento.constant.ExceptionConstants.USER_ALREADY_REGISTERED;
-import static gr.evansp.momento.constant.ExceptionConstants.USER_NOT_FOUND;
-
+import static gr.evansp.momento.constant.ExceptionConstants.*;
 import gr.evansp.momento.annotation.ValidPage;
 import gr.evansp.momento.annotation.ValidPaging;
 import gr.evansp.momento.annotation.ValidUpdateUserProfileDto;
@@ -133,6 +130,10 @@ public class UserManagementServiceImpl implements UserManagementService {
   public UserFollow follow(String jwtToken, @ValidUserId String userId) {
     UserProfile currentUser = getLoggedInUser(jwtToken);
 
+    if (currentUser.getId().toString().equals(userId)) {
+      throw new LogicException(CANNOT_FOLLOW_SELF, null);
+    }
+
     UserProfile followedByUser =
         repository
             .findById(UUID.fromString(userId))
@@ -165,6 +166,10 @@ public class UserManagementServiceImpl implements UserManagementService {
   @Override
   public void unfollow(String jwtToken, @ValidUserId String userId) {
     UserProfile currentUser = getLoggedInUser(jwtToken);
+
+    if (currentUser.getId().toString().equals(userId)) {
+      throw new LogicException(CANNOT_FOLLOW_SELF, null);
+    }
 
     UserProfile followedByUser =
         repository
