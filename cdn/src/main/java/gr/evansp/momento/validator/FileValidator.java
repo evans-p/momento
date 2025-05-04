@@ -46,7 +46,6 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
     if (isValid) {
       if (FileContentTypes.getValidMedia().stream()
               .filter(t -> t.a.equals(file.getContentType()))
-              .peek(System.out::println)
               .filter(
                   t ->
                       t.b.contains(
