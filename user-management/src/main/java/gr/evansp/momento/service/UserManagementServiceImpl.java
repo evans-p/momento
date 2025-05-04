@@ -18,6 +18,8 @@ import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,7 @@ import org.springframework.validation.annotation.Validated;
 /**
  * Implementation of {@link UserManagementService}.
  */
+@Slf4j
 @Validated
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
@@ -55,12 +58,14 @@ public class UserManagementServiceImpl implements UserManagementService {
         repository.findByAuthenticationProviderId(tokenInfo.authenticationProviderId());
 
     if (fetchedProfile.isPresent()) {
+      log.info("register: attempted registration by existing user. Email: {}, id: {}.", fetchedProfile.get().getEmail(), fetchedProfile.get().getId());
       throw new LogicException(USER_ALREADY_REGISTERED, null);
     }
 
     fetchedProfile = repository.findByEmail(tokenInfo.email());
 
     if (fetchedProfile.isPresent()) {
+      log.warn("register: valid token with the same mail as existing user: {}.", tokenInfo.email());
       throw new LogicException(EMAIL_ALREADY_REGISTERED, new Object[] {tokenInfo.email()});
     }
 
@@ -80,7 +85,10 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     return repository
         .findByAuthenticationProviderId(tokenInfo.authenticationProviderId())
-        .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {""}));
+        .orElseThrow(() -> {
+          log.warn("getLoggedInUser: logged in user, not found. email: {}, providerId: {}", tokenInfo.email(), tokenInfo.authenticationProviderId());
+          return new ResourceNotFoundException(USER_NOT_FOUND, new Object[]{""});
+        });
   }
 
   @Override
