@@ -9,8 +9,11 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import gr.evansp.momento.beans.JwtTokenInfo;
 import gr.evansp.momento.exception.LogicException;
 import java.util.Set;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class JwtServiceImpl implements JwtService {
 
