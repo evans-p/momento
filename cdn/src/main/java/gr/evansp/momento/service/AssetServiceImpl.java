@@ -48,7 +48,7 @@ public class AssetServiceImpl implements AssetService {
 
   @Override
   public Asset uploadAsset(@ValidFile MultipartFile file) {
-    log.info("UploadAsset: {}", file.getOriginalFilename());
+    log.info("uploadAsset: uploading: {}", file.getOriginalFilename());
 
     try {
       byte[] bytes = file.getBytes();
@@ -71,7 +71,7 @@ public class AssetServiceImpl implements AssetService {
 
       return storeAssetMetadata(file, storedFilename, contentHash);
     } catch (IOException e) {
-      log.warn("Failed storing file: {}.", file);
+      log.warn("uploadAsset: failed storing file: {}.", file);
       throw new InternalServiceException(FILE_PROCESS_FAILED, null);
     }
   }
@@ -87,7 +87,7 @@ public class AssetServiceImpl implements AssetService {
     try {
       return assetRepository.save(asset);
     } catch (Exception e) {
-      log.warn("Failed saving asset metadata: {}.", asset);
+      log.warn("uploadAsset: failed saving asset metadata: {}.", asset);
       try {
         Files.deleteIfExists(Paths.get(storageLocation + "/", storedFilename));
       } catch (IOException ex) {
@@ -102,7 +102,7 @@ public class AssetServiceImpl implements AssetService {
     Optional<Asset> result = assetRepository.findByFileName(name);
 
     if (result.isEmpty()) {
-      log.info("Requested file metadata don't exist: {}.", name);
+      log.info("getFileByName: File metadata don't exist: {}.", name);
       throw new ResourceNotFoundException(FILE_NOT_FOUND, new Object[] {name});
     }
     Asset asset = result.get();
@@ -110,7 +110,7 @@ public class AssetServiceImpl implements AssetService {
     File file = new File(storageLocation + "/" + asset.getFileName());
 
     if (!file.exists()) {
-      log.warn("Requested file don't exist: {}.", name);
+      log.warn("getFileByName: File does not exist: {}.", name);
       throw new ResourceNotFoundException(FILE_NOT_FOUND, new Object[] {name});
     }
 
