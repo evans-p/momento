@@ -11,6 +11,7 @@ import java.util.Objects;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * Represents all asset metadata like photos, videos, etc.
@@ -18,6 +19,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Entity
+@ToString
 @Table(schema = "CDN", name = "ASSET")
 public class Asset {
 

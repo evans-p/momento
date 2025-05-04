@@ -19,6 +19,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.UUID;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,6 +31,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * Implementation of {@link AssetService}.
  */
+@Slf4j
 @Validated
 @Service
 public class AssetServiceImpl implements AssetService {
@@ -45,6 +48,8 @@ public class AssetServiceImpl implements AssetService {
 
   @Override
   public Asset uploadAsset(@ValidFile MultipartFile file) {
+    log.info("UploadAsset: {}", file.getOriginalFilename());
+
     try {
       byte[] bytes = file.getBytes();
 
@@ -66,21 +71,23 @@ public class AssetServiceImpl implements AssetService {
 
       return storeAssetMetadata(file, storedFilename, contentHash);
     } catch (IOException e) {
+      log.warn("Failed storing file: {}.", file);
       throw new InternalServiceException(FILE_PROCESS_FAILED, null);
     }
   }
 
   @Transactional
   private Asset storeAssetMetadata(MultipartFile file, String storedFilename, String contentHash) {
-    try {
-      Asset asset = new Asset();
-      asset.setFileName(storedFilename);
-      asset.setContentType(file.getContentType());
-      asset.setContentHash(contentHash);
-      asset.setFileSize(file.getSize());
+    Asset asset = new Asset();
+    asset.setFileName(storedFilename);
+    asset.setContentType(file.getContentType());
+    asset.setContentHash(contentHash);
+    asset.setFileSize(file.getSize());
 
+    try {
       return assetRepository.save(asset);
     } catch (Exception e) {
+      log.warn("Failed saving asset metadata: {}.", asset);
       try {
         Files.deleteIfExists(Paths.get(storageLocation + "/", storedFilename));
       } catch (IOException ex) {
@@ -95,6 +102,7 @@ public class AssetServiceImpl implements AssetService {
     Optional<Asset> result = assetRepository.findByFileName(name);
 
     if (result.isEmpty()) {
+      log.info("Requested file metadata don't exist: {}.", name);
       throw new ResourceNotFoundException(FILE_NOT_FOUND, new Object[] {name});
     }
     Asset asset = result.get();
@@ -102,6 +110,7 @@ public class AssetServiceImpl implements AssetService {
     File file = new File(storageLocation + "/" + asset.getFileName());
 
     if (!file.exists()) {
+      log.warn("Requested file don't exist: {}.", name);
       throw new ResourceNotFoundException(FILE_NOT_FOUND, new Object[] {name});
     }
 
