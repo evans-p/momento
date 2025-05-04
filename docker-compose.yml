@@ -17,6 +17,7 @@ services:
       - C:/var/cdn/storage:/var/cdn/storage
     depends_on:
       - db
+      - redis
 
   user-management:
     build:
@@ -33,6 +34,22 @@ services:
       - "8081:8080"
     depends_on:
       - db
+      - redis
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: ["redis-server", "/usr/local/etc/redis/redis.conf"]
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
 
   db:
     image: postgres:14
