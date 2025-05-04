@@ -39,6 +39,7 @@ public class JwtServiceImpl implements JwtService {
           getClaimAsString(decodedJWT, EMAIL_CLAIM),
           getClaimAsStringNoException(decodedJWT, PROFILE_PICTURE_URL_CLAIM));
     } catch (JWTDecodeException e) {
+      log.warn("extractUserProfileInfo: Invalid token: {}", token);
       throw new LogicException(INVALID_TOKEN, null);
     }
   }
