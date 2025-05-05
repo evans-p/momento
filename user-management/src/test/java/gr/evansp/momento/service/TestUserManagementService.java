@@ -59,7 +59,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertNotNull(profile.getLastName());
     assertNotNull(profile.getAuthenticationProviderId());
     assertEquals(0L, profile.getFollowsCount());
-    assertEquals(0L, profile.getFollowedByCount());
+    assertEquals(0L, profile.getFollowedCount());
   }
 
   /**
@@ -152,7 +152,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         profile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS),
         fetchProfile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS));
     assertEquals(profile.getFollowsCount(), fetchProfile.getFollowsCount());
-    assertEquals(profile.getFollowedByCount(), fetchProfile.getFollowedByCount());
+    assertEquals(profile.getFollowedCount(), fetchProfile.getFollowedCount());
   }
 
   /**
@@ -186,7 +186,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         profile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS),
         fetchProfile.getUpdatedAt().truncatedTo(ChronoUnit.MILLIS));
     assertEquals(profile.getFollowsCount(), fetchProfile.getFollowsCount());
-    assertEquals(profile.getFollowedByCount(), fetchProfile.getFollowedByCount());
+    assertEquals(profile.getFollowedCount(), fetchProfile.getFollowedCount());
   }
 
   /**
@@ -278,13 +278,13 @@ class TestUserManagementService extends AbstractIntegrationTest {
 
     UserFollow follow = new UserFollow();
     follow.setFollows(profile1);
-    follow.setFollowedBy(profile2);
+    follow.setFollowed(profile2);
 
     userFollowRepository.save(follow);
 
     UserFollow follow2 = new UserFollow();
     follow2.setFollows(profile2);
-    follow2.setFollowedBy(profile1);
+    follow2.setFollowed(profile1);
 
     userFollowRepository.save(follow2);
 
@@ -295,17 +295,17 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(1, profile2Follows.size());
 
     assertEquals(profile1, profile1Follows.getFirst().getFollows());
-    assertEquals(profile2, profile1Follows.getFirst().getFollowedBy());
+    assertEquals(profile2, profile1Follows.getFirst().getFollowed());
 
     assertEquals(profile2, profile2Follows.getFirst().getFollows());
-    assertEquals(profile1, profile2Follows.getFirst().getFollowedBy());
+    assertEquals(profile1, profile2Follows.getFirst().getFollowed());
   }
 
   /**
-   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
    */
   @Test
-  public void testGetFollowedBy_nullUserId() {
+  public void testgetFollowed_nullUserId() {
     ConstraintViolationException e =
         assertThrows(ConstraintViolationException.class, () -> service.getFollows(null, 1, 1));
     assertEquals(
@@ -314,103 +314,103 @@ class TestUserManagementService extends AbstractIntegrationTest {
   }
 
   /**
-   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
    */
   @Test
-  public void testGetFollowedBy_negativePage() {
+  public void testgetFollowed_negativePage() {
     ConstraintViolationException e =
         assertThrows(
             ConstraintViolationException.class,
-            () -> service.getFollowedBy(UUID.randomUUID().toString(), -1, 1));
+            () -> service.getFollowed(UUID.randomUUID().toString(), -1, 1));
     assertEquals(
         VALIDATION_MESSAGES.getString("invalid.page"),
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
-   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
    */
   @Test
-  public void testGetFollowedBy_negativePageSize() {
+  public void testgetFollowed_negativePageSize() {
     ConstraintViolationException e =
         assertThrows(
             ConstraintViolationException.class,
-            () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, -1));
+            () -> service.getFollowed(UUID.randomUUID().toString(), 1, -1));
     assertEquals(
         VALIDATION_MESSAGES.getString("invalid.paging"),
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
-   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
    */
   @Test
-  public void testGetFollowedBy_zeroPageSize() {
+  public void testgetFollowed_zeroPageSize() {
     ConstraintViolationException e =
         assertThrows(
             ConstraintViolationException.class,
-            () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 0));
+            () -> service.getFollowed(UUID.randomUUID().toString(), 1, 0));
     assertEquals(
         VALIDATION_MESSAGES.getString("invalid.paging"),
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
   /**
-   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
    */
   @Test
-  public void testGetFollowedBy_faultyPagination() {
+  public void testgetFollowed_faultyPagination() {
     ConstraintViolationException e =
         assertThrows(
             ConstraintViolationException.class,
-            () -> service.getFollowedBy(UUID.randomUUID().toString(), -1, -1));
+            () -> service.getFollowed(UUID.randomUUID().toString(), -1, -1));
 
     assertEquals(2, e.getConstraintViolations().size());
   }
 
   /**
-   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
    */
   @Test
-  public void testGetFollowedBy_userNotFound() {
+  public void testgetFollowed_userNotFound() {
     ResourceNotFoundException e =
         assertThrows(
             ResourceNotFoundException.class,
-            () -> service.getFollowedBy(UUID.randomUUID().toString(), 1, 1));
+            () -> service.getFollowed(UUID.randomUUID().toString(), 1, 1));
     assertEquals(USER_NOT_FOUND, e.getMessage());
   }
 
   /**
-   * Test for {@link UserManagementService#getFollowedBy(String, int, int)}.
+   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
    */
   @Test
-  public void testGetFollowedBy_ok() {
+  public void testgetFollowed_ok() {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
     UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
 
     UserFollow follow = new UserFollow();
     follow.setFollows(profile1);
-    follow.setFollowedBy(profile2);
+    follow.setFollowed(profile2);
 
     userFollowRepository.save(follow);
 
     UserFollow follow2 = new UserFollow();
     follow2.setFollows(profile2);
-    follow2.setFollowedBy(profile1);
+    follow2.setFollowed(profile1);
 
     userFollowRepository.save(follow2);
 
-    List<UserFollow> profile1FollowedBy = service.getFollowedBy(profile1.getId().toString(), 0, 30);
-    List<UserFollow> profile2FollowedBy = service.getFollowedBy(profile2.getId().toString(), 0, 30);
+    List<UserFollow> profile1followed = service.getFollowed(profile1.getId().toString(), 0, 30);
+    List<UserFollow> profile2followed = service.getFollowed(profile2.getId().toString(), 0, 30);
 
-    assertEquals(1, profile1FollowedBy.size());
-    assertEquals(1, profile2FollowedBy.size());
+    assertEquals(1, profile1followed.size());
+    assertEquals(1, profile2followed.size());
 
-    assertEquals(profile2, profile1FollowedBy.getFirst().getFollows());
-    assertEquals(profile1, profile1FollowedBy.getFirst().getFollowedBy());
+    assertEquals(profile2, profile1followed.getFirst().getFollows());
+    assertEquals(profile1, profile1followed.getFirst().getFollowed());
 
-    assertEquals(profile1, profile2FollowedBy.getFirst().getFollows());
-    assertEquals(profile2, profile2FollowedBy.getFirst().getFollowedBy());
+    assertEquals(profile1, profile2followed.getFirst().getFollows());
+    assertEquals(profile2, profile2followed.getFirst().getFollowed());
   }
 
   /**
@@ -449,19 +449,19 @@ class TestUserManagementService extends AbstractIntegrationTest {
 
     UserFollow follow = new UserFollow();
     follow.setFollows(profile1);
-    follow.setFollowedBy(profile2);
+    follow.setFollowed(profile2);
 
     userFollowRepository.save(follow);
 
     profile1.setFollowsCount(profile1.getFollowsCount() + 1);
-    profile2.setFollowedByCount(profile2.getFollowedByCount() + 1);
+    profile2.setFollowedCount(profile2.getFollowedCount() + 1);
 
     profile1 = userProfileRepository.save(profile1);
     profile2 = userProfileRepository.save(profile2);
 
-    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowedCount());
     assertEquals(1, profile1.getFollowsCount());
-    assertEquals(1, profile2.getFollowedByCount());
+    assertEquals(1, profile2.getFollowedCount());
     assertEquals(0, profile2.getFollowsCount());
 
     service.follow(VALID_GOOGLE_TOKEN, profile2.getId().toString());
@@ -469,9 +469,9 @@ class TestUserManagementService extends AbstractIntegrationTest {
     profile1 = userProfileRepository.findById(profile1.getId()).get();
     profile2 = userProfileRepository.findById(profile2.getId()).get();
 
-    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowedCount());
     assertEquals(1, profile1.getFollowsCount());
-    assertEquals(1, profile2.getFollowedByCount());
+    assertEquals(1, profile2.getFollowedCount());
     assertEquals(0, profile2.getFollowsCount());
     assertEquals(1, userFollowRepository.findAll().size());
   }
@@ -484,22 +484,22 @@ class TestUserManagementService extends AbstractIntegrationTest {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
     UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
 
-    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowedCount());
     assertEquals(0, profile1.getFollowsCount());
-    assertEquals(0, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowedCount());
     assertEquals(0, profile2.getFollowsCount());
 
     UserFollow follow = service.follow(VALID_GOOGLE_TOKEN, profile2.getId().toString());
 
     assertEquals(profile1, follow.getFollows());
-    assertEquals(profile2, follow.getFollowedBy());
+    assertEquals(profile2, follow.getFollowed());
 
     profile1 = userProfileRepository.findById(profile1.getId()).get();
     profile2 = userProfileRepository.findById(profile2.getId()).get();
 
-    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowedCount());
     assertEquals(1, profile1.getFollowsCount());
-    assertEquals(1, profile2.getFollowedByCount());
+    assertEquals(1, profile2.getFollowedCount());
     assertEquals(0, profile2.getFollowsCount());
     assertEquals(1, userFollowRepository.findAll().size());
   }
@@ -539,9 +539,9 @@ class TestUserManagementService extends AbstractIntegrationTest {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
     UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
 
-    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowedCount());
     assertEquals(0, profile1.getFollowsCount());
-    assertEquals(0, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowedCount());
     assertEquals(0, profile2.getFollowsCount());
     assertEquals(0, userFollowRepository.findAll().size());
 
@@ -550,9 +550,9 @@ class TestUserManagementService extends AbstractIntegrationTest {
     profile1 = userProfileRepository.findById(profile1.getId()).get();
     profile2 = userProfileRepository.findById(profile2.getId()).get();
 
-    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowedCount());
     assertEquals(0, profile1.getFollowsCount());
-    assertEquals(0, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowedCount());
     assertEquals(0, profile2.getFollowsCount());
     assertEquals(0, userFollowRepository.findAll().size());
   }
@@ -568,14 +568,14 @@ class TestUserManagementService extends AbstractIntegrationTest {
     UserFollow follow = service.follow(VALID_GOOGLE_TOKEN, profile2.getId().toString());
 
     assertEquals(profile1, follow.getFollows());
-    assertEquals(profile2, follow.getFollowedBy());
+    assertEquals(profile2, follow.getFollowed());
 
     profile1 = userProfileRepository.findById(profile1.getId()).get();
     profile2 = userProfileRepository.findById(profile2.getId()).get();
 
-    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowedCount());
     assertEquals(1, profile1.getFollowsCount());
-    assertEquals(1, profile2.getFollowedByCount());
+    assertEquals(1, profile2.getFollowedCount());
     assertEquals(0, profile2.getFollowsCount());
     assertEquals(1, userFollowRepository.findAll().size());
 
@@ -584,9 +584,9 @@ class TestUserManagementService extends AbstractIntegrationTest {
     profile1 = userProfileRepository.findById(profile1.getId()).get();
     profile2 = userProfileRepository.findById(profile2.getId()).get();
 
-    assertEquals(0, profile1.getFollowedByCount());
+    assertEquals(0, profile1.getFollowedCount());
     assertEquals(0, profile1.getFollowsCount());
-    assertEquals(0, profile2.getFollowedByCount());
+    assertEquals(0, profile2.getFollowedCount());
     assertEquals(0, profile2.getFollowsCount());
     assertEquals(0, userFollowRepository.findAll().size());
   }
@@ -617,13 +617,13 @@ class TestUserManagementService extends AbstractIntegrationTest {
 
     UserFollow follow = new UserFollow();
     follow.setFollows(profile1);
-    follow.setFollowedBy(profile2);
+    follow.setFollowed(profile2);
 
     userFollowRepository.save(follow);
 
     UserFollow follow2 = new UserFollow();
     follow2.setFollows(profile2);
-    follow2.setFollowedBy(profile1);
+    follow2.setFollowed(profile1);
 
     userFollowRepository.save(follow2);
 
@@ -631,33 +631,33 @@ class TestUserManagementService extends AbstractIntegrationTest {
 
     assertEquals(1, follows.size());
     assertEquals(profile1, follows.getFirst().getFollows());
-    assertEquals(profile2, follows.getFirst().getFollowedBy());
+    assertEquals(profile2, follows.getFirst().getFollowed());
   }
 
   /**
    * Test for {@link UserManagementService#getLoggedInUserFollows(String, int, int)}.
    */
   @Test
-  public void testGetLoggedInUserFollowedBy_ok() {
+  public void testgetLoggedInUserFollowed_ok() {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
     UserProfile profile2 = service.register(VALID_FACEBOOK_TOKEN);
 
     UserFollow follow = new UserFollow();
     follow.setFollows(profile1);
-    follow.setFollowedBy(profile2);
+    follow.setFollowed(profile2);
 
     userFollowRepository.save(follow);
 
     UserFollow follow2 = new UserFollow();
     follow2.setFollows(profile2);
-    follow2.setFollowedBy(profile1);
+    follow2.setFollowed(profile1);
 
     userFollowRepository.save(follow2);
 
-    List<UserFollow> follows = service.getLoggedInUserFollowedBy(VALID_GOOGLE_TOKEN, 0, 30);
+    List<UserFollow> follows = service.getLoggedInUserFollowed(VALID_GOOGLE_TOKEN, 0, 30);
 
     assertEquals(1, follows.size());
     assertEquals(profile2, follows.getFirst().getFollows());
-    assertEquals(profile1, follows.getFirst().getFollowedBy());
+    assertEquals(profile1, follows.getFirst().getFollowed());
   }
 }

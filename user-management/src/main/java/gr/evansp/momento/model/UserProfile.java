@@ -52,14 +52,14 @@ public class UserProfile {
   @Column(name = "FOLLOWS_COUNT", nullable = false)
   private Long followsCount = 0L;
 
-  @Column(name = "FOLLOWED_BY_COUNT", nullable = false)
-  private Long followedByCount = 0L;
+  @Column(name = "FOLLOWED_COUNT", nullable = false)
+  private Long followedCount = 0L;
 
   @OneToMany(mappedBy = "follows", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
   private List<UserFollow> followsList = new LinkedList<>();
 
-  @OneToMany(mappedBy = "followedBy", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<UserFollow> followedByList = new LinkedList<>();
+  @OneToMany(mappedBy = "followed", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+  private List<UserFollow> followedList = new LinkedList<>();
 
   @Override
   public boolean equals(Object o) {

@@ -29,24 +29,24 @@ public interface UserFollowRepository extends JpaRepository<UserFollow, UUID> {
 
   /**
    * Gets all the {@link UserFollow}, meaning all the {@link UserProfile}
-   * are followed by  the user.
+   * are followed by the user.
    *
-   * @param followedBy
+   * @param followed
    *        {@link UserProfile}
    * @param pageable
    *        {@link Pageable}.
    * @return {@link Page}
    */
-  Page<UserFollow> findByFollowedBy(UserProfile followedBy, Pageable pageable);
+  Page<UserFollow> findByFollowed(UserProfile followed, Pageable pageable);
 
   /**
    * Finds the {@link UserFollow} relation between two {@link UserProfile}.
    *
    * @param follows
    *        {@link UserProfile}
-   * @param followedBy
+   * @param followed
    *        {@link UserProfile}
    * @return {@link UserFollow}
    */
-  Optional<UserFollow> findByFollowsAndFollowedBy(UserProfile follows, UserProfile followedBy);
+  Optional<UserFollow> findByFollowsAndFollowed(UserProfile follows, UserProfile followed);
 }

@@ -18,7 +18,7 @@ public record UserProfileDto(
     String lastName,
     String profilePictureUrl,
     Long followsCount,
-    Long followedByCount) {
+    Long followedCount) {
 
   public static UserProfileDto of(UserProfile profile) {
     return new UserProfileDto(
@@ -27,6 +27,6 @@ public record UserProfileDto(
         profile.getLastName(),
         profile.getProfilePictureUrl(),
         profile.getFollowsCount(),
-        profile.getFollowedByCount());
+        profile.getFollowedCount());
   }
 }

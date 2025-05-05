@@ -60,7 +60,7 @@ public class UserManagementController {
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size) {
     String jwtToken = extractJwtToken(authorizationHeader);
-    List<UserFollow> follows = service.getLoggedInUserFollowedBy(jwtToken, page, size);
+    List<UserFollow> follows = service.getLoggedInUserFollowed(jwtToken, page, size);
 
     List<UserProfileDto> followers =
         follows.stream().map(UserFollow::getFollows).map(UserProfileDto::of).toList();
@@ -77,7 +77,7 @@ public class UserManagementController {
     List<UserFollow> follows = service.getLoggedInUserFollows(jwtToken, page, size);
 
     List<UserProfileDto> followers =
-        follows.stream().map(UserFollow::getFollowedBy).map(UserProfileDto::of).toList();
+        follows.stream().map(UserFollow::getFollowed).map(UserProfileDto::of).toList();
 
     return new ResponseEntity<>(followers, HttpStatus.OK);
   }
@@ -104,7 +104,7 @@ public class UserManagementController {
       @PathVariable String userId,
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size) {
-    List<UserFollow> follows = service.getFollowedBy(userId, page, size);
+    List<UserFollow> follows = service.getFollowed(userId, page, size);
 
     List<UserProfileDto> followers =
         follows.stream().map(UserFollow::getFollows).map(UserProfileDto::of).toList();
@@ -120,7 +120,7 @@ public class UserManagementController {
     List<UserFollow> follows = service.getFollows(userId, page, size);
 
     List<UserProfileDto> followsDto =
-        follows.stream().map(UserFollow::getFollowedBy).map(UserProfileDto::of).toList();
+        follows.stream().map(UserFollow::getFollowed).map(UserProfileDto::of).toList();
 
     return new ResponseEntity<>(followsDto, HttpStatus.OK);
   }

@@ -235,13 +235,13 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
     UserFollow follow = new UserFollow();
     follow.setFollows(profile1);
-    follow.setFollowedBy(profile2);
+    follow.setFollowed(profile2);
 
     userFollowRepository.save(follow);
 
     UserFollow follow2 = new UserFollow();
     follow2.setFollows(profile2);
-    follow2.setFollowedBy(profile1);
+    follow2.setFollowed(profile1);
 
     userFollowRepository.save(follow2);
 
@@ -265,18 +265,18 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
     UserFollow follow = new UserFollow();
     follow.setFollows(profile1);
-    follow.setFollowedBy(profile2);
+    follow.setFollowed(profile2);
 
     userFollowRepository.save(follow);
 
     UserFollow follow2 = new UserFollow();
     follow2.setFollows(profile2);
-    follow2.setFollowedBy(profile1);
+    follow2.setFollowed(profile1);
 
     userFollowRepository.save(follow2);
 
     String result =
-        "[{\"id\":\"FOLLOW_ID\",\"firstName\":\"Jane\",\"lastName\":\"Smith\",\"profilePictureUrl\":\"https://graph.facebook.com/123456789012345/picture\",\"followsCount\":0,\"followedByCount\":0}]"
+        "[{\"id\":\"FOLLOW_ID\",\"firstName\":\"Jane\",\"lastName\":\"Smith\",\"profilePictureUrl\":\"https://graph.facebook.com/123456789012345/picture\",\"followsCount\":0,\"followedCount\":0}]"
             .replace("FOLLOW_ID", profile2.getId().toString());
 
     mockMvc
@@ -299,18 +299,18 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
     UserFollow follow = new UserFollow();
     follow.setFollows(profile1);
-    follow.setFollowedBy(profile2);
+    follow.setFollowed(profile2);
 
     userFollowRepository.save(follow);
 
     UserFollow follow2 = new UserFollow();
     follow2.setFollows(profile2);
-    follow2.setFollowedBy(profile1);
+    follow2.setFollowed(profile1);
 
     userFollowRepository.save(follow2);
 
     String result =
-        "[{\"id\":\"FOLLOW_ID\",\"firstName\":\"Jane\",\"lastName\":\"Smith\",\"profilePictureUrl\":\"https://graph.facebook.com/123456789012345/picture\",\"followsCount\":0,\"followedByCount\":0}]"
+        "[{\"id\":\"FOLLOW_ID\",\"firstName\":\"Jane\",\"lastName\":\"Smith\",\"profilePictureUrl\":\"https://graph.facebook.com/123456789012345/picture\",\"followsCount\":0,\"followedCount\":0}]"
             .replace("FOLLOW_ID", profile2.getId().toString());
 
     mockMvc
@@ -509,22 +509,22 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
     UserFollow follow = new UserFollow();
     follow.setFollows(profile1);
-    follow.setFollowedBy(profile2);
+    follow.setFollowed(profile2);
 
     userFollowRepository.save(follow);
 
     UserFollow follow2 = new UserFollow();
     follow2.setFollows(profile2);
-    follow2.setFollowedBy(profile1);
+    follow2.setFollowed(profile1);
 
     userFollowRepository.save(follow2);
 
     String response1 =
-        "[{\"id\":\"GOOGLE_ID\",\"firstName\":\"Βαγγέλης\",\"lastName\":\"Πουλάκης\",\"profilePictureUrl\":\"https://lh3.googleusercontent.com/a/ACg8ocItjtnWNX4BhkKLDvOV9ChIYx5_r_UzSgftgwIp6TmyZrloVJM=s96-c\",\"followsCount\":0,\"followedByCount\":0}]"
+        "[{\"id\":\"GOOGLE_ID\",\"firstName\":\"Βαγγέλης\",\"lastName\":\"Πουλάκης\",\"profilePictureUrl\":\"https://lh3.googleusercontent.com/a/ACg8ocItjtnWNX4BhkKLDvOV9ChIYx5_r_UzSgftgwIp6TmyZrloVJM=s96-c\",\"followsCount\":0,\"followedCount\":0}]"
             .replace("GOOGLE_ID", profile1.getId().toString());
 
     String response2 =
-        "[{\"id\":\"FACEBOOK_ID\",\"firstName\":\"Jane\",\"lastName\":\"Smith\",\"profilePictureUrl\":\"https://graph.facebook.com/123456789012345/picture\",\"followsCount\":0,\"followedByCount\":0}]"
+        "[{\"id\":\"FACEBOOK_ID\",\"firstName\":\"Jane\",\"lastName\":\"Smith\",\"profilePictureUrl\":\"https://graph.facebook.com/123456789012345/picture\",\"followsCount\":0,\"followedCount\":0}]"
             .replace("FACEBOOK_ID", profile2.getId().toString());
     mockMvc
         .perform(MockMvcRequestBuilders.get(BASE_URI + profile2.getId() + "/followers"))
@@ -550,22 +550,22 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
     UserFollow follow = new UserFollow();
     follow.setFollows(profile1);
-    follow.setFollowedBy(profile2);
+    follow.setFollowed(profile2);
 
     userFollowRepository.save(follow);
 
     UserFollow follow2 = new UserFollow();
     follow2.setFollows(profile2);
-    follow2.setFollowedBy(profile1);
+    follow2.setFollowed(profile1);
 
     userFollowRepository.save(follow2);
 
     String response1 =
-        "[{\"id\":\"GOOGLE_ID\",\"firstName\":\"Βαγγέλης\",\"lastName\":\"Πουλάκης\",\"profilePictureUrl\":\"https://lh3.googleusercontent.com/a/ACg8ocItjtnWNX4BhkKLDvOV9ChIYx5_r_UzSgftgwIp6TmyZrloVJM=s96-c\",\"followsCount\":0,\"followedByCount\":0}]"
+        "[{\"id\":\"GOOGLE_ID\",\"firstName\":\"Βαγγέλης\",\"lastName\":\"Πουλάκης\",\"profilePictureUrl\":\"https://lh3.googleusercontent.com/a/ACg8ocItjtnWNX4BhkKLDvOV9ChIYx5_r_UzSgftgwIp6TmyZrloVJM=s96-c\",\"followsCount\":0,\"followedCount\":0}]"
             .replace("GOOGLE_ID", profile1.getId().toString());
 
     String response2 =
-        "[{\"id\":\"FACEBOOK_ID\",\"firstName\":\"Jane\",\"lastName\":\"Smith\",\"profilePictureUrl\":\"https://graph.facebook.com/123456789012345/picture\",\"followsCount\":0,\"followedByCount\":0}]"
+        "[{\"id\":\"FACEBOOK_ID\",\"firstName\":\"Jane\",\"lastName\":\"Smith\",\"profilePictureUrl\":\"https://graph.facebook.com/123456789012345/picture\",\"followsCount\":0,\"followedCount\":0}]"
             .replace("FACEBOOK_ID", profile2.getId().toString());
     mockMvc
         .perform(MockMvcRequestBuilders.get(BASE_URI + profile2.getId() + "/follows"))
@@ -622,7 +622,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
     List<UserFollow> follows = userFollowRepository.findAll();
 
     assertEquals(1, follows.size());
-    assertEquals(follows.getFirst().getFollowedBy(), profile2);
+    assertEquals(follows.getFirst().getFollowed(), profile2);
     assertEquals(follows.getFirst().getFollows(), profile1);
   }
 
@@ -666,7 +666,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
     List<UserFollow> follows = userFollowRepository.findAll();
 
     assertEquals(1, follows.size());
-    assertEquals(follows.getFirst().getFollowedBy(), profile2);
+    assertEquals(follows.getFirst().getFollowed(), profile2);
     assertEquals(follows.getFirst().getFollows(), profile1);
 
     mockMvc

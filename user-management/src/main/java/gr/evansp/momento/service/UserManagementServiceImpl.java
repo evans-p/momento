@@ -99,11 +99,11 @@ public class UserManagementServiceImpl implements UserManagementService {
   }
 
   @Override
-  public List<UserFollow> getLoggedInUserFollowedBy(
+  public List<UserFollow> getLoggedInUserFollowed(
       String jwtToken, @ValidPage int page, @ValidPaging int pageSize) {
     UserProfile profile = getLoggedInUser(jwtToken);
     return userFollowRepository
-        .findByFollowedBy(profile, PageRequest.of(page, pageSize))
+        .findByFollowed(profile, PageRequest.of(page, pageSize))
         .getContent();
   }
 
@@ -120,7 +120,7 @@ public class UserManagementServiceImpl implements UserManagementService {
   }
 
   @Override
-  public List<UserFollow> getFollowedBy(
+  public List<UserFollow> getFollowed(
       @ValidUserId String userId, @ValidPage int page, @ValidPaging int pageSize) {
 
     UserProfile profile =
@@ -130,7 +130,7 @@ public class UserManagementServiceImpl implements UserManagementService {
                 () -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
 
     return userFollowRepository
-        .findByFollowedBy(profile, PageRequest.of(page, pageSize))
+        .findByFollowed(profile, PageRequest.of(page, pageSize))
         .getContent();
   }
 
@@ -143,14 +143,14 @@ public class UserManagementServiceImpl implements UserManagementService {
       throw new LogicException(CANNOT_FOLLOW_SELF, null);
     }
 
-    UserProfile followedByUser =
+    UserProfile followedUser =
         repository
             .findById(UUID.fromString(userId))
             .orElseThrow(
                 () -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
 
     Optional<UserFollow> follow =
-        userFollowRepository.findByFollowsAndFollowedBy(currentUser, followedByUser);
+        userFollowRepository.findByFollowsAndFollowed(currentUser, followedUser);
 
     if (follow.isPresent()) {
       return follow.get();
@@ -158,15 +158,15 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     UserFollow userFollow = new UserFollow();
     userFollow.setFollows(currentUser);
-    userFollow.setFollowedBy(followedByUser);
+    userFollow.setFollowed(followedUser);
 
     userFollowRepository.save(userFollow);
 
     currentUser.setFollowsCount(currentUser.getFollowsCount() + 1);
-    followedByUser.setFollowedByCount(followedByUser.getFollowedByCount() + 1);
+    followedUser.setFollowedCount(followedUser.getFollowedCount() + 1);
 
     repository.save(currentUser);
-    repository.save(followedByUser);
+    repository.save(followedUser);
 
     return userFollowRepository.save(userFollow);
   }
@@ -180,24 +180,24 @@ public class UserManagementServiceImpl implements UserManagementService {
       throw new LogicException(CANNOT_FOLLOW_SELF, null);
     }
 
-    UserProfile followedByUser =
+    UserProfile followedUser =
         repository
             .findById(UUID.fromString(userId))
             .orElseThrow(
                 () -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
 
     Optional<UserFollow> follow =
-        userFollowRepository.findByFollowsAndFollowedBy(currentUser, followedByUser);
+        userFollowRepository.findByFollowsAndFollowed(currentUser, followedUser);
 
     if (follow.isEmpty()) {
       return;
     }
 
     currentUser.setFollowsCount(currentUser.getFollowsCount() - 1);
-    followedByUser.setFollowedByCount(followedByUser.getFollowedByCount() - 1);
+    followedUser.setFollowedCount(followedUser.getFollowedCount() - 1);
 
     repository.save(currentUser);
-    repository.save(followedByUser);
+    repository.save(followedUser);
     userFollowRepository.delete(follow.get());
   }
 

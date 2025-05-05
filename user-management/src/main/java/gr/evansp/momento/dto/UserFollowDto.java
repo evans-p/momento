@@ -5,14 +5,14 @@ import gr.evansp.momento.model.UserFollow;
 /**
  * Data transfer object for {@link UserFollow}.
  * @param follows {@link UserProfileDto}.
- * @param followedBy {@link UserProfileDto}.
+ * @param followed {@link UserProfileDto}.
  */
-public record UserFollowDto(UserProfileDto follows, UserProfileDto followedBy) {
+public record UserFollowDto(UserProfileDto follows, UserProfileDto followed) {
 
   public static UserFollowDto of(UserFollow userFollow) {
     UserProfileDto followsDto = UserProfileDto.of(userFollow.getFollows());
-    UserProfileDto followedByDto = UserProfileDto.of(userFollow.getFollowedBy());
+    UserProfileDto followedDto = UserProfileDto.of(userFollow.getFollowed());
 
-    return new UserFollowDto(followsDto, followedByDto);
+    return new UserFollowDto(followsDto, followedDto);
   }
 }

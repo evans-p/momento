@@ -22,7 +22,7 @@ import lombok.Setter;
 @Table(
     schema = "USER_MANAGEMENT",
     name = "USER_FOLLOW",
-    uniqueConstraints = {@UniqueConstraint(columnNames = {"FOLLOWED_BY_ID", "FOLLOWS_ID"})})
+    uniqueConstraints = {@UniqueConstraint(columnNames = {"FOLLOWED_ID", "FOLLOWS_ID"})})
 public class UserFollow {
 
   @Id
@@ -35,8 +35,8 @@ public class UserFollow {
   UserProfile follows;
 
   @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "FOLLOWED_BY_ID", nullable = false)
-  UserProfile followedBy;
+  @JoinColumn(name = "FOLLOWED_ID", nullable = false)
+  UserProfile followed;
 
   @Column(name = "CREATED_AT", nullable = false)
   private OffsetDateTime createdAt = OffsetDateTime.now();
