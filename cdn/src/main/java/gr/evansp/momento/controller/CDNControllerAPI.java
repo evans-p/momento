@@ -98,15 +98,80 @@ interface CDNControllerAPI {
               content = @Content(mediaType = MediaType.MULTIPART_FORM_DATA_VALUE),
               example = "(Binary file content not displayable here)"))
   ResponseEntity<AssetDto> upload(
-      @RequestParam("file")
-          @RequestBody(
+      @RequestBody(
               description = "File to be uploaded. Supports 'png' and 'jpg/jpeg' files, up to 5 MB.",
               required = true,
               content =
                   @Content(
                       schema = @Schema(implementation = MultipartFile.class),
                       mediaType = MediaType.MULTIPART_FORM_DATA_VALUE))
+          @RequestParam("file")
           MultipartFile file);
 
+  @Operation(summary = "Fetches an asset by its file name.")
+  @ApiResponses(
+      value = {
+        @ApiResponse(
+            responseCode = "200",
+            description = "File retrieved successfully.",
+            content = {
+              @Content(
+                  mediaType = MediaType.IMAGE_PNG_VALUE + " or " + MediaType.IMAGE_JPEG_VALUE,
+                  schema = @Schema(implementation = FileSystemResource.class),
+                  examples = @ExampleObject(value = "(Binary file content not displayable here)"))
+            }),
+        @ApiResponse(
+            responseCode = "404",
+            description = "File not found.",
+            content =
+                @Content(
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = ExceptionMessage.class),
+                    examples =
+                        @ExampleObject(
+                            value =
+                                "{\n"
+                                    + "\"messages\": {\n"
+                                    + "\"file.not.found\": \"The requested file could not be found.\"\n"
+                                    + "}\n"
+                                    + "}"))),
+      @ApiResponse(
+              responseCode = "422",
+              description = "Invalid file name provided.",
+              content =
+              @Content(
+                      mediaType = MediaType.APPLICATION_JSON_VALUE,
+                      schema = @Schema(implementation = ExceptionMessage.class),
+                      examples =
+                      @ExampleObject(
+                              value =
+                                      "{\n"
+                                              + "\"messages\": {\n"
+                                              + "\"faulty.file.name\": \"Invalid file name.\"\n"
+                                              + "}\n"
+                                              + "}"))),
+        @ApiResponse(
+            responseCode = "500",
+            description = "Internal server error.",
+            content =
+                @Content(
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = ExceptionMessage.class),
+                    examples =
+                        @ExampleObject(
+                            value =
+                                "{\n"
+                                    + "\"messages\": {\n"
+                                    + "\"internal.server.error\": \"Internal server Error.\"\n"
+                                    + "}\n"
+                                    + "}")))
+      })
+  @Parameters(
+      value =
+          @Parameter(
+              name = "fileName",
+              description = "Name of the file to be retrieved.",
+              required = true,
+              example = "fb2ae93f-4c57-45dd-adce-8a9194b62254-fcdcc20a.png"))
   ResponseEntity<FileSystemResource> getFile(@PathVariable String fileName);
 }
