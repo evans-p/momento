@@ -23,6 +23,7 @@ Momento is a social media like app, built in java.
 - https://dev.to/bansikah/keycloak-and-spring-boot-the-ultimate-guide-to-implementing-single-sign-on-1af7
 - https://inero-software.com/keycloak-integration-guide-enabling-social-login-with-multiple-platforms-like-google/#:~:text=Once%20Keycloak%20successfully%20authenticates%20the,user%20back%20to%20the%20client
 - https://ui.shadcn.com/
+- https://www.baeldung.com/spring-rest-openapi-documentation
 
 ## Initial Idea
 
