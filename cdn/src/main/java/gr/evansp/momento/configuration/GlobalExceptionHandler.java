@@ -10,6 +10,7 @@ import jakarta.validation.ConstraintViolationException;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -21,12 +22,14 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 /**
  * Application Global Exception Handler.
  */
 @SuppressWarnings("unused")
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
 
   /**
@@ -77,6 +80,26 @@ public class GlobalExceptionHandler {
     String errorMessage = messageSource.getMessage(CANNOT_PROCESS_REQUEST, null, locale);
     return new ResponseEntity<>(
         new ExceptionMessage(Map.of(CANNOT_PROCESS_REQUEST, errorMessage)), HttpStatus.BAD_REQUEST);
+  }
+
+
+
+
+  /**
+   * Handler for {@link MethodArgumentTypeMismatchException}.
+   *
+   * @param e
+   *        {@link MethodArgumentTypeMismatchException}.
+   * @param locale
+   * 		locale
+   * @return error message
+   */
+  @ExceptionHandler(MaxUploadSizeExceededException.class)
+  public ResponseEntity<ExceptionMessage> handleMaxUploadSizeExceeded(
+          MaxUploadSizeExceededException e, Locale locale) {
+    String errorMessage = messageSource.getMessage(PAYLOAD_TOO_LARGE, null, locale);
+    return new ResponseEntity<>(
+            new ExceptionMessage(Map.of(PAYLOAD_TOO_LARGE, errorMessage)), HttpStatus.PAYLOAD_TOO_LARGE);
   }
 
   /**
@@ -197,8 +220,10 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ExceptionMessage> handleGenericException(Exception e, Locale locale) {
     String errorMessage = messageSource.getMessage(INTERNAL_SERVER_ERROR, null, locale);
+    System.out.println(e.getClass());
+    log.warn("Internal server error. Message: {}", e.getMessage());
     return new ResponseEntity<>(
-        new ExceptionMessage(Map.of(e.getMessage(), errorMessage)),
+        new ExceptionMessage(Map.of(INTERNAL_SERVER_ERROR, errorMessage)),
         HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }

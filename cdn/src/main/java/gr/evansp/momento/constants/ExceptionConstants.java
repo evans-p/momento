@@ -45,6 +45,11 @@ public class ExceptionConstants {
   public static final String INTERNAL_SERVER_ERROR = "internal.server.error";
 
   /**
+   * PAYLOAD TOO LARGE.
+   */
+  public static final String PAYLOAD_TOO_LARGE = "payload.too.large";
+
+  /**
    * Private NoArgs Constructor.
    */
   private ExceptionConstants() {

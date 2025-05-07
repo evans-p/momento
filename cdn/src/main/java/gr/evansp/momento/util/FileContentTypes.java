@@ -18,8 +18,8 @@ public class FileContentTypes {
 
   private static Set<Triple<String, Set<String>, MediaType>> initializeMedia() {
     return Set.of(
-        new Triple<>(MediaType.IMAGE_PNG_VALUE, Set.of("png"), MediaType.IMAGE_PNG),
-        new Triple<>(MediaType.IMAGE_JPEG_VALUE, Set.of("jpg", "jpeg"), MediaType.IMAGE_JPEG));
+        new Triple<>(MediaType.IMAGE_PNG_VALUE, Set.of("png", "PNG"), MediaType.IMAGE_PNG),
+        new Triple<>(MediaType.IMAGE_JPEG_VALUE, Set.of("jpg", "jpeg", "JPG", "JPEG"), MediaType.IMAGE_JPEG));
   }
 
   public static Set<Triple<String, Set<String>, MediaType>> getValidMedia() {
