@@ -82,9 +82,6 @@ public class GlobalExceptionHandler {
         new ExceptionMessage(Map.of(CANNOT_PROCESS_REQUEST, errorMessage)), HttpStatus.BAD_REQUEST);
   }
 
-
-
-
   /**
    * Handler for {@link MethodArgumentTypeMismatchException}.
    *
