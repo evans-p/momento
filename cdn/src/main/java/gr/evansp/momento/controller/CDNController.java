@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
  */
 @RestController
 @RequestMapping("cdn/v1/assets/")
-public class CDNController {
+public class CDNController implements CDNControllerAPI {
 
   private final AssetService service;
 
