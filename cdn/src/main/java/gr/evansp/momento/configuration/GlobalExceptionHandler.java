@@ -21,8 +21,8 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.servlet.resource.NoResourceFoundException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 /**
  * Application Global Exception Handler.
@@ -93,10 +93,11 @@ public class GlobalExceptionHandler {
    */
   @ExceptionHandler(MaxUploadSizeExceededException.class)
   public ResponseEntity<ExceptionMessage> handleMaxUploadSizeExceeded(
-          MaxUploadSizeExceededException e, Locale locale) {
+      MaxUploadSizeExceededException e, Locale locale) {
     String errorMessage = messageSource.getMessage(PAYLOAD_TOO_LARGE, null, locale);
     return new ResponseEntity<>(
-            new ExceptionMessage(Map.of(PAYLOAD_TOO_LARGE, errorMessage)), HttpStatus.PAYLOAD_TOO_LARGE);
+        new ExceptionMessage(Map.of(PAYLOAD_TOO_LARGE, errorMessage)),
+        HttpStatus.PAYLOAD_TOO_LARGE);
   }
 
   /**

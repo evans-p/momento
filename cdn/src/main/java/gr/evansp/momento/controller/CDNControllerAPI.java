@@ -58,21 +58,21 @@ interface CDNControllerAPI {
                                     + "\"invalid.file.content\": \"Invalid file content or mismatch between file content, suffix and content type.\"\n"
                                     + "}\n"
                                     + "}"))),
-      @ApiResponse(
-              responseCode = "413",
-              description = "File too large.",
-              content =
-              @Content(
-                      mediaType = MediaType.APPLICATION_JSON_VALUE,
-                      schema = @Schema(implementation = ExceptionMessage.class),
-                      examples =
-                      @ExampleObject(
-                              value =
-                                      "{\n" +
-                                              "\"messages\": {\n" +
-                                              "\"payload.too.large\": \"Maximum upload size exceeded.\"\n" +
-                                              "}\n" +
-                                              "}"))),
+        @ApiResponse(
+            responseCode = "413",
+            description = "File too large.",
+            content =
+                @Content(
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = ExceptionMessage.class),
+                    examples =
+                        @ExampleObject(
+                            value =
+                                "{\n"
+                                    + "\"messages\": {\n"
+                                    + "\"payload.too.large\": \"Maximum upload size exceeded.\"\n"
+                                    + "}\n"
+                                    + "}"))),
         @ApiResponse(
             responseCode = "500",
             description = "Internal server error.",
