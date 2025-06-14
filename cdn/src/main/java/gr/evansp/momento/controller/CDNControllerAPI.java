@@ -135,21 +135,21 @@ interface CDNControllerAPI {
                                     + "\"file.not.found\": \"The requested file could not be found.\"\n"
                                     + "}\n"
                                     + "}"))),
-      @ApiResponse(
-              responseCode = "422",
-              description = "Invalid file name provided.",
-              content =
-              @Content(
-                      mediaType = MediaType.APPLICATION_JSON_VALUE,
-                      schema = @Schema(implementation = ExceptionMessage.class),
-                      examples =
-                      @ExampleObject(
-                              value =
-                                      "{\n"
-                                              + "\"messages\": {\n"
-                                              + "\"faulty.file.name\": \"Invalid file name.\"\n"
-                                              + "}\n"
-                                              + "}"))),
+        @ApiResponse(
+            responseCode = "422",
+            description = "Invalid file name provided.",
+            content =
+                @Content(
+                    mediaType = MediaType.APPLICATION_JSON_VALUE,
+                    schema = @Schema(implementation = ExceptionMessage.class),
+                    examples =
+                        @ExampleObject(
+                            value =
+                                "{\n"
+                                    + "\"messages\": {\n"
+                                    + "\"faulty.file.name\": \"Invalid file name.\"\n"
+                                    + "}\n"
+                                    + "}"))),
         @ApiResponse(
             responseCode = "500",
             description = "Internal server error.",

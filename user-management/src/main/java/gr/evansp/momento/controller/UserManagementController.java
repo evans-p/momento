@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("users/v1/")
-public class UserManagementController {
+public class UserManagementController implements UserManagementControllerAPI {
 
   /**
    * {@link UserManagementService}.
