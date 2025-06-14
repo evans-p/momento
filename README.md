@@ -10,7 +10,6 @@ Momento is a social media like app, built in java.
 
 ## Todos
 - Add caching with redis.
-- Add documentation with swagger/OpenAPI.
 - Check locking.
 
 ## Useful Resources
