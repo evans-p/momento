@@ -22,6 +22,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
@@ -48,7 +50,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    */
   @Autowired UserFollowRepository userFollowRepository;
 
-  @Transactional
+  @Transactional(isolation = Isolation.SERIALIZABLE)
   @Override
   public UserProfile register(String jwtToken) {
     JwtTokenInfo tokenInfo = jwtService.extractUserProfileInfo(jwtToken);
@@ -140,7 +142,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         .getContent();
   }
 
-  @Transactional
+  @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
   @Override
   public UserFollow follow(String jwtToken, @ValidUserId String userId) {
     UserProfile currentUser = getLoggedInUser(jwtToken);
@@ -171,13 +173,15 @@ public class UserManagementServiceImpl implements UserManagementService {
     currentUser.setFollowsCount(currentUser.getFollowsCount() + 1);
     followedUser.setFollowedCount(followedUser.getFollowedCount() + 1);
 
+    // TODO: move these to a new service.
     repository.save(currentUser);
     repository.save(followedUser);
-
     return userFollowRepository.save(userFollow);
+
+    //FMEA
   }
 
-  @Transactional
+  @Transactional(isolation = Isolation.SERIALIZABLE)
   @Override
   public void unfollow(String jwtToken, @ValidUserId String userId) {
     UserProfile currentUser = getLoggedInUser(jwtToken);
