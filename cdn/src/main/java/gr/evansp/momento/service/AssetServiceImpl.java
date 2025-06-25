@@ -10,7 +10,6 @@ import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.Asset;
 import gr.evansp.momento.repository.AssetRepository;
 import gr.evansp.momento.util.FileContentTypes;
-import jakarta.transaction.Transactional;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -23,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,13 +38,23 @@ public class AssetServiceImpl implements AssetService {
   @Value("${cdn.storage.location}")
   private String storageLocation;
 
+  /**
+   * {@link AssetRepository}.
+   */
   private final AssetRepository assetRepository;
 
+  /**
+   * {@link AssetMetadataService}
+   */
+  private final AssetMetadataService assetMetadataService;
+
   @Autowired
-  public AssetServiceImpl(AssetRepository assetRepository) {
+  public AssetServiceImpl(AssetRepository assetRepository, AssetMetadataService assetMetadataService) {
     this.assetRepository = assetRepository;
+    this.assetMetadataService = assetMetadataService;
   }
 
+  @Transactional(readOnly = true)
   @Override
   public Asset uploadAsset(@ValidFile MultipartFile file) {
     log.info("uploadAsset: uploading: {}", file.getOriginalFilename());
@@ -68,30 +78,9 @@ public class AssetServiceImpl implements AssetService {
       Path targetPath = Paths.get(fullPath, storedFilename);
       Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
 
-      return storeAssetMetadata(file, storedFilename, contentHash);
+      return assetMetadataService.storeAssetMetadata(file, storedFilename, contentHash);
     } catch (IOException e) {
       log.warn("uploadAsset: failed storing file: {}.", file);
-      throw new InternalServiceException(FILE_PROCESS_FAILED, null);
-    }
-  }
-
-  @Transactional
-  private Asset storeAssetMetadata(MultipartFile file, String storedFilename, String contentHash) {
-    Asset asset = new Asset();
-    asset.setFileName(storedFilename);
-    asset.setContentType(file.getContentType());
-    asset.setContentHash(contentHash);
-    asset.setFileSize(file.getSize());
-
-    try {
-      return assetRepository.save(asset);
-    } catch (Exception e) {
-      log.warn("uploadAsset: failed saving asset metadata: {}.", asset);
-      try {
-        Files.deleteIfExists(Paths.get(storageLocation + "/", storedFilename));
-      } catch (IOException ex) {
-        throw new InternalServiceException(FILE_PROCESS_FAILED, null);
-      }
       throw new InternalServiceException(FILE_PROCESS_FAILED, null);
     }
   }
