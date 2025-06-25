@@ -1,5 +1,6 @@
 package gr.evansp.momento.service;
 
+import static gr.evansp.momento.constant.CachingConstants.USER_CACHE;
 import static gr.evansp.momento.constant.ExceptionConstants.*;
 
 import gr.evansp.momento.annotation.ValidPage;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -75,6 +77,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     return repository.save(createUserProfileFromJwtTokenInfo(tokenInfo));
   }
 
+  @Cacheable(value = USER_CACHE, key = "#userId")
   @Override
   public UserProfile getUser(@ValidUserId String userId) {
     return repository
@@ -82,6 +85,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         .orElseThrow(() -> new ResourceNotFoundException(USER_NOT_FOUND, new Object[] {userId}));
   }
 
+  @Cacheable(value = USER_CACHE, key = "#jwtToken")
   @Override
   public UserProfile getLoggedInUser(String jwtToken) {
     JwtTokenInfo tokenInfo = jwtService.extractUserProfileInfo(jwtToken);
