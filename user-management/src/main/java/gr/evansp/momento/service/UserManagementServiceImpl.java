@@ -142,7 +142,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         .getContent();
   }
 
-  @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+  @Transactional(isolation = Isolation.SERIALIZABLE)
   @Override
   public UserFollow follow(String jwtToken, @ValidUserId String userId) {
     UserProfile currentUser = getLoggedInUser(jwtToken);
