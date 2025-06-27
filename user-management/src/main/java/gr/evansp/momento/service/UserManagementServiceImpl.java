@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
@@ -142,7 +141,7 @@ public class UserManagementServiceImpl implements UserManagementService {
         .getContent();
   }
 
-  @Transactional(propagation = Propagation.REQUIRES_NEW, isolation = Isolation.SERIALIZABLE)
+  @Transactional(isolation = Isolation.SERIALIZABLE)
   @Override
   public UserFollow follow(String jwtToken, @ValidUserId String userId) {
     UserProfile currentUser = getLoggedInUser(jwtToken);
