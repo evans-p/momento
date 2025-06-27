@@ -37,6 +37,7 @@
     <modules>
         <module>cdn</module>
         <module>user-management</module>
+        <module>notifications</module>
     </modules>
 
     <scm>
