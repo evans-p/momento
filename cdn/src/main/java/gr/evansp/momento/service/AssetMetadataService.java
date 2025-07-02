@@ -9,12 +9,12 @@ import org.springframework.web.multipart.MultipartFile;
  */
 public interface AssetMetadataService {
 
-	/**
-	 * Stores {@link Asset} metadata
-	 * @param file file
-	 * @param storedFilename storedFilename
-	 * @param contentHash contentHash
-	 * @return {@link Asset}
-	 */
-	Asset storeAssetMetadata(MultipartFile file, String storedFilename, String contentHash);
+  /**
+   * Stores {@link Asset} metadata
+   * @param file file
+   * @param storedFilename storedFilename
+   * @param contentHash contentHash
+   * @return {@link Asset}
+   */
+  Asset storeAssetMetadata(MultipartFile file, String storedFilename, String contentHash);
 }
