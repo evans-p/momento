@@ -15,7 +15,6 @@ public interface UserManagementControllerAPI {
   ResponseEntity<UserProfileDto> registerUser(
       @RequestHeader("Authorization") String authorizationHeader);
 
-
   ResponseEntity<UserProfileDto> getLoggedInUser(
       @RequestHeader("Authorization") String authorizationHeader);
 
