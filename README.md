@@ -15,7 +15,7 @@ Momento is a social media like app, built in java.
 - FMEA
 
 ## Useful Resources
-
+- https://medium.com/ing-tech-romania/implementing-a-basic-kafka-producer-and-consumer-using-spring-boot-spring-kafka-and-avro-schema-2b6d06e6c4cf
 - https://stackoverflow.com/questions/61344217/gitlab-ci-pipeline-to-check-for-code-formatting
 - https://www.baeldung.com/java-maven-owasp-dependency-check?ref=dailydev
 - https://medium.com/@ksaquib/mastering-spring-boot-service-discovery-and-registration-using-spring-cloud-netflix-eureka-a-1eec70317b32
