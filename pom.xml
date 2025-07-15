@@ -60,11 +60,18 @@
         <version.owasp-java-html-sanitizer>20240325.1</version.owasp-java-html-sanitizer>
         <version.springdoc-openapi-starter-webmvc-ui>2.8.6</version.springdoc-openapi-starter-webmvc-ui>
         <version.spring-kafka>3.3.7</version.spring-kafka>
+        <version.avro>1.12.0</version.avro>
     </properties>
 
     <dependencyManagement>
 
         <dependencies>
+            <dependency>
+                <groupId>org.apache.avro</groupId>
+                <artifactId>avro</artifactId>
+                <version>${version.avro}</version>
+            </dependency>
+
             <dependency>
                 <groupId>org.springframework.kafka</groupId>
                 <artifactId>spring-kafka</artifactId>
