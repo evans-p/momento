@@ -177,7 +177,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     repository.save(followedUser);
     return userFollowRepository.save(userFollow);
 
-    // FMEA
+    //FMEA
   }
 
   @Transactional(isolation = Isolation.SERIALIZABLE)
