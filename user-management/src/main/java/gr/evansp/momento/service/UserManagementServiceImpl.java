@@ -49,6 +49,12 @@ public class UserManagementServiceImpl implements UserManagementService {
    */
   @Autowired UserFollowRepository userFollowRepository;
 
+  /**
+   * {@link FollowProducerService}.
+   */
+  @Autowired FollowProducerService followProducerService;
+
+
   @Transactional(isolation = Isolation.SERIALIZABLE)
   @Override
   public UserProfile register(String jwtToken) {
@@ -172,12 +178,13 @@ public class UserManagementServiceImpl implements UserManagementService {
     currentUser.setFollowsCount(currentUser.getFollowsCount() + 1);
     followedUser.setFollowedCount(followedUser.getFollowedCount() + 1);
 
-    // TODO: move these to a new service.
     repository.save(currentUser);
     repository.save(followedUser);
-    return userFollowRepository.save(userFollow);
+    userFollow = userFollowRepository.save(userFollow);
 
-    //FMEA
+    followProducerService.sendMessage(userFollow);
+    return userFollow;
+
   }
 
   @Transactional(isolation = Isolation.SERIALIZABLE)
