@@ -14,6 +14,7 @@ Momento is a social media like app, built in java.
 - Finalize transaction Isolation Levels, and Transaction Propagation.
 - FMEA
 - Alter services method signatures to return DTOs instead of Domain objects.
+- Rethink Dates
 
 ## Useful Resources
 - https://medium.com/ing-tech-romania/implementing-a-basic-kafka-producer-and-consumer-using-spring-boot-spring-kafka-and-avro-schema-2b6d06e6c4cf
