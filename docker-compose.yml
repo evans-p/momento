@@ -17,7 +17,6 @@ services:
       - C:/var/cdn/storage:/var/cdn/storage
     depends_on:
       - db
-      - redis
 
   user-management:
     build:
@@ -34,7 +33,6 @@ services:
       - "8081:8080"
     depends_on:
       - db
-      - redis
 
   kafka:
     image: confluentinc/cp-kafka:latest
