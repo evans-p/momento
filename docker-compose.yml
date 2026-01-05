@@ -17,6 +17,9 @@ services:
       - C:/var/cdn/storage:/var/cdn/storage
     depends_on:
       - db
+      - kafka
+      - schema-registry
+
 
   user-management:
     build:
@@ -30,9 +33,11 @@ services:
       - SPRING_DATASOURCE_USERNAME=${POSTGRES_USER}
       - SPRING_DATASOURCE_PASSWORD=${POSTGRES_PASSWORD}
     ports:
-      - "8081:8080"
+      - "8082:8080"
     depends_on:
       - db
+      - kafka
+      - schema-registry
 
   db:
     image: postgres:14
@@ -49,6 +54,7 @@ services:
     volumes:
       - ./db/ddl.sql:/docker-entrypoint-initdb.d/db_init.sql
 
+
   kafka:
     image: confluentinc/cp-kafka:7.5.0
     hostname: kafka
@@ -63,12 +69,12 @@ services:
       KAFKA_NODE_ID: 1
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:9093'
 
-      # Listener configuration
-      KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      # Dual listener configuration - INTERNAL for containers, EXTERNAL for host
+      KAFKA_LISTENERS: PLAINTEXT_INTERNAL://0.0.0.0:19092,PLAINTEXT_EXTERNAL://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT_INTERNAL:PLAINTEXT,PLAINTEXT_EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT_INTERNAL://kafka:19092,PLAINTEXT_EXTERNAL://localhost:9092
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
 
       # Storage and logging
       KAFKA_LOG_DIRS: /var/lib/kafka/data
@@ -82,15 +88,13 @@ services:
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
 
       # Cluster ID (must be unique and base64 encoded)
-      CLUSTER_ID: 'Mk3OEYBSD34fcwNTJENDM2Qk'
+      CLUSTER_ID: 'MkU3OEVBNjg3Njc4NDY2Qk'
 
       # JMX monitoring
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: localhost
     volumes:
-      - kafka-data:/var/lib/kafka/data
-    networks:
-      - kafka-network
+      - ./kafka-data:/var/lib/kafka/data
     healthcheck:
       test: ["CMD-SHELL", "kafka-broker-api-versions --bootstrap-server localhost:9092"]
       interval: 10s
@@ -98,12 +102,33 @@ services:
       retries: 5
     command: >
       bash -c "
-      # Format storage if not already formatted
       if [ ! -f /var/lib/kafka/data/.formatted ]; then
         echo 'Formatting Kafka storage...';
-        kafka-storage format -t $${CLUSTER_ID} -c /etc/kafka/kafka.properties;
+        kafka-storage format -t $${CLUSTER_ID} -c /etc/kafka/server.properties;
         touch /var/lib/kafka/data/.formatted;
       fi;
-      # Start Kafka
       /etc/confluent/docker/run
-      "a  # Store Kafka logs on your local machine.
+      "
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:7.5.0
+    hostname: schema-registry
+    container_name: schema-registry
+    depends_on:
+      kafka:
+        condition: service_healthy
+    ports:
+      - "8081:8081"
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      # Use the INTERNAL listener for inter-container communication
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'kafka:19092'
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC_REPLICATION_FACTOR: 1
+      SCHEMA_REGISTRY_DEBUG: 'true'
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/"]
+      interval: 10s
+      timeout: 10s
+      retries: 5
