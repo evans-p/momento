@@ -8,8 +8,6 @@ import gr.evansp.momento.AbstractUnitTest;
 import gr.evansp.momento.beans.JwtTokenInfo;
 import gr.evansp.momento.exception.LogicException;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 public class TestJwtService extends AbstractUnitTest {
 

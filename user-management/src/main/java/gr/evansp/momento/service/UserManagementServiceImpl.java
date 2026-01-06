@@ -54,7 +54,6 @@ public class UserManagementServiceImpl implements UserManagementService {
    */
   @Autowired FollowProducerService followProducerService;
 
-
   @Transactional(isolation = Isolation.SERIALIZABLE)
   @Override
   public UserProfile register(String jwtToken) {
@@ -184,7 +183,6 @@ public class UserManagementServiceImpl implements UserManagementService {
 
     followProducerService.sendMessage(userFollow);
     return userFollow;
-
   }
 
   @Transactional(isolation = Isolation.SERIALIZABLE)

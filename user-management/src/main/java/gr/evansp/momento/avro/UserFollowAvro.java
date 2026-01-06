@@ -5,22 +5,27 @@
  */
 package gr.evansp.momento.avro;
 
-import org.apache.avro.generic.GenericArray;
-import org.apache.avro.specific.SpecificData;
-import org.apache.avro.util.Utf8;
-import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.BinaryMessageDecoder;
+import org.apache.avro.message.BinaryMessageEncoder;
 import org.apache.avro.message.SchemaStore;
+import org.apache.avro.specific.SpecificData;
 
 @org.apache.avro.specific.AvroGenerated
-public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
+public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase
+    implements org.apache.avro.specific.SpecificRecord {
   private static final long serialVersionUID = -3235409966733079380L;
 
+  public static final org.apache.avro.Schema SCHEMA$ =
+      new org.apache.avro.Schema.Parser()
+          .parse(
+              "{\"type\":\"record\",\"name\":\"UserFollowAvro\",\"namespace\":\"gr.evansp.momento.avro\",\"fields\":[{\"name\":\"follows\",\"type\":\"string\"},{\"name\":\"followed\",\"type\":\"string\"},{\"name\":\"date\",\"type\":{\"type\":\"int\",\"logicalType\":\"date\"}}]}");
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"UserFollowAvro\",\"namespace\":\"gr.evansp.momento.avro\",\"fields\":[{\"name\":\"follows\",\"type\":\"string\"},{\"name\":\"followed\",\"type\":\"string\"},{\"name\":\"date\",\"type\":{\"type\":\"int\",\"logicalType\":\"date\"}}]}");
-  public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
+  public static org.apache.avro.Schema getClassSchema() {
+    return SCHEMA$;
+  }
 
   private static final SpecificData MODEL$ = new SpecificData();
+
   static {
     MODEL$.addLogicalTypeConversion(new org.apache.avro.data.TimeConversions.DateConversion());
   }
@@ -71,8 +76,7 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
    * @return a UserFollowAvro instance decoded from the given buffer
    * @throws java.io.IOException if the given bytes could not be deserialized into an instance of this class
    */
-  public static UserFollowAvro fromByteBuffer(
-      java.nio.ByteBuffer b) throws java.io.IOException {
+  public static UserFollowAvro fromByteBuffer(java.nio.ByteBuffer b) throws java.io.IOException {
     return DECODER.decode(b);
   }
 
@@ -93,36 +97,42 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
    * @param followed The new value for followed
    * @param date The new value for date
    */
-  public UserFollowAvro(java.lang.CharSequence follows, java.lang.CharSequence followed, java.time.LocalDate date) {
+  public UserFollowAvro(
+      java.lang.CharSequence follows, java.lang.CharSequence followed, java.time.LocalDate date) {
     this.follows = follows;
     this.followed = followed;
     this.date = date;
   }
 
   @Override
-  public org.apache.avro.specific.SpecificData getSpecificData() { return MODEL$; }
+  public org.apache.avro.specific.SpecificData getSpecificData() {
+    return MODEL$;
+  }
 
   @Override
-  public org.apache.avro.Schema getSchema() { return SCHEMA$; }
+  public org.apache.avro.Schema getSchema() {
+    return SCHEMA$;
+  }
 
   // Used by DatumWriter.  Applications should not call.
   @Override
   public java.lang.Object get(int field$) {
     switch (field$) {
-    case 0: return follows;
-    case 1: return followed;
-    case 2: return date;
-    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
+      case 0:
+        return follows;
+      case 1:
+        return followed;
+      case 2:
+        return date;
+      default:
+        throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
   private static final org.apache.avro.Conversion<?>[] conversions =
       new org.apache.avro.Conversion<?>[] {
-      null,
-      null,
-      new org.apache.avro.data.TimeConversions.DateConversion(),
-      null
-  };
+        null, null, new org.apache.avro.data.TimeConversions.DateConversion(), null
+      };
 
   @Override
   public org.apache.avro.Conversion<?> getConversion(int field) {
@@ -131,13 +141,20 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
 
   // Used by DatumReader.  Applications should not call.
   @Override
-  @SuppressWarnings(value="unchecked")
+  @SuppressWarnings(value = "unchecked")
   public void put(int field$, java.lang.Object value$) {
     switch (field$) {
-    case 0: follows = (java.lang.CharSequence)value$; break;
-    case 1: followed = (java.lang.CharSequence)value$; break;
-    case 2: date = (java.time.LocalDate)value$; break;
-    default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
+      case 0:
+        follows = (java.lang.CharSequence) value$;
+        break;
+      case 1:
+        followed = (java.lang.CharSequence) value$;
+        break;
+      case 2:
+        date = (java.time.LocalDate) value$;
+        break;
+      default:
+        throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
 
@@ -148,7 +165,6 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
   public java.lang.CharSequence getFollows() {
     return follows;
   }
-
 
   /**
    * Sets the value of the 'follows' field.
@@ -166,7 +182,6 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
     return followed;
   }
 
-
   /**
    * Sets the value of the 'followed' field.
    * @param value the value to set.
@@ -182,7 +197,6 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
   public java.time.LocalDate getDate() {
     return date;
   }
-
 
   /**
    * Sets the value of the 'date' field.
@@ -205,7 +219,8 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
    * @param other The existing builder to copy.
    * @return A new UserFollowAvro RecordBuilder
    */
-  public static gr.evansp.momento.avro.UserFollowAvro.Builder newBuilder(gr.evansp.momento.avro.UserFollowAvro.Builder other) {
+  public static gr.evansp.momento.avro.UserFollowAvro.Builder newBuilder(
+      gr.evansp.momento.avro.UserFollowAvro.Builder other) {
     if (other == null) {
       return new gr.evansp.momento.avro.UserFollowAvro.Builder();
     } else {
@@ -218,7 +233,8 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
    * @param other The existing instance to copy.
    * @return A new UserFollowAvro RecordBuilder
    */
-  public static gr.evansp.momento.avro.UserFollowAvro.Builder newBuilder(gr.evansp.momento.avro.UserFollowAvro other) {
+  public static gr.evansp.momento.avro.UserFollowAvro.Builder newBuilder(
+      gr.evansp.momento.avro.UserFollowAvro other) {
     if (other == null) {
       return new gr.evansp.momento.avro.UserFollowAvro.Builder();
     } else {
@@ -230,8 +246,9 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
    * RecordBuilder for UserFollowAvro instances.
    */
   @org.apache.avro.specific.AvroGenerated
-  public static class Builder extends org.apache.avro.specific.SpecificRecordBuilderBase<UserFollowAvro>
-    implements org.apache.avro.data.RecordBuilder<UserFollowAvro> {
+  public static class Builder
+      extends org.apache.avro.specific.SpecificRecordBuilderBase<UserFollowAvro>
+      implements org.apache.avro.data.RecordBuilder<UserFollowAvro> {
 
     private java.lang.CharSequence follows;
     private java.lang.CharSequence followed;
@@ -283,19 +300,18 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
     }
 
     /**
-      * Gets the value of the 'follows' field.
-      * @return The value.
-      */
+     * Gets the value of the 'follows' field.
+     * @return The value.
+     */
     public java.lang.CharSequence getFollows() {
       return follows;
     }
 
-
     /**
-      * Sets the value of the 'follows' field.
-      * @param value The value of 'follows'.
-      * @return This builder.
-      */
+     * Sets the value of the 'follows' field.
+     * @param value The value of 'follows'.
+     * @return This builder.
+     */
     public gr.evansp.momento.avro.UserFollowAvro.Builder setFollows(java.lang.CharSequence value) {
       validate(fields()[0], value);
       this.follows = value;
@@ -304,18 +320,17 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
     }
 
     /**
-      * Checks whether the 'follows' field has been set.
-      * @return True if the 'follows' field has been set, false otherwise.
-      */
+     * Checks whether the 'follows' field has been set.
+     * @return True if the 'follows' field has been set, false otherwise.
+     */
     public boolean hasFollows() {
       return fieldSetFlags()[0];
     }
 
-
     /**
-      * Clears the value of the 'follows' field.
-      * @return This builder.
-      */
+     * Clears the value of the 'follows' field.
+     * @return This builder.
+     */
     public gr.evansp.momento.avro.UserFollowAvro.Builder clearFollows() {
       follows = null;
       fieldSetFlags()[0] = false;
@@ -323,19 +338,18 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
     }
 
     /**
-      * Gets the value of the 'followed' field.
-      * @return The value.
-      */
+     * Gets the value of the 'followed' field.
+     * @return The value.
+     */
     public java.lang.CharSequence getFollowed() {
       return followed;
     }
 
-
     /**
-      * Sets the value of the 'followed' field.
-      * @param value The value of 'followed'.
-      * @return This builder.
-      */
+     * Sets the value of the 'followed' field.
+     * @param value The value of 'followed'.
+     * @return This builder.
+     */
     public gr.evansp.momento.avro.UserFollowAvro.Builder setFollowed(java.lang.CharSequence value) {
       validate(fields()[1], value);
       this.followed = value;
@@ -344,18 +358,17 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
     }
 
     /**
-      * Checks whether the 'followed' field has been set.
-      * @return True if the 'followed' field has been set, false otherwise.
-      */
+     * Checks whether the 'followed' field has been set.
+     * @return True if the 'followed' field has been set, false otherwise.
+     */
     public boolean hasFollowed() {
       return fieldSetFlags()[1];
     }
 
-
     /**
-      * Clears the value of the 'followed' field.
-      * @return This builder.
-      */
+     * Clears the value of the 'followed' field.
+     * @return This builder.
+     */
     public gr.evansp.momento.avro.UserFollowAvro.Builder clearFollowed() {
       followed = null;
       fieldSetFlags()[1] = false;
@@ -363,19 +376,18 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
     }
 
     /**
-      * Gets the value of the 'date' field.
-      * @return The value.
-      */
+     * Gets the value of the 'date' field.
+     * @return The value.
+     */
     public java.time.LocalDate getDate() {
       return date;
     }
 
-
     /**
-      * Sets the value of the 'date' field.
-      * @param value The value of 'date'.
-      * @return This builder.
-      */
+     * Sets the value of the 'date' field.
+     * @param value The value of 'date'.
+     * @return This builder.
+     */
     public gr.evansp.momento.avro.UserFollowAvro.Builder setDate(java.time.LocalDate value) {
       validate(fields()[2], value);
       this.date = value;
@@ -384,18 +396,17 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
     }
 
     /**
-      * Checks whether the 'date' field has been set.
-      * @return True if the 'date' field has been set, false otherwise.
-      */
+     * Checks whether the 'date' field has been set.
+     * @return True if the 'date' field has been set, false otherwise.
+     */
     public boolean hasDate() {
       return fieldSetFlags()[2];
     }
 
-
     /**
-      * Clears the value of the 'date' field.
-      * @return This builder.
-      */
+     * Clears the value of the 'date' field.
+     * @return This builder.
+     */
     public gr.evansp.momento.avro.UserFollowAvro.Builder clearDate() {
       fieldSetFlags()[2] = false;
       return this;
@@ -406,9 +417,12 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
     public UserFollowAvro build() {
       try {
         UserFollowAvro record = new UserFollowAvro();
-        record.follows = fieldSetFlags()[0] ? this.follows : (java.lang.CharSequence) defaultValue(fields()[0]);
-        record.followed = fieldSetFlags()[1] ? this.followed : (java.lang.CharSequence) defaultValue(fields()[1]);
-        record.date = fieldSetFlags()[2] ? this.date : (java.time.LocalDate) defaultValue(fields()[2]);
+        record.follows =
+            fieldSetFlags()[0] ? this.follows : (java.lang.CharSequence) defaultValue(fields()[0]);
+        record.followed =
+            fieldSetFlags()[1] ? this.followed : (java.lang.CharSequence) defaultValue(fields()[1]);
+        record.date =
+            fieldSetFlags()[2] ? this.date : (java.time.LocalDate) defaultValue(fields()[2]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -419,31 +433,20 @@ public class UserFollowAvro extends org.apache.avro.specific.SpecificRecordBase 
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumWriter<UserFollowAvro>
-    WRITER$ = (org.apache.avro.io.DatumWriter<UserFollowAvro>)MODEL$.createDatumWriter(SCHEMA$);
+  private static final org.apache.avro.io.DatumWriter<UserFollowAvro> WRITER$ =
+      (org.apache.avro.io.DatumWriter<UserFollowAvro>) MODEL$.createDatumWriter(SCHEMA$);
 
-  @Override public void writeExternal(java.io.ObjectOutput out)
-    throws java.io.IOException {
+  @Override
+  public void writeExternal(java.io.ObjectOutput out) throws java.io.IOException {
     WRITER$.write(this, SpecificData.getEncoder(out));
   }
 
   @SuppressWarnings("unchecked")
-  private static final org.apache.avro.io.DatumReader<UserFollowAvro>
-    READER$ = (org.apache.avro.io.DatumReader<UserFollowAvro>)MODEL$.createDatumReader(SCHEMA$);
+  private static final org.apache.avro.io.DatumReader<UserFollowAvro> READER$ =
+      (org.apache.avro.io.DatumReader<UserFollowAvro>) MODEL$.createDatumReader(SCHEMA$);
 
-  @Override public void readExternal(java.io.ObjectInput in)
-    throws java.io.IOException {
+  @Override
+  public void readExternal(java.io.ObjectInput in) throws java.io.IOException {
     READER$.read(this, SpecificData.getDecoder(in));
   }
-
 }
-
-
-
-
-
-
-
-
-
-
