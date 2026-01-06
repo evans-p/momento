@@ -7,6 +7,7 @@ import gr.evansp.momento.annotation.ValidUpdateUserProfileDto;
 import gr.evansp.momento.beans.JwtTokenInfo;
 import gr.evansp.momento.dto.UpdateUserProfileDto;
 import gr.evansp.momento.service.JwtService;
+import gr.evansp.momento.service.JwtServiceImpl;
 import jakarta.validation.ConstraintValidatorContext;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validation;
@@ -24,10 +25,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 /**
  * Unit tests for {@link UserProfileDtoValidator}.
  */
-@SpringBootTest
 class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
 
-  @Autowired JwtService service;
+  JwtService service = new JwtServiceImpl();
 
   /**
    * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
