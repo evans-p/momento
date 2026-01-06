@@ -10,12 +10,16 @@ Momento is a social media like app, built in java.
 
 ## Todos
 - Add caching with redis.
-- Check locking.
+- Check locking (Optimistic/Pessimistic).
 - Finalize transaction Isolation Levels, and Transaction Propagation.
 - FMEA
+- Alter services method signatures to return DTOs instead of Domain objects.
+- Rethink Dates
+- Full maven plugin integration
+- project restructure
 
 ## Useful Resources
-
+- https://medium.com/ing-tech-romania/implementing-a-basic-kafka-producer-and-consumer-using-spring-boot-spring-kafka-and-avro-schema-2b6d06e6c4cf
 - https://stackoverflow.com/questions/61344217/gitlab-ci-pipeline-to-check-for-code-formatting
 - https://www.baeldung.com/java-maven-owasp-dependency-check?ref=dailydev
 - https://medium.com/@ksaquib/mastering-spring-boot-service-discovery-and-registration-using-spring-cloud-netflix-eureka-a-1eec70317b32

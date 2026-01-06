@@ -8,6 +8,7 @@ COPY pom.xml .
 # Copy the module's pom.xml
 COPY user-management/pom.xml ./user-management/
 COPY cdn/pom.xml ./cdn/
+COPY notifications/pom.xml ./notifications/
 
 RUN mvn dependency:go-offline -B -pl user-management
 

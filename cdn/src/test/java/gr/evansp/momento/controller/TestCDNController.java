@@ -57,9 +57,8 @@ class TestCDNController extends AbstractIntegrationTest {
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(
             content()
-                .bytes(
-                    "{\"messages\":{\"resource.not.found\":\"Δε βρέθηκε περιεχόμενο στο συγκεκριμένο URL.\"}}"
-                        .getBytes()));
+                .string(
+                    "{\"messages\":{\"resource.not.found\":\"Δε βρέθηκε περιεχόμενο στο συγκεκριμένο URL.\"}}"));
   }
 
   @Test
@@ -116,9 +115,8 @@ class TestCDNController extends AbstractIntegrationTest {
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(
             content()
-                .bytes(
-                    "{\"messages\":{\"type.mismatch\":\"Διαφορά μεταξύ του τύπου περιεχομένου του αρχείου και της επέκτασης του.\"}}"
-                        .getBytes()));
+                .string(
+                    "{\"messages\":{\"type.mismatch\":\"Διαφορά μεταξύ του τύπου περιεχομένου του αρχείου και της επέκτασης του.\"}}"));
   }
 
   /**
