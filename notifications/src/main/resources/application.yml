@@ -1,0 +1,16 @@
+
+spring:
+  application:
+    name: momento-notifications
+  kafka:
+    follow:
+      topic: follow-topic
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: event-consumer-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: io.confluent.kafka.serializers.KafkaAvroDeserializer
+      properties:
+        schema.registry.url: http://localhost:8081
+        specific.avro.reader: true
