@@ -13,7 +13,7 @@ RUN mvn dependency:go-offline -B -pl notifications
 
 COPY notifications/src ./notifications/src/
 
-RUN mvn package spring-boot:repackage -DskipTests -pl user-management
+RUN mvn package spring-boot:repackage -DskipTests -pl notifications
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
