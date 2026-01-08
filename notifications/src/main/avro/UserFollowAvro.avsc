@@ -1,0 +1,16 @@
+{
+  "type": "record",
+  "name": "UserFollowAvro",
+  "namespace": "gr.evansp.momento.avro",
+  "fields": [
+    {"name": "follows", "type": "string"},
+    {"name": "followed", "type": "string"},
+    {
+      "name": "date",
+      "type": {
+        "type": "int",
+        "logicalType": "date"
+      }
+    }
+  ]
+}

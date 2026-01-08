@@ -17,9 +17,19 @@ services:
       - C:/var/cdn/storage:/var/cdn/storage
     depends_on:
       - db
+
+  notifications:
+    build:
+      context: .
+      dockerfile: notifications/Dockerfile
+    container_name: notifications
+    env_file:
+      - .env
+    ports:
+      - "8083:8080"
+    depends_on:
       - kafka
       - schema-registry
-
 
   user-management:
     build:
@@ -69,32 +79,25 @@ services:
       KAFKA_NODE_ID: 1
       KAFKA_CONTROLLER_QUORUM_VOTERS: '1@kafka:9093'
 
-      # Dual listener configuration - INTERNAL for containers, EXTERNAL for host
       KAFKA_LISTENERS: PLAINTEXT_INTERNAL://0.0.0.0:19092,PLAINTEXT_EXTERNAL://0.0.0.0:9092,CONTROLLER://0.0.0.0:9093
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT_INTERNAL:PLAINTEXT,PLAINTEXT_EXTERNAL:PLAINTEXT,CONTROLLER:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT_INTERNAL://kafka:19092,PLAINTEXT_EXTERNAL://localhost:9092
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
       KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
 
-      # Storage and logging
       KAFKA_LOG_DIRS: /var/lib/kafka/data
       KAFKA_LOG_RETENTION_HOURS: 168
 
-      # Topic and replication settings
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
       KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
       KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
 
-      # Cluster ID (must be unique and base64 encoded)
       CLUSTER_ID: 'MkU3OEVBNjg3Njc4NDY2Qk'
 
-      # JMX monitoring
       KAFKA_JMX_PORT: 9101
       KAFKA_JMX_HOSTNAME: localhost
-    volumes:
-      - ./kafka-data:/var/lib/kafka/data
     healthcheck:
       test: ["CMD-SHELL", "kafka-broker-api-versions --bootstrap-server localhost:9092"]
       interval: 10s
@@ -121,7 +124,6 @@ services:
       - "8081:8081"
     environment:
       SCHEMA_REGISTRY_HOST_NAME: schema-registry
-      # Use the INTERNAL listener for inter-container communication
       SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: 'kafka:19092'
       SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
       SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
