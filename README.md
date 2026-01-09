@@ -10,12 +10,18 @@ Momento is a social media like app, built in java.
 
 ## Todos
 - Add caching with redis.
-- Check locking.
+- Check locking (Optimistic/Pessimistic).
 - Finalize transaction Isolation Levels, and Transaction Propagation.
 - FMEA
+- Alter services method signatures to return DTOs instead of Domain objects.
+- Rethink Dates
+- Full maven plugin integration
+- project restructure
+- enhance UserFollowAvro
+- Think more about notifications: Maybe implement them using WebSockets https://claude.ai/chat/da3efdec-365a-4302-b951-e73f95a0c2a2
 
 ## Useful Resources
-
+- https://medium.com/ing-tech-romania/implementing-a-basic-kafka-producer-and-consumer-using-spring-boot-spring-kafka-and-avro-schema-2b6d06e6c4cf
 - https://stackoverflow.com/questions/61344217/gitlab-ci-pipeline-to-check-for-code-formatting
 - https://www.baeldung.com/java-maven-owasp-dependency-check?ref=dailydev
 - https://medium.com/@ksaquib/mastering-spring-boot-service-discovery-and-registration-using-spring-cloud-netflix-eureka-a-1eec70317b32
@@ -25,6 +31,7 @@ Momento is a social media like app, built in java.
 - https://inero-software.com/keycloak-integration-guide-enabling-social-login-with-multiple-platforms-like-google/#:~:text=Once%20Keycloak%20successfully%20authenticates%20the,user%20back%20to%20the%20client
 - https://ui.shadcn.com/
 - https://www.baeldung.com/spring-rest-openapi-documentation
+- https://medium.com/@AlexanderObregon/sending-push-notifications-using-spring-boot-and-firebase-e1227a7eea99
 
 ## Initial Idea
 
