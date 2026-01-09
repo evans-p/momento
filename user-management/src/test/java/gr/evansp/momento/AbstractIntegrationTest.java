@@ -55,7 +55,9 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
                   .withStartupTimeout(Duration.ofMinutes(2)));
 
   private static final RedisContainer redis = new RedisContainer(DockerImageName.parse("redis:7.4-alpine"))
-                                                      .withExposedPorts(6379);
+                                                .withNetwork(network)
+                                                .withNetworkAliases("redis")
+                                                .withExposedPorts(6379);
 
 
   @Autowired UserProfileRepository userProfileRepository;
@@ -80,8 +82,8 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
     registry.add(
         "spring.kafka.producer.properties.schema.registry.url",
         () -> "http://" + schemaRegistry.getHost() + ":" + schemaRegistry.getMappedPort(8081));
-    registry.add("spring.redis.host", redis::getHost);
-    registry.add("spring.redis.port", redis::getFirstMappedPort);
+    registry.add("spring.data.redis.host", redis::getHost);
+    registry.add("spring.data.redis.port", redis::getFirstMappedPort);
     registry.add("spring.cache.type", () -> "redis");
   }
 
