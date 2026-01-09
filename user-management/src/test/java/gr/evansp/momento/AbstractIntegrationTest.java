@@ -24,9 +24,6 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
 
   private static final Network network = Network.newNetwork();
 
-  private static PostgreSQLContainer<?> postgres =
-
-
   private static final PostgreSQLContainer<?> postgres =
       new PostgreSQLContainer<>("postgres:14")
           .withDatabaseName("user-management")
@@ -36,7 +33,6 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
           .withInitScript("sql/ddl.sql")
           .withNetwork(network)
           .waitingFor(Wait.forLogMessage(".*database system is ready to accept connections.*", 2));
-  ;
 
   private static final KafkaContainer kafka =
       new KafkaContainer(DockerImageName.parse("confluentinc/cp-kafka:7.5.0"))
@@ -57,14 +53,10 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
               Wait.forHttp("/subjects")
                   .forStatusCode(200)
                   .withStartupTimeout(Duration.ofMinutes(2)));
+
   private static final RedisContainer redis = new RedisContainer(DockerImageName.parse("redis:7.0-alpine"))
                                                       .withExposedPorts(6379);
 
-
-  static {
-    postgres.start();
-    redis.start();
-  }
 
   @Autowired UserProfileRepository userProfileRepository;
 
@@ -74,6 +66,7 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
     postgres.start();
     kafka.start();
     schemaRegistry.start();
+    redis.start();
   }
 
   @DynamicPropertySource
@@ -87,7 +80,6 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
     registry.add(
         "spring.kafka.producer.properties.schema.registry.url",
         () -> "http://" + schemaRegistry.getHost() + ":" + schemaRegistry.getMappedPort(8081));
-        "spring.jpa.properties.hibernate.dialect", () -> "org.hibernate.dialect.PostgreSQLDialect");
     registry.add("spring.redis.host", redis::getHost);
     registry.add("spring.redis.port", redis::getFirstMappedPort);
     registry.add("spring.cache.type", () -> "redis");
