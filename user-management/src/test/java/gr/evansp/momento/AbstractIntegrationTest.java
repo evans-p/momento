@@ -54,11 +54,11 @@ public abstract class AbstractIntegrationTest extends AbstractUnitTest {
                   .forStatusCode(200)
                   .withStartupTimeout(Duration.ofMinutes(2)));
 
-  private static final RedisContainer redis = new RedisContainer(DockerImageName.parse("redis:7.4-alpine"))
-                                                .withNetwork(network)
-                                                .withNetworkAliases("redis")
-                                                .withExposedPorts(6379);
-
+  private static final RedisContainer redis =
+      new RedisContainer(DockerImageName.parse("redis:7.4-alpine"))
+          .withNetwork(network)
+          .withNetworkAliases("redis")
+          .withExposedPorts(6379);
 
   @Autowired UserProfileRepository userProfileRepository;
 
