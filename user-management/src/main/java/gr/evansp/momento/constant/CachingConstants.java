@@ -13,6 +13,4 @@ public class CachingConstants {
   }
 
   public static final String USER_CACHE = "userCache";
-
-  public static final String FOLLOWS_CACHE = "followsCache";
 }
