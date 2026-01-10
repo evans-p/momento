@@ -49,7 +49,8 @@ public class AssetServiceImpl implements AssetService {
   private final AssetMetadataService assetMetadataService;
 
   @Autowired
-  public AssetServiceImpl(AssetRepository assetRepository, AssetMetadataService assetMetadataService) {
+  public AssetServiceImpl(
+      AssetRepository assetRepository, AssetMetadataService assetMetadataService) {
     this.assetRepository = assetRepository;
     this.assetMetadataService = assetMetadataService;
   }

@@ -1,5 +1,6 @@
 package gr.evansp.momento.service;
 
+import static gr.evansp.momento.constant.CachingConstants.USER_CACHE;
 import static gr.evansp.momento.constant.ExceptionConstants.*;
 
 import gr.evansp.momento.annotation.ValidPage;
@@ -20,6 +21,8 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -54,6 +57,7 @@ public class UserManagementServiceImpl implements UserManagementService {
    */
   @Autowired FollowProducerService followProducerService;
 
+  @Cacheable(value = USER_CACHE, key = "#result.id", condition = "#result != null")
   @Transactional(isolation = Isolation.SERIALIZABLE)
   @Override
   public UserProfile register(String jwtToken) {
@@ -80,6 +84,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     return repository.save(createUserProfileFromJwtTokenInfo(tokenInfo));
   }
 
+  @Cacheable(value = USER_CACHE, key = "#userId", condition = "#userId != null")
   @Override
   public UserProfile getUser(@ValidUserId String userId) {
     return repository
@@ -215,6 +220,7 @@ public class UserManagementServiceImpl implements UserManagementService {
     userFollowRepository.delete(follow.get());
   }
 
+  @CachePut(value = USER_CACHE, key = "#result.id", condition = "#result != null")
   @Override
   public UserProfile updateProfile(
       String jwtToken, @ValidUpdateUserProfileDto UpdateUserProfileDto profileDto) {
