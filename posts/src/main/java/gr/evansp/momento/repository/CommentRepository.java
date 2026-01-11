@@ -7,7 +7,7 @@ import gr.evansp.momento.model.Comment;
 import java.util.UUID;
 
 /**
- * {@link Repository} for {@link }.
+ * {@link Repository} for {@link Comment}.
  */
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, UUID> {
