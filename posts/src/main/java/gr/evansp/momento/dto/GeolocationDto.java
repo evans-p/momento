@@ -19,4 +19,4 @@ package gr.evansp.momento.dto;
  * @author Momento Development Team
  * @since 1.0
  */
-public record GeolocationDto(float latitude, float longitude, String placeName, String placeId) {}
+public record GeolocationDto(Float latitude, Float longitude, String placeName, String placeId) {}
