@@ -35,6 +35,7 @@ Momento is a social media like app, built in java.
 - https://ui.shadcn.com/
 - https://www.baeldung.com/spring-rest-openapi-documentation
 - https://medium.com/@AlexanderObregon/sending-push-notifications-using-spring-boot-and-firebase-e1227a7eea99
+- https://medium.com/@AlexanderObregon/navigating-client-server-communication-with-springs-feignclient-annotation-70376157cefd
 
 ## Initial Idea
 
