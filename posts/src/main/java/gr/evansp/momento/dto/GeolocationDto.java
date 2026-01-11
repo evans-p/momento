@@ -8,7 +8,7 @@ package gr.evansp.momento.dto;
  * </p>
  *
  * @param latitude  The latitude coordinate in decimal degrees. Valid range: -90.0 to 90.0.
- *                  Positive values represent northern hemisphere, negative values represent southern hemisphere.
+ *                  Positive values represent Northern Hemisphere, negative values represent Southern Hemisphere.
  * @param longitude The longitude coordinate in decimal degrees. Valid range: -180.0 to 180.0.
  *                  Positive values represent eastern hemisphere, negative values represent western hemisphere.
  * @param placeName The human-readable name of the location (e.g., "Central Park, New York", "Eiffel Tower, Paris").
