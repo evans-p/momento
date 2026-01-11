@@ -10,17 +10,16 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import java.time.OffsetDateTime;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Setter
 @Getter
 @Entity
 @Table(schema = "USER_MANAGEMENT", name = "USER_PROFILE")
+@ToString
 public class UserProfile {
 
   @Id
@@ -56,10 +55,10 @@ public class UserProfile {
   private Long followedCount = 0L;
 
   @OneToMany(mappedBy = "follows", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<UserFollow> followsList = new LinkedList<>();
+  private List<UserFollow> followsList = new ArrayList<>();
 
   @OneToMany(mappedBy = "followed", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-  private List<UserFollow> followedList = new LinkedList<>();
+  private List<UserFollow> followedList = new ArrayList<>();
 
   @Override
   public boolean equals(Object o) {
