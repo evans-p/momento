@@ -13,7 +13,7 @@ import java.util.UUID;
 @Getter
 @Entity
 @ToString
-@Table(schema = "POST_MANAGEMENT", name = "LIKE")
+@Table(schema = "POST_MANAGEMENT", name = "LIKE", uniqueConstraints = {@UniqueConstraint(columnNames = {"POST_ID", "USER_ID"})})
 public class Like {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
