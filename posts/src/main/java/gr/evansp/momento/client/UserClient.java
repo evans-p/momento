@@ -32,6 +32,6 @@ public interface UserClient {
      * @throws feign.FeignException if the request fails due to network issues,
      *                             authentication errors, or server-side problems
      */
-    @GetMapping("/")
+    @GetMapping("users/v1/")
     UserProfileDto getLoggedInUserProfile(@RequestHeader("Authorization") String authorizationHeader);
 }
