@@ -29,10 +29,10 @@ public class Post {
   private UUID ownerId;
 
   @Column(name = "LATITUDE")
-  private float latitude;
+  private Float latitude;
 
   @Column(name = "LONGITUDE")
-  float longitude;
+  private Float longitude;
 
   @Column(name = "PLACE_NAME")
   String placeName;
