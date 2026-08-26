@@ -20,6 +20,8 @@ Momento is a social media like app, built in java.
 - enhance UserFollowAvro
 - Think more about notifications: Maybe implement them using WebSockets https://claude.ai/chat/da3efdec-365a-4302-b951-e73f95a0c2a2
 - Add stress testing with Gatling
+- Add a batch process to delete image files, whose metadata are not on posts service DB
+- Add Chatting functionality
 
 ## Useful Resources
 - https://medium.com/ing-tech-romania/implementing-a-basic-kafka-producer-and-consumer-using-spring-boot-spring-kafka-and-avro-schema-2b6d06e6c4cf
@@ -33,6 +35,7 @@ Momento is a social media like app, built in java.
 - https://ui.shadcn.com/
 - https://www.baeldung.com/spring-rest-openapi-documentation
 - https://medium.com/@AlexanderObregon/sending-push-notifications-using-spring-boot-and-firebase-e1227a7eea99
+- https://medium.com/@AlexanderObregon/navigating-client-server-communication-with-springs-feignclient-annotation-70376157cefd
 
 ## Initial Idea
 
@@ -188,6 +191,7 @@ GATEWAY --> Notification-Service;
 GATEWAY --> Service-registry;
 User-Service --> Service-registry;
 Post-Service --> Service-registry;
+Post-Service --> User-Service;
 Feed-Service --> Service-registry;
 Notification-Service --> Service-registry;
 ```

@@ -38,6 +38,7 @@
         <module>cdn</module>
         <module>user-management</module>
         <module>notifications</module>
+        <module>posts</module>
     </modules>
 
     <scm>
@@ -64,11 +65,18 @@
         <version.kafka-avro-serializer>8.0.0</version.kafka-avro-serializer>
         <version.avro.maven.plugin>1.11.3</version.avro.maven.plugin>
         <version.testcontainers-redis>2.2.2</version.testcontainers-redis>
+        <version.spring-cloud-starter-openfeign>4.2.3</version.spring-cloud-starter-openfeign>
     </properties>
 
     <dependencyManagement>
 
         <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${version.spring-cloud-starter-openfeign}</version>
+            </dependency>
+
             <dependency>
                 <groupId>io.confluent</groupId>
                 <artifactId>kafka-avro-serializer</artifactId>
