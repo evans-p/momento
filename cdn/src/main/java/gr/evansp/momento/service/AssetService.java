@@ -3,6 +3,7 @@ package gr.evansp.momento.service;
 import gr.evansp.momento.annotation.ValidFile;
 import gr.evansp.momento.annotation.ValidFileName;
 import gr.evansp.momento.bean.FileWithContentType;
+import gr.evansp.momento.dto.AssetDto;
 import gr.evansp.momento.model.Asset;
 import java.io.File;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ public interface AssetService {
    *        {@link MultipartFile}
    * @return {@link Asset}
    */
-  Asset uploadAsset(@ValidFile MultipartFile file);
+  AssetDto uploadAsset(@ValidFile MultipartFile file);
 
   /**
    * Returns the file from the filesystem.

@@ -5,6 +5,7 @@ import static gr.evansp.momento.constants.ExceptionConstants.*;
 import gr.evansp.momento.annotation.ValidFile;
 import gr.evansp.momento.annotation.ValidFileName;
 import gr.evansp.momento.bean.FileWithContentType;
+import gr.evansp.momento.dto.AssetDto;
 import gr.evansp.momento.exception.InternalServiceException;
 import gr.evansp.momento.exception.ResourceNotFoundException;
 import gr.evansp.momento.model.Asset;
@@ -57,7 +58,7 @@ public class AssetServiceImpl implements AssetService {
 
   @Transactional(readOnly = true)
   @Override
-  public Asset uploadAsset(@ValidFile MultipartFile file) {
+  public AssetDto uploadAsset(@ValidFile MultipartFile file) {
     log.info("uploadAsset: uploading: {}", file.getOriginalFilename());
 
     try {
@@ -67,7 +68,7 @@ public class AssetServiceImpl implements AssetService {
 
       Optional<Asset> existingAsset = assetRepository.findByContentHash(contentHash);
       if (existingAsset.isPresent()) {
-        return existingAsset.get();
+        return AssetDto.of(existingAsset.get());
       }
 
       String fileExtension =
@@ -79,7 +80,8 @@ public class AssetServiceImpl implements AssetService {
       Path targetPath = Paths.get(fullPath, storedFilename);
       Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
 
-      return assetMetadataService.storeAssetMetadata(file, storedFilename, contentHash);
+      return AssetDto.of(assetMetadataService.storeAssetMetadata(file, storedFilename, contentHash));
+
     } catch (IOException e) {
       log.warn("uploadAsset: failed storing file: {}.", file);
       throw new InternalServiceException(FILE_PROCESS_FAILED, null);

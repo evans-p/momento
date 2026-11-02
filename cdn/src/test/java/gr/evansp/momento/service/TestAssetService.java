@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import gr.evansp.momento.AbstractIntegrationTest;
 import gr.evansp.momento.bean.FileWithContentType;
 import gr.evansp.momento.constants.ExceptionConstants;
+import gr.evansp.momento.dto.AssetDto;
 import gr.evansp.momento.exception.ResourceNotFoundException;
-import gr.evansp.momento.model.Asset;
 import jakarta.validation.ConstraintViolationException;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -38,10 +38,9 @@ class TestAssetService extends AbstractIntegrationTest {
   public void testUploadAsset_ok() {
     MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "image/jpeg", JPG_IMAGE);
 
-    Asset asset = service.uploadAsset(file);
+    AssetDto asset = service.uploadAsset(file);
 
     assertNotNull(asset);
-    assertNotNull(asset.getId());
   }
 
   /**
@@ -51,11 +50,10 @@ class TestAssetService extends AbstractIntegrationTest {
   public void testUploadAsset_alreadyExists() {
     MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "image/jpeg", JPG_IMAGE);
 
-    Asset asset = service.uploadAsset(file);
-    Asset duplicateAsset = service.uploadAsset(file);
+    AssetDto asset = service.uploadAsset(file);
+    AssetDto duplicateAsset = service.uploadAsset(file);
 
     assertNotNull(asset);
-    assertNotNull(asset.getId());
     assertEquals(asset, duplicateAsset);
   }
 
@@ -95,12 +93,12 @@ class TestAssetService extends AbstractIntegrationTest {
   @Test
   public void testGetFileByName_noFile() throws IOException {
     MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "image/jpeg", JPG_IMAGE);
-    Asset asset = service.uploadAsset(file);
-    Files.deleteIfExists(Path.of(storageLocation + "/" + asset.getFileName()));
+    AssetDto asset = service.uploadAsset(file);
+    Files.deleteIfExists(Path.of(storageLocation + "/" + asset.fileName()));
 
     ResourceNotFoundException e =
         assertThrows(
-            ResourceNotFoundException.class, () -> service.getFileByName(asset.getFileName()));
+            ResourceNotFoundException.class, () -> service.getFileByName(asset.fileName()));
     assertEquals(ExceptionConstants.FILE_NOT_FOUND, e.getMessage());
   }
 
@@ -113,9 +111,9 @@ class TestAssetService extends AbstractIntegrationTest {
   @Test
   public void testGetFileByName_ok() throws IOException {
     MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "image/jpeg", JPG_IMAGE);
-    Asset asset = service.uploadAsset(file);
+    AssetDto asset = service.uploadAsset(file);
 
-    FileWithContentType result = service.getFileByName(asset.getFileName());
+    FileWithContentType result = service.getFileByName(asset.fileName());
 
     assertNotNull(result);
     assertArrayEquals(file.getBytes(), Files.readAllBytes(result.file().toPath()));
