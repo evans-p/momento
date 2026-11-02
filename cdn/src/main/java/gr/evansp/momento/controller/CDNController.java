@@ -2,7 +2,6 @@ package gr.evansp.momento.controller;
 
 import gr.evansp.momento.bean.FileWithContentType;
 import gr.evansp.momento.dto.AssetDto;
-import gr.evansp.momento.model.Asset;
 import gr.evansp.momento.service.AssetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -33,8 +32,7 @@ public class CDNController implements CDNControllerAPI {
 
   @PostMapping("upload")
   public ResponseEntity<AssetDto> upload(@RequestParam("file") MultipartFile file) {
-    Asset asset = service.uploadAsset(file);
-    return new ResponseEntity<>(AssetDto.of(asset), HttpStatus.OK);
+    return new ResponseEntity<>(service.uploadAsset(file), HttpStatus.OK);
   }
 
   @GetMapping("{fileName}")
