@@ -21,6 +21,7 @@ Momento is a social media like app, built in java.
 - Think more about notifications: Maybe implement them using WebSockets https://claude.ai/chat/da3efdec-365a-4302-b951-e73f95a0c2a2
 - Add stress testing with Gatling
 - Add Github Actions
+- Spring Boot Actuator
 
 ## Useful Resources
 - https://medium.com/ing-tech-romania/implementing-a-basic-kafka-producer-and-consumer-using-spring-boot-spring-kafka-and-avro-schema-2b6d06e6c4cf
