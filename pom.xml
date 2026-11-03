@@ -64,6 +64,13 @@
         <version.kafka-avro-serializer>8.0.0</version.kafka-avro-serializer>
         <version.avro.maven.plugin>1.11.3</version.avro.maven.plugin>
         <version.testcontainers-redis>2.2.2</version.testcontainers-redis>
+        <version.spotbugs.maven.plugin>4.9.3.0</version.spotbugs.maven.plugin>
+        <skipSpotbugs>false</skipSpotbugs>
+        <version.dependency.check>11.1.1</version.dependency.check>
+        <version.pmd.maven.plugin>3.26.0</version.pmd.maven.plugin>
+        <version.enforcer.maven.plugin>3.5.0</version.enforcer.maven.plugin>
+        <skipPmd>false</skipPmd>
+        <skipEnforcer>false</skipEnforcer>
     </properties>
 
     <dependencyManagement>
@@ -201,6 +208,112 @@
                     </executions>
                 </plugin>
 
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>${version.spotbugs.maven.plugin}</version>
+                    <configuration>
+                        <skip>${skipSpotbugs}</skip>
+                        <effort>Max</effort>
+                        <threshold>Medium</threshold>
+                        <failOnError>true</failOnError>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>spotbugs-check</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${version.dependency.check}</version>
+                    <configuration>
+                        <failBuildOnCVSS>7</failBuildOnCVSS>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${version.pmd.maven.plugin}</version>
+                    <configuration>
+                        <skip>${skipPmd}</skip>
+                        <targetJdk>${java.version}</targetJdk>
+                        <printFailingErrors>true</printFailingErrors>
+                        <failOnViolation>true</failOnViolation>
+                        <failurePriority>3</failurePriority>
+                        <includeTests>false</includeTests>
+                        <rulesets>
+                            <ruleset>${maven.multiModuleProjectDirectory}/pmd-ruleset.xml</ruleset>
+                        </rulesets>
+                        <excludeRoots>
+                            <excludeRoot>${project.basedir}/src/main/java/gr/evansp/momento/avro</excludeRoot>
+                        </excludeRoots>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>pmd-check</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>check</goal>
+                                <goal>cpd-check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${version.enforcer.maven.plugin}</version>
+                    <configuration>
+                        <skip>${skipEnforcer}</skip>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>enforce-rules</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                            <configuration>
+                                <rules>
+                                    <requireMavenVersion>
+                                        <version>[3.9.0,)</version>
+                                    </requireMavenVersion>
+                                    <requireJavaVersion>
+                                        <version>[${java.version},)</version>
+                                    </requireJavaVersion>
+                                    <requirePluginVersions>
+                                        <banSnapshots>true</banSnapshots>
+                                    </requirePluginVersions>
+                                    <banDuplicatePomDependencyVersions/>
+                                    <dependencyConvergence/>
+                                </rules>
+                                <fail>true</fail>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.12.1</version>
+                </plugin>
             </plugins>
 
         </pluginManagement>
