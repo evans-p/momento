@@ -26,6 +26,7 @@ Momento is a social media like app, built in java.
 - SonarCube
 - ArchUnit
 - Spring Modulith
+- flyway
 
 ## Useful Resources
 - https://medium.com/ing-tech-romania/implementing-a-basic-kafka-producer-and-consumer-using-spring-boot-spring-kafka-and-avro-schema-2b6d06e6c4cf
