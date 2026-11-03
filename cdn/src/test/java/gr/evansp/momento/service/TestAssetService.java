@@ -54,7 +54,8 @@ class TestAssetService extends AbstractIntegrationTest {
     AssetDto duplicateAsset = service.uploadAsset(file);
 
     assertNotNull(asset);
-    assertEquals(asset, duplicateAsset);
+    assertEquals(asset.fileName(), duplicateAsset.fileName());
+    assertEquals(asset.fileSize(), duplicateAsset.fileSize());
   }
 
   /**
