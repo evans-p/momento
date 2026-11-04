@@ -23,11 +23,11 @@ jobs:
         run: mvn clean install -DskipTests
 
   spotless:
-    name: Build with java 21
+    name: Spotless Check
     needs: build
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false
+      fail-fast: true
     steps:
       - uses: actions/checkout@v4
 
@@ -37,5 +37,5 @@ jobs:
           distribution: temurin
           java-version: 21
           cache: maven
-      - name: Build project
+      - name: Run Spotless Check
         run: mvn clean install -DskipTests
