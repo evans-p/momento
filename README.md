@@ -13,7 +13,6 @@ Momento is a social media like app, built in java.
 - Check locking (Optimistic/Pessimistic).
 - Finalize transaction Isolation Levels, and Transaction Propagation.
 - FMEA
-- Alter services method signatures to return DTOs instead of Domain objects.
 - Rethink Dates
 - Full maven plugin integration
 - project restructure
