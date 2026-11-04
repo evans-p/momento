@@ -80,6 +80,6 @@ jobs:
           java-version: 21
           cache: maven
       - name: Run Dependency Check
-        run: mvn dependency-check:check -DskipDependencyCheck=false
+        run: mvn dependency-check:check -DskipDependencyCheck=false -DnvdApiKey=${{ secrets.NVD_API_KEY }}
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
