@@ -12,18 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-/**
- * Integration tests for {@link UserProfileRepository}.
- */
+/** Integration tests for {@link UserProfileRepository}. */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class TestUserProfileRepository extends AbstractIntegrationTest {
 
   @Autowired UserProfileRepository repository;
 
-  /**
-   * Test for {@link UserProfileRepository#save(Object)}
-   */
+  /** Test for {@link UserProfileRepository#save(Object)} */
   @Test
   public void testStore() {
     UserProfile userProfile = getSampleUserProfile();
@@ -36,9 +32,7 @@ class TestUserProfileRepository extends AbstractIntegrationTest {
     assertEquals(userProfile.getAuthenticationProviderId(), profile.getAuthenticationProviderId());
   }
 
-  /**
-   * Test for {@link UserProfileRepository#save(Object)}
-   */
+  /** Test for {@link UserProfileRepository#save(Object)} */
   @Test
   public void testFindByAuthenticationProviderId() {
     UserProfile userProfile = getSampleUserProfile();

@@ -8,9 +8,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Implementation of {@link UserService}.
- */
+/** Implementation of {@link UserService}. */
 @Service
 public class UserServiceImpl implements UserService {
 

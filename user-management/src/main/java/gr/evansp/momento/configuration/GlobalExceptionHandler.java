@@ -24,24 +24,19 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
-/**
- * Application Global Exception Handler.
- */
+/** Application Global Exception Handler. */
 @SuppressWarnings("unused")
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-  /**
-   * {@link MessageSource}.
-   */
+  /** {@link MessageSource}. */
   MessageSource messageSource;
 
   /**
    * Constructor.
    *
-   * @param messageSource
-   *        {@link MessageSource}.
+   * @param messageSource {@link MessageSource}.
    */
   @Autowired
   public GlobalExceptionHandler(MessageSource messageSource) {
@@ -51,10 +46,8 @@ public class GlobalExceptionHandler {
   /**
    * Handler for {@link NoResourceFoundException}.
    *
-   * @param e
-   *        {@link NoResourceFoundException}.
-   * @param locale
-   * 		locale
+   * @param e {@link NoResourceFoundException}.
+   * @param locale locale
    * @return error message
    */
   @ExceptionHandler(NoResourceFoundException.class)
@@ -69,10 +62,8 @@ public class GlobalExceptionHandler {
   /**
    * Handler for {@link MethodArgumentTypeMismatchException}.
    *
-   * @param e
-   *        {@link MethodArgumentTypeMismatchException}.
-   * @param locale
-   * 		locale
+   * @param e {@link MethodArgumentTypeMismatchException}.
+   * @param locale locale
    * @return error message
    */
   @ExceptionHandler(MethodArgumentTypeMismatchException.class)
@@ -87,10 +78,8 @@ public class GlobalExceptionHandler {
   /**
    * Handler for {@link HttpMessageNotReadableException}.
    *
-   * @param e
-   *        {@link HttpMessageNotReadableException}.
-   * @param locale
-   * 		locale
+   * @param e {@link HttpMessageNotReadableException}.
+   * @param locale locale
    * @return error message
    */
   @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -105,10 +94,8 @@ public class GlobalExceptionHandler {
   /**
    * Handler for {@link HttpMediaTypeNotSupportedException}.
    *
-   * @param e
-   *        {@link HttpMediaTypeNotSupportedException}.
-   * @param locale
-   * 		locale
+   * @param e {@link HttpMediaTypeNotSupportedException}.
+   * @param locale locale
    * @return error message
    */
   @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
@@ -124,10 +111,8 @@ public class GlobalExceptionHandler {
   /**
    * Handler for {@link HttpRequestMethodNotSupportedException}.
    *
-   * @param e
-   *        {@link HttpRequestMethodNotSupportedException}.
-   * @param locale
-   * 		locale
+   * @param e {@link HttpRequestMethodNotSupportedException}.
+   * @param locale locale
    * @return error message
    */
   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
@@ -143,10 +128,8 @@ public class GlobalExceptionHandler {
   /**
    * Handler for {@link HttpRequestMethodNotSupportedException}.
    *
-   * @param e
-   *        {@link HttpRequestMethodNotSupportedException}.
-   * @param locale
-   * 		locale
+   * @param e {@link HttpRequestMethodNotSupportedException}.
+   * @param locale locale
    * @return error message
    */
   @ExceptionHandler(MissingRequestHeaderException.class)
@@ -162,10 +145,8 @@ public class GlobalExceptionHandler {
   /**
    * Handler for {@link LogicException}.
    *
-   * @param e
-   *        {@link LogicException}.
-   * @param locale
-   * 		locale
+   * @param e {@link LogicException}.
+   * @param locale locale
    * @return error message
    */
   @ExceptionHandler(LogicException.class)
@@ -180,10 +161,8 @@ public class GlobalExceptionHandler {
   /**
    * Handler for {@link LogicException}.
    *
-   * @param e
-   *        {@link LogicException}.
-   * @param locale
-   * 		locale
+   * @param e {@link LogicException}.
+   * @param locale locale
    * @return error message
    */
   @ExceptionHandler(ResourceNotFoundException.class)
@@ -198,8 +177,7 @@ public class GlobalExceptionHandler {
   /**
    * Handler for invalid Entities.
    *
-   * @param e
-   *        {@link ConstraintViolationException}.
+   * @param e {@link ConstraintViolationException}.
    * @return {@link ResponseEntity}.
    */
   @ExceptionHandler(ConstraintViolationException.class)
@@ -217,10 +195,8 @@ public class GlobalExceptionHandler {
   /**
    * If none of the exceptions above work, this one takes effect.
    *
-   * @param e
-   *        {@link Exception}.
-   * @param locale
-   * 		locale.
+   * @param e {@link Exception}.
+   * @param locale locale.
    * @return {@link ResponseEntity}
    */
   @ExceptionHandler(Exception.class)

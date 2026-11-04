@@ -70,8 +70,9 @@ public class UserProfileDtoValidator
 
   /**
    * Validates url.
+   *
    * @param value value
-   * @param context  {@link ConstraintValidatorContext}
+   * @param context {@link ConstraintValidatorContext}
    * @return whether is valid or not.
    */
   private boolean validateProfileUrl(String value, ConstraintValidatorContext context) {
@@ -104,6 +105,7 @@ public class UserProfileDtoValidator
 
   /**
    * Parses URL from string.
+   *
    * @param stringUrl stringUrl
    * @return {@link ValueHolder}.
    */
@@ -128,6 +130,7 @@ public class UserProfileDtoValidator
 
   /**
    * Validates fields like first name and last name.
+   *
    * @param name name
    * @param context {@link ConstraintValidatorContext}.
    * @return is valid or not
@@ -157,10 +160,8 @@ public class UserProfileDtoValidator
   /**
    * Build a validation message.
    *
-   * @param messageCode
-   * 		messageCode
-   * @param context
-   * 		context
+   * @param messageCode messageCode
+   * @param context context
    * @return false
    */
   private boolean buildConstraintViolationMessage(
@@ -173,6 +174,7 @@ public class UserProfileDtoValidator
 
   /**
    * {@link ValueHolder}.
+   *
    * @param protocol protocol
    * @param host host
    * @param port port

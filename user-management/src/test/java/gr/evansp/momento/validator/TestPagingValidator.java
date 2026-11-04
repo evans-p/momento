@@ -14,14 +14,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;
 
-/**
- * Unit tests for {@link PagingValidator}.
- */
+/** Unit tests for {@link PagingValidator}. */
 public class TestPagingValidator extends AbstractUnitTest {
 
-  /**
-   * Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_nullPaging() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -39,9 +35,7 @@ public class TestPagingValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_negativePaging() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -59,9 +53,7 @@ public class TestPagingValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_zeroPaging() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -79,9 +71,7 @@ public class TestPagingValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_maxPaging() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -95,9 +85,7 @@ public class TestPagingValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_tooBigPaging() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -115,9 +103,7 @@ public class TestPagingValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link PagingValidator#isValid(Integer, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_ok() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {

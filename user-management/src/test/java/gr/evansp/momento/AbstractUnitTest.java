@@ -19,9 +19,7 @@ public class AbstractUnitTest {
   protected static final String VALID_LINKED_IN_TOKEN =
       loadValidToken("util/linkedin-jwt-token.txt");
 
-  /**
-   * Validation Messages.
-   */
+  /** Validation Messages. */
   protected static final ResourceBundle VALIDATION_MESSAGES =
       ResourceBundle.getBundle("ValidationMessages", Locale.getDefault());
 

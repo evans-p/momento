@@ -23,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 /**
  * API contract and OpenAPI documentation for user management endpoints.
  *
- * <p>All error responses share the {@link ExceptionMessage} body, a map of message key to
- * localized message.
+ * <p>All error responses share the {@link ExceptionMessage} body, a map of message key to localized
+ * message.
  */
 @Tag(
     name = "User Management",

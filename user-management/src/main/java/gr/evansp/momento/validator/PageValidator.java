@@ -23,10 +23,8 @@ public class PageValidator implements ConstraintValidator<ValidPage, Integer> {
   /**
    * Build validation message.
    *
-   * @param messageCode
-   * 		messageCode
-   * @param context
-   * 		context
+   * @param messageCode messageCode
+   * @param context context
    * @return false
    */
   private boolean buildConstraintViolationMessage(

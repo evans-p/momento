@@ -17,8 +17,8 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 
 /**
- * Abstract Class for Integration tests. Contains the initialization of
- * the required test containers.
+ * Abstract Class for Integration tests. Contains the initialization of the required test
+ * containers.
  */
 public abstract class AbstractIntegrationTest extends AbstractUnitTest {
 

@@ -23,9 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("users/v1/")
 public class UserManagementController implements UserManagementControllerAPI {
 
-  /**
-   * {@link UserManagementService}.
-   */
+  /** {@link UserManagementService}. */
   private final UserService service;
 
   @Autowired

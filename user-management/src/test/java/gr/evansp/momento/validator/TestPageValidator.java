@@ -13,9 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;
 
-/**
- * Unit tests for {@link PageValidator}.
- */
+/** Unit tests for {@link PageValidator}. */
 class TestPageValidator extends AbstractUnitTest {
 
   @Test

@@ -20,15 +20,14 @@ import lombok.Getter;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;
 
-/**
- * Unit tests for {@link UserProfileDtoValidator}.
- */
+/** Unit tests for {@link UserProfileDtoValidator}. */
 class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
 
   JwtService service = new JwtServiceImpl();
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_nullUserProfileDto() {
@@ -48,7 +47,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_emptyUserProfileDto() {
@@ -77,7 +77,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_blankFirstNameLastName() {
@@ -107,7 +108,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_tooLongFirstNameLastName() {
@@ -137,7 +139,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_exactly511LengthFirstNameLastName() {
@@ -154,7 +157,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_invalidCharactersFirstNameLastName1() {
@@ -188,7 +192,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_invalidCharactersFirstNameLastName2() {
@@ -222,7 +227,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_invalidCharactersFirstNameLastName3() {
@@ -256,7 +262,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_invalidCharactersFirstNameLastName4() {
@@ -290,7 +297,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_invalidCharactersFirstNameLastName5() {
@@ -321,7 +329,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_okCharactersFirstNameLastName() {
@@ -338,7 +347,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_emptyProfileUrl() {
@@ -357,7 +367,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_blankProfileUrl() {
@@ -376,7 +387,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_tooLongProfileUrl() {
@@ -403,7 +415,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_okGoogle() {
@@ -423,7 +436,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_okKeycloak() {
@@ -443,7 +457,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_okFacebook() {
@@ -463,7 +478,8 @@ class TestUpdateUserProfileDtoValidator extends AbstractUnitTest {
   }
 
   /**
-   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto, ConstraintValidatorContext)}.
+   * Test for {@link UserProfileDtoValidator#isValid(UpdateUserProfileDto,
+   * ConstraintValidatorContext)}.
    */
   @Test
   public void testIsValid_okLinkedIn() {
