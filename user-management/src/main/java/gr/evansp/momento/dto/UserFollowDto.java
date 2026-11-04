@@ -4,6 +4,7 @@ import gr.evansp.momento.model.UserFollow;
 
 /**
  * Data transfer object for {@link UserFollow}.
+ *
  * @param follows {@link UserProfileDto}.
  * @param followed {@link UserProfileDto}.
  */

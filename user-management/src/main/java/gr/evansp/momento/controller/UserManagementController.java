@@ -3,9 +3,8 @@ package gr.evansp.momento.controller;
 import gr.evansp.momento.dto.UpdateUserProfileDto;
 import gr.evansp.momento.dto.UserFollowDto;
 import gr.evansp.momento.dto.UserProfileDto;
-import gr.evansp.momento.model.UserFollow;
-import gr.evansp.momento.model.UserProfile;
 import gr.evansp.momento.service.UserManagementService;
+import gr.evansp.momento.service.UserService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,13 +23,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("users/v1/")
 public class UserManagementController implements UserManagementControllerAPI {
 
-  /**
-   * {@link UserManagementService}.
-   */
-  private final UserManagementService service;
+  /** {@link UserManagementService}. */
+  private final UserService service;
 
   @Autowired
-  public UserManagementController(UserManagementService service) {
+  public UserManagementController(UserService service) {
     this.service = service;
   }
 
@@ -39,9 +36,8 @@ public class UserManagementController implements UserManagementControllerAPI {
       @RequestHeader("Authorization") String authorizationHeader) {
 
     String jwtToken = extractJwtToken(authorizationHeader);
-    UserProfile profile = service.register(jwtToken);
 
-    return new ResponseEntity<>(UserProfileDto.of(profile), HttpStatus.OK);
+    return new ResponseEntity<>(service.register(jwtToken), HttpStatus.OK);
   }
 
   @GetMapping("")
@@ -49,9 +45,8 @@ public class UserManagementController implements UserManagementControllerAPI {
       @RequestHeader("Authorization") String authorizationHeader) {
 
     String jwtToken = extractJwtToken(authorizationHeader);
-    UserProfile profile = service.getLoggedInUser(jwtToken);
 
-    return new ResponseEntity<>(UserProfileDto.of(profile), HttpStatus.OK);
+    return new ResponseEntity<>(service.getLoggedInUser(jwtToken), HttpStatus.OK);
   }
 
   @GetMapping("followers")
@@ -60,12 +55,9 @@ public class UserManagementController implements UserManagementControllerAPI {
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size) {
     String jwtToken = extractJwtToken(authorizationHeader);
-    List<UserFollow> follows = service.getLoggedInUserFollowed(jwtToken, page, size);
 
-    List<UserProfileDto> followers =
-        follows.stream().map(UserFollow::getFollows).map(UserProfileDto::of).toList();
-
-    return new ResponseEntity<>(followers, HttpStatus.OK);
+    return new ResponseEntity<>(
+        service.getLoggedInUserFollowed(jwtToken, page, size), HttpStatus.OK);
   }
 
   @GetMapping("follows")
@@ -74,12 +66,9 @@ public class UserManagementController implements UserManagementControllerAPI {
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size) {
     String jwtToken = extractJwtToken(authorizationHeader);
-    List<UserFollow> follows = service.getLoggedInUserFollows(jwtToken, page, size);
 
-    List<UserProfileDto> followers =
-        follows.stream().map(UserFollow::getFollowed).map(UserProfileDto::of).toList();
-
-    return new ResponseEntity<>(followers, HttpStatus.OK);
+    return new ResponseEntity<>(
+        service.getLoggedInUserFollows(jwtToken, page, size), HttpStatus.OK);
   }
 
   @PutMapping("")
@@ -87,16 +76,14 @@ public class UserManagementController implements UserManagementControllerAPI {
       @RequestBody UpdateUserProfileDto userProfileDto,
       @RequestHeader("Authorization") String authorizationHeader) {
     String jwtToken = extractJwtToken(authorizationHeader);
-    UserProfile profile = service.updateProfile(jwtToken, userProfileDto);
 
-    return new ResponseEntity<>(UserProfileDto.of(profile), HttpStatus.OK);
+    return new ResponseEntity<>(service.updateProfile(jwtToken, userProfileDto), HttpStatus.OK);
   }
 
   @GetMapping("{userId}")
   public ResponseEntity<UserProfileDto> getUser(@PathVariable String userId) {
-    UserProfile profile = service.getUser(userId);
 
-    return new ResponseEntity<>(UserProfileDto.of(profile), HttpStatus.OK);
+    return new ResponseEntity<>(service.getUser(userId), HttpStatus.OK);
   }
 
   @GetMapping("{userId}/followers")
@@ -104,12 +91,8 @@ public class UserManagementController implements UserManagementControllerAPI {
       @PathVariable String userId,
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size) {
-    List<UserFollow> follows = service.getFollowed(userId, page, size);
 
-    List<UserProfileDto> followers =
-        follows.stream().map(UserFollow::getFollows).map(UserProfileDto::of).toList();
-
-    return new ResponseEntity<>(followers, HttpStatus.OK);
+    return new ResponseEntity<>(service.getFollowed(userId, page, size), HttpStatus.OK);
   }
 
   @GetMapping("{userId}/follows")
@@ -117,21 +100,16 @@ public class UserManagementController implements UserManagementControllerAPI {
       @PathVariable String userId,
       @RequestParam(defaultValue = "0") int page,
       @RequestParam(defaultValue = "10") int size) {
-    List<UserFollow> follows = service.getFollows(userId, page, size);
 
-    List<UserProfileDto> followsDto =
-        follows.stream().map(UserFollow::getFollowed).map(UserProfileDto::of).toList();
-
-    return new ResponseEntity<>(followsDto, HttpStatus.OK);
+    return new ResponseEntity<>(service.getFollows(userId, page, size), HttpStatus.OK);
   }
 
   @PostMapping("{userId}/follow")
   public ResponseEntity<UserFollowDto> follow(
       @PathVariable String userId, @RequestHeader("Authorization") String authorizationHeader) {
     String jwtToken = extractJwtToken(authorizationHeader);
-    UserFollow follow = service.follow(jwtToken, userId);
 
-    return new ResponseEntity<>(UserFollowDto.of(follow), HttpStatus.OK);
+    return new ResponseEntity<>(service.follow(jwtToken, userId), HttpStatus.OK);
   }
 
   @PostMapping("{userId}/unfollow")

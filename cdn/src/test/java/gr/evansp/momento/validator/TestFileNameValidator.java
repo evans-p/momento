@@ -14,14 +14,10 @@ import lombok.Getter;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;
 
-/**
- * Unit tests for {@link FileNameValidator}.
- */
+/** Unit tests for {@link FileNameValidator}. */
 class TestFileNameValidator extends AbstractUnitTest {
 
-  /**
-   * Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_nullFileName() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -38,9 +34,7 @@ class TestFileNameValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_emptyFileName() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -57,9 +51,7 @@ class TestFileNameValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_blankFileName() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -76,9 +68,7 @@ class TestFileNameValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_faultyFileName() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -95,9 +85,7 @@ class TestFileNameValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_ok() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -112,9 +100,7 @@ class TestFileNameValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_ok2() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -129,9 +115,7 @@ class TestFileNameValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileNameValidator#isValid(String, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_ok3() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {

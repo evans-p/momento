@@ -23,32 +23,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-/**
- * Integration tests for {@link UserManagementService}.
- */
+/** Integration tests for {@link UserManagementService}. */
 @SuppressWarnings("OptionalGetWithoutIsPresent")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class TestUserManagementService extends AbstractIntegrationTest {
 
-  /**
-   * {@link UserManagementService}.
-   */
+  /** {@link UserManagementService}. */
   @Autowired UserManagementService service;
 
-  /**
-   * {@link UserFollowRepository}.
-   */
+  /** {@link UserFollowRepository}. */
   @Autowired UserFollowRepository userFollowRepository;
 
-  /**
-   * {@link UserProfileRepository}.
-   */
+  /** {@link UserProfileRepository}. */
   @Autowired UserProfileRepository userProfileRepository;
 
-  /**
-   * Test for {@link UserManagementService#register(String)}.
-   */
+  /** Test for {@link UserManagementService#register(String)}. */
   @Test
   public void testRegister_ok() {
     UserProfile profile = service.register(VALID_GOOGLE_TOKEN);
@@ -62,9 +52,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(0L, profile.getFollowedCount());
   }
 
-  /**
-   * Test for {@link UserManagementService#register(String)}.
-   */
+  /** Test for {@link UserManagementService#register(String)}. */
   @Test
   public void testRegister_userAlreadyRegistered() {
     service.register(VALID_GOOGLE_TOKEN);
@@ -73,9 +61,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(USER_ALREADY_REGISTERED, exception.getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#register(String)}.
-   */
+  /** Test for {@link UserManagementService#register(String)}. */
   @Test
   public void testGetUser_nullUserId() {
     ConstraintViolationException e =
@@ -85,9 +71,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#register(String)}.
-   */
+  /** Test for {@link UserManagementService#register(String)}. */
   @Test
   public void testGetUser_emptyUserId() {
     ConstraintViolationException e =
@@ -97,9 +81,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#register(String)}.
-   */
+  /** Test for {@link UserManagementService#register(String)}. */
   @Test
   public void testGetUser_blankUserId() {
     ConstraintViolationException e =
@@ -109,9 +91,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#register(String)}.
-   */
+  /** Test for {@link UserManagementService#register(String)}. */
   @Test
   public void testGetUser_invalidToken() {
     ConstraintViolationException e =
@@ -121,9 +101,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#register(String)}.
-   */
+  /** Test for {@link UserManagementService#register(String)}. */
   @Test
   public void testGetUser_userNotFound() {
     ResourceNotFoundException e =
@@ -132,9 +110,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(USER_NOT_FOUND, e.getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#register(String)}.
-   */
+  /** Test for {@link UserManagementService#register(String)}. */
   @Test
   public void testGetUser_ok() {
     UserProfile profile = service.register(VALID_GOOGLE_TOKEN);
@@ -155,9 +131,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(profile.getFollowedCount(), fetchProfile.getFollowedCount());
   }
 
-  /**
-   * Test for {@link UserManagementService#getLoggedInUser(String)}.
-   */
+  /** Test for {@link UserManagementService#getLoggedInUser(String)}. */
   @Test
   public void testGetLoggedInUser_userNotFound() {
     ResourceNotFoundException exception =
@@ -166,9 +140,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(USER_NOT_FOUND, exception.getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#getLoggedInUser(String)}.
-   */
+  /** Test for {@link UserManagementService#getLoggedInUser(String)}. */
   @Test
   public void testGetLoggedInUser_ok() {
     UserProfile profile = service.register(VALID_GOOGLE_TOKEN);
@@ -189,9 +161,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(profile.getFollowedCount(), fetchProfile.getFollowedCount());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollows(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollows(String, int, int)}. */
   @Test
   public void testGetFollows_nullUserId() {
     ConstraintViolationException e =
@@ -201,9 +171,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollows(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollows(String, int, int)}. */
   @Test
   public void testGetFollows_negativePage() {
     ConstraintViolationException e =
@@ -215,9 +183,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollows(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollows(String, int, int)}. */
   @Test
   public void testGetFollows_negativePageSize() {
     ConstraintViolationException e =
@@ -229,9 +195,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollows(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollows(String, int, int)}. */
   @Test
   public void testGetFollows_zeroPageSize() {
     ConstraintViolationException e =
@@ -243,9 +207,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollows(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollows(String, int, int)}. */
   @Test
   public void testGetFollows_faultyPagination() {
     ConstraintViolationException e =
@@ -256,9 +218,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(2, e.getConstraintViolations().size());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollows(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollows(String, int, int)}. */
   @Test
   public void testGetFollows_userNotFound() {
     ResourceNotFoundException e =
@@ -268,9 +228,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(USER_NOT_FOUND, e.getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollows(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollows(String, int, int)}. */
   @Test
   public void testGetFollows_ok() {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
@@ -301,9 +259,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(profile1, profile2Follows.getFirst().getFollowed());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollowed(String, int, int)}. */
   @Test
   public void testgetFollowed_nullUserId() {
     ConstraintViolationException e =
@@ -313,9 +269,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollowed(String, int, int)}. */
   @Test
   public void testgetFollowed_negativePage() {
     ConstraintViolationException e =
@@ -327,9 +281,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollowed(String, int, int)}. */
   @Test
   public void testgetFollowed_negativePageSize() {
     ConstraintViolationException e =
@@ -341,9 +293,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollowed(String, int, int)}. */
   @Test
   public void testgetFollowed_zeroPageSize() {
     ConstraintViolationException e =
@@ -355,9 +305,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         e.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollowed(String, int, int)}. */
   @Test
   public void testgetFollowed_faultyPagination() {
     ConstraintViolationException e =
@@ -368,9 +316,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(2, e.getConstraintViolations().size());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollowed(String, int, int)}. */
   @Test
   public void testgetFollowed_userNotFound() {
     ResourceNotFoundException e =
@@ -380,9 +326,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(USER_NOT_FOUND, e.getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#getFollowed(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getFollowed(String, int, int)}. */
   @Test
   public void testgetFollowed_ok() {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
@@ -413,9 +357,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(profile2, profile2followed.getFirst().getFollowed());
   }
 
-  /**
-   * Test for {@link UserManagementService#follow(String, String)}.
-   */
+  /** Test for {@link UserManagementService#follow(String, String)}. */
   @Test
   public void testFollow_loggedInUserNotFound() {
     ResourceNotFoundException exception =
@@ -425,9 +367,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(USER_NOT_FOUND, exception.getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#follow(String, String)}.
-   */
+  /** Test for {@link UserManagementService#follow(String, String)}. */
   @Test
   public void testFollow_invalidFollowedUserId() {
     service.register(VALID_GOOGLE_TOKEN);
@@ -439,9 +379,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         exception.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#follow(String, String)}.
-   */
+  /** Test for {@link UserManagementService#follow(String, String)}. */
   @Test
   public void testFollow_followAlreadyExists() {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
@@ -476,9 +414,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(1, userFollowRepository.findAll().size());
   }
 
-  /**
-   * Test for {@link UserManagementService#follow(String, String)}.
-   */
+  /** Test for {@link UserManagementService#follow(String, String)}. */
   @Test
   public void testFollow_ok() {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
@@ -504,9 +440,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(1, userFollowRepository.findAll().size());
   }
 
-  /**
-   * Test for {@link UserManagementService#unfollow(String, String)}.
-   */
+  /** Test for {@link UserManagementService#unfollow(String, String)}. */
   @Test
   public void testUnfollow_loggedInUserNotFound() {
     ResourceNotFoundException exception =
@@ -516,9 +450,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(USER_NOT_FOUND, exception.getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#unfollow(String, String)}.
-   */
+  /** Test for {@link UserManagementService#unfollow(String, String)}. */
   @Test
   public void testUnfollow_invalidFollowedUserId() {
     service.register(VALID_GOOGLE_TOKEN);
@@ -531,9 +463,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
         exception.getConstraintViolations().iterator().next().getMessage());
   }
 
-  /**
-   * Test for {@link UserManagementService#unfollow(String, String)}.
-   */
+  /** Test for {@link UserManagementService#unfollow(String, String)}. */
   @Test
   public void testUnfollow_followDoesNotExist() {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
@@ -557,9 +487,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(0, userFollowRepository.findAll().size());
   }
 
-  /**
-   * Test for {@link UserManagementService#unfollow(String, String)}.
-   */
+  /** Test for {@link UserManagementService#unfollow(String, String)}. */
   @Test
   public void testUnfollow_ok() {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
@@ -591,9 +519,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(0, userFollowRepository.findAll().size());
   }
 
-  /**
-   * Test for {@link UserManagementService#updateProfile(String, UpdateUserProfileDto)} .
-   */
+  /** Test for {@link UserManagementService#updateProfile(String, UpdateUserProfileDto)} . */
   @Test
   public void testUpdateProfile_ok() {
     UserProfile profile = service.register(VALID_GOOGLE_TOKEN);
@@ -607,9 +533,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(profileDto.lastName(), fetchProfile.getLastName());
   }
 
-  /**
-   * Test for {@link UserManagementService#getLoggedInUserFollows(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getLoggedInUserFollows(String, int, int)}. */
   @Test
   public void testGetLoggedInUserFollows_ok() {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);
@@ -634,9 +558,7 @@ class TestUserManagementService extends AbstractIntegrationTest {
     assertEquals(profile2, follows.getFirst().getFollowed());
   }
 
-  /**
-   * Test for {@link UserManagementService#getLoggedInUserFollows(String, int, int)}.
-   */
+  /** Test for {@link UserManagementService#getLoggedInUserFollows(String, int, int)}. */
   @Test
   public void testgetLoggedInUserFollowed_ok() {
     UserProfile profile1 = service.register(VALID_GOOGLE_TOKEN);

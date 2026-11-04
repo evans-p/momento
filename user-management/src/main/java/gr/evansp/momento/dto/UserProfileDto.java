@@ -5,12 +5,9 @@ import gr.evansp.momento.model.UserProfile;
 /**
  * Data transfer object for {@link UserProfile}.
  *
- * @param firstName
- * 		firstName
- * @param lastName
- * 		lastName
- * @param profilePictureUrl
- * 		profilePictureUrl
+ * @param firstName firstName
+ * @param lastName lastName
+ * @param profilePictureUrl profilePictureUrl
  */
 public record UserProfileDto(
     String id,

@@ -13,25 +13,19 @@ public class TestJwtService extends AbstractUnitTest {
 
   JwtService service = new JwtServiceImpl();
 
-  /**
-   * Test for {@link JwtService#extractUserProfileInfo(String)}
-   */
+  /** Test for {@link JwtService#extractUserProfileInfo(String)} */
   @Test
   public void testExtractUserProfileInfo_nullToken() {
     assertThrows(LogicException.class, () -> service.extractUserProfileInfo(null));
   }
 
-  /**
-   * Test for {@link JwtService#extractUserProfileInfo(String)}
-   */
+  /** Test for {@link JwtService#extractUserProfileInfo(String)} */
   @Test
   public void testExtractUserProfileInfo_emptyToken() {
     assertThrows(LogicException.class, () -> service.extractUserProfileInfo(""));
   }
 
-  /**
-   * Test for {@link JwtService#extractUserProfileInfo(String)}
-   */
+  /** Test for {@link JwtService#extractUserProfileInfo(String)} */
   @Test
   public void testExtractUserProfileInfo_googleToken() {
     JwtTokenInfo info = service.extractUserProfileInfo(VALID_GOOGLE_TOKEN);
@@ -45,9 +39,7 @@ public class TestJwtService extends AbstractUnitTest {
         info.profilePictureUrl());
   }
 
-  /**
-   * Test for {@link JwtService#extractUserProfileInfo(String)}
-   */
+  /** Test for {@link JwtService#extractUserProfileInfo(String)} */
   @Test
   public void testExtractUserProfileInfo_keycloakToken() {
     JwtTokenInfo info = service.extractUserProfileInfo(VALID_KEYCLOAK_TOKEN);
@@ -59,9 +51,7 @@ public class TestJwtService extends AbstractUnitTest {
     assertNull(info.profilePictureUrl());
   }
 
-  /**
-   * Test for {@link JwtService#extractUserProfileInfo(String)}
-   */
+  /** Test for {@link JwtService#extractUserProfileInfo(String)} */
   @Test
   public void testExtractUserProfileInfo_facebookToken() {
     JwtTokenInfo info = service.extractUserProfileInfo(VALID_FACEBOOK_TOKEN);
@@ -73,9 +63,7 @@ public class TestJwtService extends AbstractUnitTest {
     assertEquals("https://graph.facebook.com/123456789012345/picture", info.profilePictureUrl());
   }
 
-  /**
-   * Test for {@link JwtService#extractUserProfileInfo(String)}
-   */
+  /** Test for {@link JwtService#extractUserProfileInfo(String)} */
   @Test
   public void testExtractUserProfileInfo_linkedInToken() {
     JwtTokenInfo info = service.extractUserProfileInfo(VALID_LINKED_IN_TOKEN);

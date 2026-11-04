@@ -29,32 +29,22 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
-/**
- * Implementation of {@link UserManagementService}.
- */
+/** Implementation of {@link UserManagementService}. */
 @Slf4j
 @Validated
 @Service
 public class UserManagementServiceImpl implements UserManagementService {
 
-  /**
-   * {@link JwtService}.
-   */
+  /** {@link JwtService}. */
   @Autowired JwtService jwtService;
 
-  /**
-   * {@link UserProfileRepository}.
-   */
+  /** {@link UserProfileRepository}. */
   @Autowired UserProfileRepository repository;
 
-  /**
-   * {@link UserFollowRepository}.
-   */
+  /** {@link UserFollowRepository}. */
   @Autowired UserFollowRepository userFollowRepository;
 
-  /**
-   * {@link FollowProducerService}.
-   */
+  /** {@link FollowProducerService}. */
   @Autowired FollowProducerService followProducerService;
 
   @Cacheable(value = USER_CACHE, key = "#result.id", condition = "#result != null")

@@ -5,9 +5,7 @@ import java.util.Set;
 import org.antlr.v4.runtime.misc.Triple;
 import org.springframework.http.MediaType;
 
-/**
- *
- */
+/** */
 public class FileContentTypes {
 
   private FileContentTypes() {
@@ -31,11 +29,10 @@ public class FileContentTypes {
 
   /**
    * Assumes that the 'fileName' parameter has already been validated using {@link ValidFileName}.
-   * Maps the fileName extension to the appropriate {@link MediaType}.
-   * Defaults to {@link MediaType#IMAGE_PNG}.
+   * Maps the fileName extension to the appropriate {@link MediaType}. Defaults to {@link
+   * MediaType#IMAGE_PNG}.
    *
-   * @param fileName
-   * 		example 'lucky.png'
+   * @param fileName example 'lucky.png'
    * @return {@link MediaType}.
    */
   public static MediaType getContentType(String fileName) {
@@ -51,9 +48,7 @@ public class FileContentTypes {
   /**
    * Returns {@link MediaType} of a byte array, by checking the content.
    *
-   * @param fileData
-   * 		fileData
-   *
+   * @param fileData fileData
    * @return {@link MediaType} extension or null.
    */
   public static String getContentTypeAsString(byte[] fileData) {

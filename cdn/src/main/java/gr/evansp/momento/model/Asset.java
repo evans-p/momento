@@ -13,9 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * Represents all asset metadata like photos, videos, etc.
- */
+/** Represents all asset metadata like photos, videos, etc. */
 @Setter
 @Getter
 @Entity

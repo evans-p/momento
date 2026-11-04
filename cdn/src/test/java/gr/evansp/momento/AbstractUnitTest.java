@@ -5,19 +5,13 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 import org.springframework.core.io.ClassPathResource;
 
-/**
- * Base Class for Unit tests.
- */
+/** Base Class for Unit tests. */
 public abstract class AbstractUnitTest {
-  /**
-   * Error Messages.
-   */
+  /** Error Messages. */
   protected static final ResourceBundle ERROR_MESSAGES =
       ResourceBundle.getBundle("messages", Locale.getDefault());
 
-  /**
-   * Validation Messages.
-   */
+  /** Validation Messages. */
   protected static final ResourceBundle VALIDATION_MESSAGES =
       ResourceBundle.getBundle("ValidationMessages", Locale.getDefault());
 

@@ -38,10 +38,8 @@ public class UserIdValidator implements ConstraintValidator<ValidUserId, String>
   /**
    * Build validation message.
    *
-   * @param messageCode
-   * 		messageCode
-   * @param context
-   * 		context
+   * @param messageCode messageCode
+   * @param context context
    * @return false
    */
   private boolean buildConstraintViolationMessage(

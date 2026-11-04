@@ -3,9 +3,7 @@ package gr.evansp.momento.bean;
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.Map;
 
-/**
- * Record to be returned when an {@link Exception} occurs.
- */
+/** Record to be returned when an {@link Exception} occurs. */
 @Schema(
     name = "ExceptionMessage",
     description = "Error response containing validation or processing error messages")

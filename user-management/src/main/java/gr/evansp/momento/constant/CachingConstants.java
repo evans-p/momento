@@ -1,13 +1,9 @@
 package gr.evansp.momento.constant;
 
-/**
- * Constants regarding Caching.
- */
+/** Constants regarding Caching. */
 public class CachingConstants {
 
-  /**
-   * Private no args constructor.
-   */
+  /** Private no args constructor. */
   private CachingConstants() {
     // EMPTY
   }

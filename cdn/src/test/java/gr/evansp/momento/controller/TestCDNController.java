@@ -19,18 +19,14 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * Integration tests for {@link CDNController}.
- */
+/** Integration tests for {@link CDNController}. */
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestCDNController extends AbstractIntegrationTest {
 
   MockMultipartFile file = new MockMultipartFile("file", "Yosuke.png", "image/png", PNG_IMAGE);
 
-  /**
-   * {@link MockMvc}.
-   */
+  /** {@link MockMvc}. */
   @Autowired MockMvc mockMvc;
 
   @Test
@@ -80,8 +76,7 @@ class TestCDNController extends AbstractIntegrationTest {
   /**
    * Test for {@link CDNController#upload(MultipartFile)}
    *
-   * @throws Exception
-   * 		Exception
+   * @throws Exception Exception
    */
   @Test
   public void testUpload_validationErrorEnglish() throws Exception {
@@ -101,8 +96,7 @@ class TestCDNController extends AbstractIntegrationTest {
   /**
    * Test for {@link CDNController#upload(MultipartFile)}
    *
-   * @throws Exception
-   * 		Exception
+   * @throws Exception Exception
    */
   @Test
   public void testUpload_validationErrorGeek() throws Exception {
@@ -122,8 +116,7 @@ class TestCDNController extends AbstractIntegrationTest {
   /**
    * Test for {@link CDNController#upload(MultipartFile)}
    *
-   * @throws Exception
-   * 		Exception
+   * @throws Exception Exception
    */
   @Test
   public void testUpload_ok() throws Exception {
@@ -136,8 +129,7 @@ class TestCDNController extends AbstractIntegrationTest {
   /**
    * Test for {@link CDNController#getFile(String)}.
    *
-   * @throws Exception
-   * 		Exception
+   * @throws Exception Exception
    */
   @Test
   public void testGetFile_ok() throws Exception {
@@ -162,8 +154,7 @@ class TestCDNController extends AbstractIntegrationTest {
   /**
    * Test for {@link CDNController#getFile(String)}.
    *
-   * @throws Exception
-   * 		Exception
+   * @throws Exception Exception
    */
   @Test
   public void testGetFile_fileNotFound() throws Exception {

@@ -14,18 +14,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-/**
- * Integration tests for {@link AssetRepository}.
- */
+/** Integration tests for {@link AssetRepository}. */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class TestAssetRepository extends AbstractIntegrationTest {
 
   @Autowired AssetRepository repository;
 
-  /**
-   * Test for {@link AssetRepository#save(Object)}
-   */
+  /** Test for {@link AssetRepository#save(Object)} */
   @Test
   public void testStore() {
     Asset asset = createSampleAsset();
@@ -55,9 +51,7 @@ public class TestAssetRepository extends AbstractIntegrationTest {
     return asset;
   }
 
-  /**
-   * Test for {@link AssetRepository#save(Object)}
-   */
+  /** Test for {@link AssetRepository#save(Object)} */
   @Test
   public void testDelete() {
     repository.save(createSampleAsset());
@@ -71,9 +65,7 @@ public class TestAssetRepository extends AbstractIntegrationTest {
     assertTrue(repository.findAll().isEmpty());
   }
 
-  /**
-   * Test for {@link AssetRepository#save(Object)}
-   */
+  /** Test for {@link AssetRepository#save(Object)} */
   @Test
   public void testUpdate() {
     repository.save(createSampleAsset());

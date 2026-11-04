@@ -13,9 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.junit.jupiter.api.Test;
 
-/**
- * Unit tests for {@link UserIdValidator}.
- */
+/** Unit tests for {@link UserIdValidator}. */
 class TestUserIdValidator extends AbstractUnitTest {
 
   @Test

@@ -5,9 +5,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import java.time.LocalDateTime;
 import org.springframework.http.MediaType;
 
-/**
- * Dto for {@link Asset}.
- */
+/** Dto for {@link Asset}. */
 @Schema(name = "Asset", description = "Represents metadata about an uploaded file asset.")
 public record AssetDto(
     @Schema(
@@ -25,8 +23,7 @@ public record AssetDto(
   /**
    * Static transformation method from {@link Asset} to {@link AssetDto}.
    *
-   * @param asset
-   *        {@link Asset}.
+   * @param asset {@link Asset}.
    * @return {@link AssetDto}.
    */
   public static AssetDto of(Asset asset) {

@@ -22,33 +22,23 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-/**
- * Integration tests for {@link UserManagementController}.
- */
+/** Integration tests for {@link UserManagementController}. */
 @SpringBootTest
 @AutoConfigureMockMvc
 class TestUserManagementController extends AbstractIntegrationTest {
 
   private static final String BASE_URI = "/users/v1/";
 
-  /**
-   * {@link MockMvc}.
-   */
+  /** {@link MockMvc}. */
   @Autowired MockMvc mockMvc;
 
-  /**
-   * {@link UserManagementService}.
-   */
+  /** {@link UserManagementService}. */
   @Autowired UserManagementService service;
 
-  /**
-   * {@link UserFollowRepository}.
-   */
+  /** {@link UserFollowRepository}. */
   @Autowired UserFollowRepository userFollowRepository;
 
-  /**
-   * {@link ObjectMapper}.
-   */
+  /** {@link ObjectMapper}. */
   private static ObjectMapper objectMapper;
 
   @BeforeAll
@@ -96,6 +86,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#registerUser(String)}
+   *
    * @throws Exception Exception
    */
   @Test
@@ -112,6 +103,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#registerUser(String)}
+   *
    * @throws Exception Exception
    */
   @Test
@@ -125,6 +117,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#registerUser(String)}
+   *
    * @throws Exception Exception
    */
   @Test
@@ -139,6 +132,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#registerUser(String)}
+   *
    * @throws Exception Exception
    */
   @Test
@@ -163,6 +157,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#getLoggedInUser(String)}
+   *
    * @throws Exception Exception
    */
   @Test
@@ -178,6 +173,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#getLoggedInUser(String)}
+   *
    * @throws Exception Exception
    */
   @Test
@@ -199,6 +195,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#getLoggedInUserFollowers(String, int, int)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -225,6 +222,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#getLoggedInUserFollowers(String, int, int)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -256,6 +254,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#getLoggedInUserFollowers(String, int, int)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -290,6 +289,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#getLoggedInUserFollows(String, int, int)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -324,6 +324,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#updateUser(UpdateUserProfileDto, String)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -338,6 +339,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#updateUser(UpdateUserProfileDto, String)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -352,6 +354,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#updateUser(UpdateUserProfileDto, String)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -366,6 +369,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#updateUser(UpdateUserProfileDto, String)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -382,6 +386,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#updateUser(UpdateUserProfileDto, String)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -403,6 +408,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#updateUser(UpdateUserProfileDto, String)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -421,6 +427,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#updateUser(UpdateUserProfileDto, String)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -450,6 +457,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#updateUser(UpdateUserProfileDto, String)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -474,6 +482,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#getUser(String)}
+   *
    * @throws Exception Exception
    */
   @Test
@@ -487,6 +496,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#getUser(String)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -500,6 +510,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#getFollowers(String, int, int)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -541,6 +552,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#getFollows(String, int, int)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -582,6 +594,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#follow(String, String)} .
+   *
    * @throws Exception Exception
    */
   @Test
@@ -603,6 +616,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#follow(String, String)}.
+   *
    * @throws Exception Exception
    */
   @Test
@@ -628,6 +642,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#unfollow(String, String)}
+   *
    * @throws Exception Exception
    */
   @Test
@@ -647,6 +662,7 @@ class TestUserManagementController extends AbstractIntegrationTest {
 
   /**
    * Test for {@link UserManagementController#unfollow(String, String)}.
+   *
    * @throws Exception Exception
    */
   @Test

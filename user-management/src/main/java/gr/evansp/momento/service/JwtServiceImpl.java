@@ -44,14 +44,11 @@ public class JwtServiceImpl implements JwtService {
   }
 
   /**
-   * Parse the {@link DecodedJWT} and fetches the desired claim, based
-   * on the claimName parameter. If claim is missing from token,
-   * returns null
+   * Parse the {@link DecodedJWT} and fetches the desired claim, based on the claimName parameter.
+   * If claim is missing from token, returns null
    *
-   * @param decodedJWT
-   *        {@link DecodedJWT}.
-   * @param claimNames
-   * 		name of the {@link Claim} in token.
+   * @param decodedJWT {@link DecodedJWT}.
+   * @param claimNames name of the {@link Claim} in token.
    * @return Claim value as string.
    */
   private String getClaimAsStringNoException(DecodedJWT decodedJWT, Set<String> claimNames) {
@@ -65,14 +62,11 @@ public class JwtServiceImpl implements JwtService {
   }
 
   /**
-   * Parse the {@link DecodedJWT} and fetches the desired claim, based
-   * on the claimName parameter. If claim is missing from token,
-   * throws {@link LogicException}.
+   * Parse the {@link DecodedJWT} and fetches the desired claim, based on the claimName parameter.
+   * If claim is missing from token, throws {@link LogicException}.
    *
-   * @param decodedJWT
-   *        {@link DecodedJWT}.
-   * @param claimNames
-   * 		name of the {@link Claim} in token.
+   * @param decodedJWT {@link DecodedJWT}.
+   * @param claimNames name of the {@link Claim} in token.
    * @return Claim value as string.
    */
   private String getClaimAsString(DecodedJWT decodedJWT, Set<String> claimNames) {

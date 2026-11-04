@@ -53,7 +53,7 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <argLine>-Duser.timezone=GMT</argLine>
-        <skipSpotlessCheck>true</skipSpotlessCheck>
+
         <version.spotless.maven.plugin>2.43.0</version.spotless.maven.plugin>
         <version.java-jwt>4.1.0</version.java-jwt>
         <version.owasp.encoder>1.3.1</version.owasp.encoder>
@@ -64,6 +64,20 @@
         <version.kafka-avro-serializer>8.0.0</version.kafka-avro-serializer>
         <version.avro.maven.plugin>1.11.3</version.avro.maven.plugin>
         <version.testcontainers-redis>2.2.2</version.testcontainers-redis>
+        <version.spotbugs.maven.plugin>4.9.3.0</version.spotbugs.maven.plugin>
+        <version.dependency.check>11.1.1</version.dependency.check>
+        <version.pmd.maven.plugin>3.26.0</version.pmd.maven.plugin>
+        <version.enforcer.maven.plugin>3.5.0</version.enforcer.maven.plugin>
+        <version.testcontainers-kafkaestcontainers-kafka>2.0.1</version.testcontainers-kafkaestcontainers-kafka>
+        <version.checker-qual>3.48.3</version.checker-qual>
+        <version.commons-compress>1.26.2</version.commons-compress>
+        <version.extra-enforcer-rules>1.12.1</version.extra-enforcer-rules>
+
+        <skipPmd>true</skipPmd>
+        <skipEnforcer>true</skipEnforcer>
+        <skipSpotless>true</skipSpotless>
+        <skipSpotbugs>true</skipSpotbugs>
+        <skipDependencyCheck>true</skipDependencyCheck>
     </properties>
 
     <dependencyManagement>
@@ -113,9 +127,29 @@
             </dependency>
 
             <dependency>
+                <groupId>org.checkerframework</groupId>
+                <artifactId>checker-qual</artifactId>
+                <version>${version.checker-qual}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-compress</artifactId>
+                <version>${version.commons-compress}</version>
+            </dependency>
+
+            <dependency>
                 <groupId>com.redis</groupId>
                 <artifactId>testcontainers-redis</artifactId>
                 <version>${version.testcontainers-redis}</version>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.testcontainers</groupId>
+                <artifactId>testcontainers-kafka</artifactId>
+                <version>${version.testcontainers-kafkaestcontainers-kafka}</version>
+                <scope>test</scope>
             </dependency>
 
         </dependencies>
@@ -166,7 +200,7 @@
                         </execution>
                     </executions>
                     <configuration>
-                        <skip>${skipSpotlessCheck}</skip>
+                        <skip>${skipSpotless}</skip>
                         <java>
                             <includes>
                                 <include>src/main/java/**/*.java</include>
@@ -175,7 +209,7 @@
                             <googleJavaFormat>
                                 <version>1.19.2</version>
                                 <style>GOOGLE</style>
-                                <formatJavadoc>false</formatJavadoc>
+                                <formatJavadoc>true</formatJavadoc>
                             </googleJavaFormat>
                             <importOrder/>
                             <removeUnusedImports/>
@@ -201,6 +235,162 @@
                     </executions>
                 </plugin>
 
+                <plugin>
+                    <groupId>com.github.spotbugs</groupId>
+                    <artifactId>spotbugs-maven-plugin</artifactId>
+                    <version>${version.spotbugs.maven.plugin}</version>
+                    <configuration>
+                        <skip>${skipSpotbugs}</skip>
+                        <effort>Max</effort>
+                        <threshold>Medium</threshold>
+                        <failOnError>true</failOnError>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>spotbugs-check</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.owasp</groupId>
+                    <artifactId>dependency-check-maven</artifactId>
+                    <version>${version.dependency.check}</version>
+                    <configuration>
+                        <skip>${skipDependencyCheck}</skip>
+                        <failBuildOnCVSS>7</failBuildOnCVSS>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-pmd-plugin</artifactId>
+                    <version>${version.pmd.maven.plugin}</version>
+                    <configuration>
+                        <skip>${skipPmd}</skip>
+                        <targetJdk>${java.version}</targetJdk>
+                        <printFailingErrors>true</printFailingErrors>
+                        <failOnViolation>true</failOnViolation>
+                        <failurePriority>3</failurePriority>
+                        <includeTests>true</includeTests>
+                        <rulesets>
+                            <ruleset>${maven.multiModuleProjectDirectory}/pmd-ruleset.xml</ruleset>
+                        </rulesets>
+                        <excludeRoots>
+                            <excludeRoot>${project.basedir}/src/main/java/gr/evansp/momento/avro</excludeRoot>
+                        </excludeRoots>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>pmd-check</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>check</goal>
+                                <goal>cpd-check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-enforcer-plugin</artifactId>
+                    <version>${version.enforcer.maven.plugin}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.codehaus.mojo</groupId>
+                            <artifactId>extra-enforcer-rules</artifactId>
+                            <version>${version.extra-enforcer-rules}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <skip>${skipEnforcer}</skip>
+                        <fail>true</fail>
+                        <rules>
+                            <requireMavenVersion>
+                                <version>[3.9.0,)</version>
+                            </requireMavenVersion>
+
+                            <requireJavaVersion>
+                                <version>[${java.version},)</version>
+                            </requireJavaVersion>
+
+                            <requirePluginVersions>
+                                <banSnapshots>true</banSnapshots>
+                            </requirePluginVersions>
+
+                            <banDuplicatePomDependencyVersions/>
+                            <banDynamicVersions/>
+                            <reactorModuleConvergence/>
+
+                            <dependencyConvergence/>
+                            <requireUpperBoundDeps/>
+
+                            <requireReleaseDeps>
+                                <onlyWhenRelease>true</onlyWhenRelease>
+                            </requireReleaseDeps>
+
+                            <bannedDependencies>
+                                <searchTransitive>true</searchTransitive>
+                                <excludes>
+                                    <exclude>commons-logging:commons-logging</exclude>
+                                    <exclude>log4j:log4j</exclude>
+                                    <exclude>org.slf4j:slf4j-log4j12</exclude>
+                                    <exclude>org.apache.logging.log4j:log4j-slf4j-impl</exclude>
+                                    <exclude>junit:junit</exclude>
+                                    <exclude>javax.servlet:javax.servlet-api</exclude>
+                                    <exclude>javax.persistence:javax.persistence-api</exclude>
+                                    <exclude>javax.validation:validation-api</exclude>
+                                </excludes>
+                                <includes>
+                                    <!-- Testcontainers 1.x requires JUnit 4 on the test classpath -->
+                                    <include>junit:junit:*:*:test</include>
+                                </includes>
+                            </bannedDependencies>
+
+                            <requireFilesExist>
+                                <files>
+                                    <file>${maven.multiModuleProjectDirectory}/pmd-ruleset.xml</file>
+                                </files>
+                            </requireFilesExist>
+
+                            <banDuplicateClasses>
+                                <findAllDuplicates>true</findAllDuplicates>
+                                <ignoreWhenIdentical>true</ignoreWhenIdentical>
+                            </banDuplicateClasses>
+
+                            <enforceBytecodeVersion>
+                                <maxJdkVersion>${java.version}</maxJdkVersion>
+                            </enforceBytecodeVersion>
+                        </rules>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>enforce-rules</id>
+                            <phase>validate</phase>
+                            <goals>
+                                <goal>enforce</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.12.1</version>
+                </plugin>
             </plugins>
 
         </pluginManagement>
