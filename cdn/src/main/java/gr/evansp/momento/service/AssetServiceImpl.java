@@ -80,7 +80,8 @@ public class AssetServiceImpl implements AssetService {
       Path targetPath = Paths.get(fullPath, storedFilename);
       Files.copy(file.getInputStream(), targetPath, StandardCopyOption.REPLACE_EXISTING);
 
-      return AssetDto.of(assetMetadataService.storeAssetMetadata(file, storedFilename, contentHash));
+      return AssetDto.of(
+          assetMetadataService.storeAssetMetadata(file, storedFilename, contentHash));
 
     } catch (IOException e) {
       log.warn("uploadAsset: failed storing file: {}.", file);
