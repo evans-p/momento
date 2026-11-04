@@ -4,8 +4,8 @@ import gr.evansp.momento.dto.UpdateUserProfileDto;
 import gr.evansp.momento.dto.UserFollowDto;
 import gr.evansp.momento.dto.UserProfileDto;
 import gr.evansp.momento.service.UserManagementService;
-import java.util.List;
 import gr.evansp.momento.service.UserService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -58,7 +58,8 @@ public class UserManagementController implements UserManagementControllerAPI {
       @RequestParam(defaultValue = "10") int size) {
     String jwtToken = extractJwtToken(authorizationHeader);
 
-    return new ResponseEntity<>(service.getLoggedInUserFollowed(jwtToken, page, size), HttpStatus.OK);
+    return new ResponseEntity<>(
+        service.getLoggedInUserFollowed(jwtToken, page, size), HttpStatus.OK);
   }
 
   @GetMapping("follows")
@@ -68,7 +69,8 @@ public class UserManagementController implements UserManagementControllerAPI {
       @RequestParam(defaultValue = "10") int size) {
     String jwtToken = extractJwtToken(authorizationHeader);
 
-    return new ResponseEntity<>(service.getLoggedInUserFollows(jwtToken, page, size), HttpStatus.OK);
+    return new ResponseEntity<>(
+        service.getLoggedInUserFollows(jwtToken, page, size), HttpStatus.OK);
   }
 
   @PutMapping("")
