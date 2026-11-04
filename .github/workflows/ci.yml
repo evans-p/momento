@@ -22,9 +22,26 @@ jobs:
       - name: Build project
         run: mvn clean install -DskipTests
 
+  test:
+    name: Execute Test Suite
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - name: Run Tests
+        run: mvn clean install
+
   spotless:
     name: Spotless Check
-    needs: build
+    needs: test
     runs-on: ubuntu-latest
     strategy:
       fail-fast: true
@@ -39,3 +56,21 @@ jobs:
           cache: maven
       - name: Run Spotless Check
         run: mvn spotless:check -DskipSpotless=false
+
+  owasp-dependency-check:
+    name: OWASP Dependency Check
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - name: Run Dependency Check
+        run: mvn dependency-check:check -DskipDependencyCheck=false
