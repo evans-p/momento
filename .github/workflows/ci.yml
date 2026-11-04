@@ -25,6 +25,7 @@ jobs:
 
   test:
     name: Execute Test Suite
+    needs: build
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -80,3 +81,5 @@ jobs:
           cache: maven
       - name: Run Dependency Check
         run: mvn dependency-check:check -DskipDependencyCheck=false
+        env:
+          NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
