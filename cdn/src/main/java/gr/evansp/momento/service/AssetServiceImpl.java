@@ -28,9 +28,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * Implementation of {@link AssetService}.
- */
+/** Implementation of {@link AssetService}. */
 @Slf4j
 @Validated
 @Service
@@ -39,14 +37,10 @@ public class AssetServiceImpl implements AssetService {
   @Value("${cdn.storage.location}")
   private String storageLocation;
 
-  /**
-   * {@link AssetRepository}.
-   */
+  /** {@link AssetRepository}. */
   private final AssetRepository assetRepository;
 
-  /**
-   * {@link AssetMetadataService}
-   */
+  /** {@link AssetMetadataService} */
   private final AssetMetadataService assetMetadataService;
 
   @Autowired

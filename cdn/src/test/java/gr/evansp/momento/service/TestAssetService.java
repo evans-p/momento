@@ -22,18 +22,14 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * Integration tests for {@link AssetService}.
- */
+/** Integration tests for {@link AssetService}. */
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 class TestAssetService extends AbstractIntegrationTest {
 
   @Autowired AssetService service;
 
-  /**
-   * Test for {@link AssetService#uploadAsset(MultipartFile)}.
-   */
+  /** Test for {@link AssetService#uploadAsset(MultipartFile)}. */
   @Test
   public void testUploadAsset_ok() {
     MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "image/jpeg", JPG_IMAGE);
@@ -43,9 +39,7 @@ class TestAssetService extends AbstractIntegrationTest {
     assertNotNull(asset);
   }
 
-  /**
-   * Test for {@link AssetService#uploadAsset(MultipartFile)}.
-   */
+  /** Test for {@link AssetService#uploadAsset(MultipartFile)}. */
   @Test
   public void testUploadAsset_alreadyExists() {
     MultipartFile file = new MockMultipartFile("file", "Yosuke.jpg", "image/jpeg", JPG_IMAGE);
@@ -58,9 +52,7 @@ class TestAssetService extends AbstractIntegrationTest {
     assertEquals(asset.fileSize(), duplicateAsset.fileSize());
   }
 
-  /**
-   * Test for {@link AssetService#uploadAsset(MultipartFile)}.
-   */
+  /** Test for {@link AssetService#uploadAsset(MultipartFile)}. */
   @Test
   public void testUploadAsset_invalidFile() {
     MultipartFile file = new MockMultipartFile("file", "Yosuke.png", "image/jpeg", JPG_IMAGE);
@@ -73,9 +65,7 @@ class TestAssetService extends AbstractIntegrationTest {
     assertEquals("uploadAsset.file: Content type and file suffix do not match.", e.getMessage());
   }
 
-  /**
-   * Test for {@link AssetService#getFileByName(String)}.
-   */
+  /** Test for {@link AssetService#getFileByName(String)}. */
   @Test
   public void testGetFileByName_noMetadata() {
     ResourceNotFoundException e =
@@ -88,8 +78,7 @@ class TestAssetService extends AbstractIntegrationTest {
   /**
    * Test for {@link AssetService#getFileByName(String)}.
    *
-   * @throws IOException
-   * 		IOException
+   * @throws IOException IOException
    */
   @Test
   public void testGetFileByName_noFile() throws IOException {
@@ -106,8 +95,7 @@ class TestAssetService extends AbstractIntegrationTest {
   /**
    * Test for {@link AssetService#getFileByName(String)}.
    *
-   * @throws IOException
-   * 		IOException
+   * @throws IOException IOException
    */
   @Test
   public void testGetFileByName_ok() throws IOException {

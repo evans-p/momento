@@ -11,9 +11,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * {@link ConstraintValidator} for {@link MultipartFile}.
- */
+/** {@link ConstraintValidator} for {@link MultipartFile}. */
 public class FileValidator implements ConstraintValidator<ValidFile, MultipartFile> {
 
   @Override
@@ -90,10 +88,8 @@ public class FileValidator implements ConstraintValidator<ValidFile, MultipartFi
   /**
    * Build validation message.
    *
-   * @param messageCode
-   * 		messageCode
-   * @param context
-   * 		context
+   * @param messageCode messageCode
+   * @param context context
    * @return false
    */
   private boolean buildConstraintViolationMessage(

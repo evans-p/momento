@@ -56,10 +56,8 @@ public class FileNameValidator implements ConstraintValidator<ValidFileName, Str
   /**
    * Build validation message.
    *
-   * @param messageCode
-   * 		messageCode
-   * @param context
-   * 		context
+   * @param messageCode messageCode
+   * @param context context
    * @return false
    */
   private boolean buildConstraintViolationMessage(

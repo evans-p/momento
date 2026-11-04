@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * Controller
- */
+/** Controller */
 @RestController
 @RequestMapping("cdn/v1/assets/")
 public class CDNController implements CDNControllerAPI {

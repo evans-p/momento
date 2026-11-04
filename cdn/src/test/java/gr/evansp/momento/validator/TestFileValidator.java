@@ -17,14 +17,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * Unit tests for {@link FileValidator}.
- */
+/** Unit tests for {@link FileValidator}. */
 class TestFileValidator extends AbstractUnitTest {
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_nullFile() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -40,9 +36,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_emptyFile() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -60,9 +54,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_originalNameNull() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -81,9 +73,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_originalNameEmpty() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -102,9 +92,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_originalNameBlank() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -123,9 +111,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_originalNameNoDot() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -144,9 +130,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_originalNameNoSuffix() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -165,9 +149,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_nullContentType() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -186,9 +168,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_emptyContentType() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -207,9 +187,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_faultyContentType() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -229,9 +207,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_mismatchBetweenFileExtensionAndContentType() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -251,9 +227,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_ok() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
@@ -269,9 +243,7 @@ class TestFileValidator extends AbstractUnitTest {
     }
   }
 
-  /**
-   * Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}.
-   */
+  /** Test for {@link FileValidator#isValid(MultipartFile, ConstraintValidatorContext)}. */
   @Test
   public void testIsValid_faultyFileContentType() {
     try (ValidatorFactory factory = Validation.buildDefaultValidatorFactory()) {
