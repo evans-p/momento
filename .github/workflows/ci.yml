@@ -38,4 +38,4 @@ jobs:
           java-version: 21
           cache: maven
       - name: Run Spotless Check
-        run: mvn clean install -DskipTests
+        run: mvn spotless:check -DskipSpotless=false
