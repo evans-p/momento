@@ -3,6 +3,7 @@ name: CI
 on:
   push:
     branches: [ main ]
+  pull_request:
 
 jobs:
   build:
@@ -36,6 +37,11 @@ jobs:
           distribution: temurin
           java-version: 21
           cache: maven
+      - name: Create CDN storage directory
+        run: |
+          sudo mkdir -p /var/cdn/storage
+          sudo chown -R "$(id -u):$(id -g)" /var/cdn 
+
       - name: Run Tests
         run: mvn clean install
 
