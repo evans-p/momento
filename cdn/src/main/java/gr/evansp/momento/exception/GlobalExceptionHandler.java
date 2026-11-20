@@ -192,7 +192,6 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ExceptionMessage> handleGenericException(Exception e, Locale locale) {
     String errorMessage = messageSource.getMessage(INTERNAL_SERVER_ERROR, null, locale);
-    System.out.println(e.getClass());
     log.warn("Internal server error. Message: {}", e.getMessage());
     return new ResponseEntity<>(
         new ExceptionMessage(Map.of(INTERNAL_SERVER_ERROR, errorMessage)),
