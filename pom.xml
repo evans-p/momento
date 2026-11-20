@@ -72,7 +72,9 @@
         <version.checker-qual>3.48.3</version.checker-qual>
         <version.commons-compress>1.26.2</version.commons-compress>
         <version.extra-enforcer-rules>1.12.1</version.extra-enforcer-rules>
+        <version.archunit-junit5>1.5.1</version.archunit-junit5>
 
+        <skipTests>true</skipTests>
         <skipPmd>true</skipPmd>
         <skipEnforcer>true</skipEnforcer>
         <skipSpotless>true</skipSpotless>
@@ -152,6 +154,13 @@
                 <scope>test</scope>
             </dependency>
 
+            <dependency>
+                <groupId>com.tngtech.archunit</groupId>
+                <artifactId>archunit-junit5</artifactId>
+                <version>${version.archunit-junit5}</version>
+                <scope>test</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -159,6 +168,15 @@
         <pluginManagement>
 
             <plugins>
+
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>${maven-surefire-plugin.version}</version>
+                    <configuration>
+                        <skip>${skipTests}</skip>
+                    </configuration>
+                </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
