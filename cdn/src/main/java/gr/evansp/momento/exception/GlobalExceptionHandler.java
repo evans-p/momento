@@ -1,10 +1,8 @@
-package gr.evansp.momento.configuration;
+package gr.evansp.momento.exception;
 
 import static gr.evansp.momento.constants.ExceptionConstants.*;
 
 import gr.evansp.momento.bean.ExceptionMessage;
-import gr.evansp.momento.exception.InternalServiceException;
-import gr.evansp.momento.exception.ResourceNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.Locale;
