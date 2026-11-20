@@ -3,6 +3,7 @@ package gr.evansp.momento;
 import com.tngtech.archunit.base.DescribedPredicate;
 import com.tngtech.archunit.core.domain.JavaClass;
 import com.tngtech.archunit.core.domain.JavaClasses;
+import com.tngtech.archunit.core.domain.JavaField;
 import com.tngtech.archunit.core.domain.JavaMethod;
 import com.tngtech.archunit.core.domain.JavaParameter;
 import com.tngtech.archunit.core.domain.properties.CanBeAnnotated;
@@ -41,6 +42,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.stream.Stream;
 
+import static com.tngtech.archunit.core.domain.JavaClass.Predicates.resideInAnyPackage;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.classes;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.fields;
 import static com.tngtech.archunit.lang.syntax.ArchRuleDefinition.methods;
@@ -57,6 +59,24 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Architecture tests for a Spring Boot 3 application (package-by-layer style).
+ *
+ * <h3>Dependencies (test scope)</h3>
+ * <pre>
+ * &lt;dependency&gt;
+ *   &lt;groupId&gt;com.tngtech.archunit&lt;/groupId&gt;
+ *   &lt;artifactId&gt;archunit-junit5&lt;/artifactId&gt;
+ *   &lt;version&gt;1.3.0&lt;/version&gt;
+ *   &lt;scope&gt;test&lt;/scope&gt;
+ * &lt;/dependency&gt;
+ * </pre>
+ *
+ * <h3>Setup</h3>
+ * <ul>
+ *   <li>Adjust {@link #BASE_PACKAGE} and the package constants below to your project.</li>
+ *   <li>Put the accompanying archunit.properties in src/test/resources so that rules
+ *       whose subject set is empty (e.g. you have no scheduled jobs) do not fail.</li>
+ *   <li>Rules that are opinionated (marked OPTIONAL) can simply be deleted.</li>
+ * </ul>
  */
 @AnalyzeClasses(
         packages = ArchitectureTest.BASE_PACKAGE,
@@ -107,8 +127,10 @@ class ArchitectureTest {
     static final ArchRule services_do_not_depend_on_web_layer = noClasses()
             .that().resideInAPackage(SERVICE)
             .should().dependOnClassesThat().resideInAnyPackage(
-                    CONTROLLER, "jakarta.servlet..", "org.springframework.web..", "org.springframework.http..")
-            .because("services must stay independent of the web/HTTP layer");
+                    CONTROLLER, "jakarta.servlet..", "org.springframework.web.bind..",
+                    "org.springframework.web.servlet..", "org.springframework.http..")
+            .because("services must stay independent of the web/HTTP layer "
+                    + "(org.springframework.web.multipart is allowed: MultipartFile is a data type)");
 
     @ArchTest
     static final ArchRule repositories_do_not_depend_on_web_or_services = noClasses()
@@ -118,15 +140,18 @@ class ArchitectureTest {
             .because("the persistence layer must not know about upper layers");
 
     @ArchTest
-    static final ArchRule dtos_do_not_depend_on_entities = noClasses()
-            .that().resideInAPackage(DTO)
-            .should().dependOnClassesThat().areAnnotatedWith(Entity.class)
-            .because("DTOs must be decoupled from the persistence model");
+    static final ArchRule dtos_do_not_hold_entities = fields()
+            .that().areDeclaredInClassesThat().resideInAPackage(DTO)
+            .should(notHoldEntities())
+            .because("DTOs must not carry persistence entities as state "
+                    + "(static factories such as AssetDto.of(Asset) are allowed)");
 
     @ArchTest
     static final ArchRule no_package_cycles = slices()
             .matching(BASE_PACKAGE + ".(*)..")
-            .should().beFreeOfCycles();
+            .should().beFreeOfCycles()
+            // Bean Validation is inherently circular: @Constraint(validatedBy = X) <-> ConstraintValidator<A, T>
+            .ignoreDependency(resideInAnyPackage("..annotation.."), resideInAnyPackage("..validator.."));
 
     // =========================================================================================
     // 2. NAMING CONVENTIONS
@@ -459,6 +484,20 @@ class ArchitectureTest {
                         .distinct()
                         .forEach(type -> events.add(SimpleConditionEvent.violated(
                                 method, method.getFullName() + " exposes entity " + type.getName())));
+            }
+        };
+    }
+
+    /** Fails if a field's type (including generic arguments) involves a JPA entity. */
+    private static ArchCondition<JavaField> notHoldEntities() {
+        return new ArchCondition<>("not hold JPA entities") {
+            @Override
+            public void check(JavaField field, ConditionEvents events) {
+                field.getType().getAllInvolvedRawTypes().stream()
+                        .filter(ArchitectureTest::isEntityLike)
+                        .distinct()
+                        .forEach(type -> events.add(SimpleConditionEvent.violated(
+                                field, field.getFullName() + " holds entity " + type.getName())));
             }
         };
     }
