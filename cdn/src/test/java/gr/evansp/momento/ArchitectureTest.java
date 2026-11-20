@@ -57,24 +57,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Architecture tests for a Spring Boot 3 application (package-by-layer style).
- *
- * <h3>Dependencies (test scope)</h3>
- * <pre>
- * &lt;dependency&gt;
- *   &lt;groupId&gt;com.tngtech.archunit&lt;/groupId&gt;
- *   &lt;artifactId&gt;archunit-junit5&lt;/artifactId&gt;
- *   &lt;version&gt;1.3.0&lt;/version&gt;
- *   &lt;scope&gt;test&lt;/scope&gt;
- * &lt;/dependency&gt;
- * </pre>
- *
- * <h3>Setup</h3>
- * <ul>
- *   <li>Adjust {@link #BASE_PACKAGE} and the package constants below to your project.</li>
- *   <li>Put the accompanying archunit.properties in src/test/resources so that rules
- *       whose subject set is empty (e.g. you have no scheduled jobs) do not fail.</li>
- *   <li>Rules that are opinionated (marked OPTIONAL) can simply be deleted.</li>
- * </ul>
  */
 @AnalyzeClasses(
         packages = ArchitectureTest.BASE_PACKAGE,
