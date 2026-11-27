@@ -20,8 +20,7 @@ public class FollowProducerServiceImpl implements FollowProducerService {
 
   @Autowired
   public FollowProducerServiceImpl(
-          @Value("${spring.kafka.follow.topic}") String topic,
-          KafkaTemplate<String, Object> template) {
+      @Value("${spring.kafka.follow.topic}") String topic, KafkaTemplate<String, Object> template) {
     this.kafkaTemplate = template;
     this.topic = topic;
   }
