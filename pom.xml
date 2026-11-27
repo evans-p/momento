@@ -76,6 +76,7 @@
         <testcontainers.version>1.21.4</testcontainers.version>
         <version.pitest.maven.plugin>1.30.2</version.pitest.maven.plugin>
         <version.pitest-junit5-plugin>1.2.3</version.pitest-junit5-plugin>
+        <version.jacoco.maven.plugin>0.8.15</version.jacoco.maven.plugin>
 
         <pitest.mutationThreshold>60</pitest.mutationThreshold>
         <pitest.coverageThreshold>70</pitest.coverageThreshold>
@@ -483,6 +484,38 @@
                             <goals>
                                 <goal>mutationCoverage</goal>
                             </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${version.jacoco.maven.plugin}</version>
+                    <configuration>
+                        <excludes>
+                            <exclude>gr/evansp/momento/avro/**</exclude>
+                        </excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                            <configuration>
+                                <formats>
+                                    <format>XML</format>
+                                    <format>HTML</format>
+                                </formats>
+                            </configuration>
                         </execution>
                     </executions>
                 </plugin>
