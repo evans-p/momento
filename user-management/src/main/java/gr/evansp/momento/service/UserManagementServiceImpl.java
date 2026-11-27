@@ -36,16 +36,29 @@ import org.springframework.validation.annotation.Validated;
 public class UserManagementServiceImpl implements UserManagementService {
 
   /** {@link JwtService}. */
-  @Autowired JwtService jwtService;
+  private final JwtService jwtService;
 
   /** {@link UserProfileRepository}. */
-  @Autowired UserProfileRepository repository;
+  private final UserProfileRepository repository;
 
   /** {@link UserFollowRepository}. */
-  @Autowired UserFollowRepository userFollowRepository;
+  private final UserFollowRepository userFollowRepository;
 
   /** {@link FollowProducerService}. */
-  @Autowired FollowProducerService followProducerService;
+  private final FollowProducerService followProducerService;
+
+
+  @Autowired
+  public UserManagementServiceImpl(JwtService jwtService,
+                                   UserProfileRepository repository,
+                                   UserFollowRepository userFollowRepository,
+                                   FollowProducerService followProducerService) {
+    this.jwtService = jwtService;
+    this.repository = repository;
+    this.userFollowRepository = userFollowRepository;
+    this.followProducerService = followProducerService;
+
+  }
 
   @Cacheable(value = USER_CACHE, key = "#result.id", condition = "#result != null")
   @Transactional(isolation = Isolation.SERIALIZABLE)
