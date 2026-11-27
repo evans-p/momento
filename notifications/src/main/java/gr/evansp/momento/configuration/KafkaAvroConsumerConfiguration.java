@@ -19,17 +19,11 @@ import org.springframework.kafka.listener.ContainerProperties;
 @Configuration
 public class KafkaAvroConsumerConfiguration {
 
-  @Value("${spring.kafka.bootstrap-servers}")
-  private String bootstrapServers;
-
-  @Value("${spring.kafka.consumer.group-id}")
-  private String groupId;
-
-  @Value("${spring.kafka.consumer.properties.schema.registry.url}")
-  private String schemaRegistryUrl;
-
   @Bean
-  public ConsumerFactory<String, Object> avroConsumerFactory() {
+  public ConsumerFactory<String, Object> avroConsumerFactory(
+          @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers,
+          @Value("${spring.kafka.consumer.group-id}") String groupId,
+          @Value("${spring.kafka.consumer.properties.schema.registry.url}") String schemaRegistryUrl) {
     Map<String, Object> config = new HashMap<>();
     config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     config.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
@@ -44,10 +38,11 @@ public class KafkaAvroConsumerConfiguration {
   }
 
   @Bean
-  public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory() {
+  public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory(
+          ConsumerFactory<String, Object> avroConsumerFactory) {
     ConcurrentKafkaListenerContainerFactory<String, Object> factory =
         new ConcurrentKafkaListenerContainerFactory<>();
-    factory.setConsumerFactory(avroConsumerFactory());
+    factory.setConsumerFactory(avroConsumerFactory);
     factory.setConcurrency(3);
     factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
     return factory;
