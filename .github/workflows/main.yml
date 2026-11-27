@@ -87,3 +87,41 @@ jobs:
         run: mvn dependency-check:check -DskipDependencyCheck=false -DnvdApiKey=${{ secrets.NVD_API_KEY }}
         env:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
+
+
+  pmd-check:
+    name: PMD Check
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - name: Run PMD Check
+        run: mvn pmd:check -DskipPmd=false
+
+  cpd-check:
+    name: CPD Check
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - name: Run PMD Check
+        run: mvn pmd:cpd-check -DskipPmd=false
+
