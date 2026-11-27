@@ -73,6 +73,7 @@
         <version.commons-compress>1.26.2</version.commons-compress>
         <version.extra-enforcer-rules>1.12.1</version.extra-enforcer-rules>
         <version.archunit-junit5>1.5.1</version.archunit-junit5>
+        <testcontainers.version>1.21.4</testcontainers.version>
 
         <skipTests>true</skipTests>
         <skipPmd>true</skipPmd>
