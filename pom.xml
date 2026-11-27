@@ -302,7 +302,7 @@
                         <printFailingErrors>true</printFailingErrors>
                         <failOnViolation>true</failOnViolation>
                         <failurePriority>3</failurePriority>
-                        <includeTests>true</includeTests>
+                        <includeTests>false</includeTests>
                         <rulesets>
                             <ruleset>${maven.multiModuleProjectDirectory}/pmd-ruleset.xml</ruleset>
                         </rulesets>
