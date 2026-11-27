@@ -159,5 +159,5 @@ jobs:
           java-version: 21
           cache: maven
       - name: Run Spotbugs Check
-        run: mvn spotbugs:check -DskipSpotbugs=false
+        run: mvn -B compile spotbugs:check -DskipSpotbugs=false
 
