@@ -21,9 +21,9 @@ public class KafkaAvroConsumerConfiguration {
 
   @Bean
   public ConsumerFactory<String, Object> avroConsumerFactory(
-          @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers,
-          @Value("${spring.kafka.consumer.group-id}") String groupId,
-          @Value("${spring.kafka.consumer.properties.schema.registry.url}") String schemaRegistryUrl) {
+      @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers,
+      @Value("${spring.kafka.consumer.group-id}") String groupId,
+      @Value("${spring.kafka.consumer.properties.schema.registry.url}") String schemaRegistryUrl) {
     Map<String, Object> config = new HashMap<>();
     config.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
     config.put(ConsumerConfig.GROUP_ID_CONFIG, groupId);
@@ -39,7 +39,7 @@ public class KafkaAvroConsumerConfiguration {
 
   @Bean
   public ConcurrentKafkaListenerContainerFactory<String, Object> kafkaListenerContainerFactory(
-          ConsumerFactory<String, Object> avroConsumerFactory) {
+      ConsumerFactory<String, Object> avroConsumerFactory) {
     ConcurrentKafkaListenerContainerFactory<String, Object> factory =
         new ConcurrentKafkaListenerContainerFactory<>();
     factory.setConsumerFactory(avroConsumerFactory);
