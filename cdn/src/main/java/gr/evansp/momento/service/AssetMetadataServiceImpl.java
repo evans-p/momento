@@ -21,15 +21,13 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class AssetMetadataServiceImpl implements AssetMetadataService {
 
-
   private final String storageLocation;
 
   private final AssetRepository assetRepository;
 
   @Autowired
   public AssetMetadataServiceImpl(
-          AssetRepository assetRepository,
-          @Value("${cdn.storage.location}")String storageLocation) {
+      AssetRepository assetRepository, @Value("${cdn.storage.location}") String storageLocation) {
     this.storageLocation = storageLocation;
     this.assetRepository = assetRepository;
   }
