@@ -44,9 +44,9 @@ public class AssetServiceImpl implements AssetService {
 
   @Autowired
   public AssetServiceImpl(
-          @Value("${cdn.storage.location}") String storageLocation,
-          AssetRepository assetRepository,
-          AssetMetadataService assetMetadataService) {
+      @Value("${cdn.storage.location}") String storageLocation,
+      AssetRepository assetRepository,
+      AssetMetadataService assetMetadataService) {
     this.storageLocation = storageLocation;
     this.assetRepository = assetRepository;
     this.assetMetadataService = assetMetadataService;
