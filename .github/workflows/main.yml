@@ -25,7 +25,7 @@ jobs:
           java-version: 21
           cache: maven
       - name: Build project
-        run: mvn clean install -DskipTests=true
+        run: mvn clean install
 
   test:
     name: Execute Test Suite
@@ -124,4 +124,40 @@ jobs:
           cache: maven
       - name: Run PMD Check
         run: mvn pmd:cpd-check -DskipPmd=false
+
+  enforcer-check:
+    name: Enforcer Check
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - name: Run Enforcer Check
+        run: mvn enforcer:enforce -DskipEnforcer=false
+
+  spotbugs-check:
+    name: Spotbugs Check
+    needs: test
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: true
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - name: Run Spotbugs Check
+        run: mvn spotbugs:check -DskipSpotbugs=false
 

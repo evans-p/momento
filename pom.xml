@@ -77,10 +77,10 @@
 
         <skipTests>true</skipTests>
         <skipPmd>true</skipPmd>
+        <skipDependencyCheck>true</skipDependencyCheck>
         <skipEnforcer>true</skipEnforcer>
         <skipSpotless>true</skipSpotless>
         <skipSpotbugs>true</skipSpotbugs>
-        <skipDependencyCheck>true</skipDependencyCheck>
     </properties>
 
     <dependencyManagement>
