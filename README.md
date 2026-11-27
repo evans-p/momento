@@ -25,7 +25,6 @@ Momento is a social media like app, built in java.
 - Spring Boot Actuator
 - CheckStyle
 - SonarCube
-- ArchUnit
 - Spring Modulith
 - flyway
 - pom cleanup

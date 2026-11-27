@@ -1,10 +1,8 @@
-package gr.evansp.momento.configuration;
+package gr.evansp.momento.exception;
 
-import static gr.evansp.momento.constants.ExceptionConstants.*;
+import static gr.evansp.momento.constant.ExceptionConstants.*;
 
-import gr.evansp.momento.bean.ExceptionMessage;
-import gr.evansp.momento.exception.InternalServiceException;
-import gr.evansp.momento.exception.ResourceNotFoundException;
+import gr.evansp.momento.beans.ExceptionMessage;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.Locale;
@@ -18,20 +16,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpMediaTypeNotSupportedException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
-import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 /** Application Global Exception Handler. */
 @SuppressWarnings("unused")
-@ControllerAdvice
 @Slf4j
+@ControllerAdvice
 public class GlobalExceptionHandler {
 
   /** {@link MessageSource}. */
-  MessageSource messageSource;
+  private final MessageSource messageSource;
 
   /**
    * Constructor.
@@ -54,6 +52,7 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ExceptionMessage> handleNoResourceFoundException(
       NoResourceFoundException e, Locale locale) {
     String errorMessage = messageSource.getMessage(RESOURCE_NOT_FOUND, null, locale);
+    log.info(String.valueOf(e.getCause()));
     return new ResponseEntity<>(
         new ExceptionMessage(Map.of(RESOURCE_NOT_FOUND, errorMessage)), HttpStatus.BAD_REQUEST);
   }
@@ -69,24 +68,9 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ExceptionMessage> handleMethodArgumentTypeMismatch(
       MethodArgumentTypeMismatchException e, Locale locale) {
     String errorMessage = messageSource.getMessage(CANNOT_PROCESS_REQUEST, null, locale);
+    log.info(String.valueOf(e.getCause()));
     return new ResponseEntity<>(
         new ExceptionMessage(Map.of(CANNOT_PROCESS_REQUEST, errorMessage)), HttpStatus.BAD_REQUEST);
-  }
-
-  /**
-   * Handler for {@link MethodArgumentTypeMismatchException}.
-   *
-   * @param e {@link MethodArgumentTypeMismatchException}.
-   * @param locale locale
-   * @return error message
-   */
-  @ExceptionHandler(MaxUploadSizeExceededException.class)
-  public ResponseEntity<ExceptionMessage> handleMaxUploadSizeExceeded(
-      MaxUploadSizeExceededException e, Locale locale) {
-    String errorMessage = messageSource.getMessage(PAYLOAD_TOO_LARGE, null, locale);
-    return new ResponseEntity<>(
-        new ExceptionMessage(Map.of(PAYLOAD_TOO_LARGE, errorMessage)),
-        HttpStatus.PAYLOAD_TOO_LARGE);
   }
 
   /**
@@ -100,6 +84,7 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ExceptionMessage> handleHttpMessageNotReadable(
       HttpMessageNotReadableException e, Locale locale) {
     String errorMessage = messageSource.getMessage(FAULTY_MESSAGE_BODY, null, locale);
+    log.info(String.valueOf(e.getCause()));
     return new ResponseEntity<>(
         new ExceptionMessage(Map.of(FAULTY_MESSAGE_BODY, errorMessage)), HttpStatus.BAD_REQUEST);
   }
@@ -115,6 +100,7 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ExceptionMessage> handleHttpMediaTypeNotSupported(
       HttpMediaTypeNotSupportedException e, Locale locale) {
     String errorMessage = messageSource.getMessage(MEDIA_TYPE_NOT_SUPPORTED, null, locale);
+    log.info(String.valueOf(e.getCause()));
     return new ResponseEntity<>(
         new ExceptionMessage(Map.of(MEDIA_TYPE_NOT_SUPPORTED, errorMessage)),
         HttpStatus.BAD_REQUEST);
@@ -131,38 +117,57 @@ public class GlobalExceptionHandler {
   public ResponseEntity<ExceptionMessage> handleHttpRequestMethodNotSupported(
       HttpRequestMethodNotSupportedException e, Locale locale) {
     String errorMessage = messageSource.getMessage(METHOD_NOT_SUPPORTED, null, locale);
+    log.info(String.valueOf(e.getCause()));
     return new ResponseEntity<>(
         new ExceptionMessage(Map.of(METHOD_NOT_SUPPORTED, errorMessage)),
         HttpStatus.METHOD_NOT_ALLOWED);
   }
 
   /**
-   * Handler for {@link InternalServiceException}.
+   * Handler for {@link HttpRequestMethodNotSupportedException}.
    *
-   * @param e {@link InternalServiceException}.
+   * @param e {@link HttpRequestMethodNotSupportedException}.
    * @param locale locale
    * @return error message
    */
-  @ExceptionHandler(InternalServiceException.class)
-  public ResponseEntity<ExceptionMessage> handleInternalServiceException(
-      InternalServiceException e, Locale locale) {
-    String errorMessage = messageSource.getMessage(e.getMessage(), e.getArgs(), locale);
+  @ExceptionHandler(MissingRequestHeaderException.class)
+  public ResponseEntity<ExceptionMessage> handleHttpRequestMethodNotSupported(
+      MissingRequestHeaderException e, Locale locale) {
+    String errorMessage = messageSource.getMessage(AUTHORIZATION_HEADER_NOT_PRESENT, null, locale);
+    log.info(String.valueOf(e.getCause()));
     return new ResponseEntity<>(
-        new ExceptionMessage(Map.of(e.getMessage(), errorMessage)),
-        HttpStatus.INTERNAL_SERVER_ERROR);
+        new ExceptionMessage(Map.of(AUTHORIZATION_HEADER_NOT_PRESENT, errorMessage)),
+        HttpStatus.BAD_REQUEST);
   }
 
   /**
-   * Handler for {@link ResourceNotFoundException}.
+   * Handler for {@link LogicException}.
    *
-   * @param e {@link ResourceNotFoundException}.
+   * @param e {@link LogicException}.
+   * @param locale locale
+   * @return error message
+   */
+  @ExceptionHandler(LogicException.class)
+  public ResponseEntity<ExceptionMessage> handleInternalServiceException(
+      LogicException e, Locale locale) {
+    String errorMessage = messageSource.getMessage(e.getMessage(), e.getArgs(), locale);
+    log.info(String.valueOf(e.getCause()));
+    return new ResponseEntity<>(
+        new ExceptionMessage(Map.of(e.getMessage(), errorMessage)), HttpStatus.BAD_REQUEST);
+  }
+
+  /**
+   * Handler for {@link LogicException}.
+   *
+   * @param e {@link LogicException}.
    * @param locale locale
    * @return error message
    */
   @ExceptionHandler(ResourceNotFoundException.class)
-  public ResponseEntity<ExceptionMessage> handleResourceNotFoundException(
+  public ResponseEntity<ExceptionMessage> handleInternalServiceException(
       ResourceNotFoundException e, Locale locale) {
     String errorMessage = messageSource.getMessage(e.getMessage(), e.getArgs(), locale);
+    log.info(String.valueOf(e.getCause()));
     return new ResponseEntity<>(
         new ExceptionMessage(Map.of(e.getMessage(), errorMessage)), HttpStatus.NOT_FOUND);
   }
@@ -181,6 +186,7 @@ public class GlobalExceptionHandler {
                 Collectors.toMap(
                     c -> c.getMessageTemplate().replace("{", "").replace("}", ""),
                     ConstraintViolation::getMessage));
+    log.info(String.valueOf(e.getCause()));
     return new ResponseEntity<>(new ExceptionMessage(messages), HttpStatus.UNPROCESSABLE_ENTITY);
   }
 
@@ -194,8 +200,7 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(Exception.class)
   public ResponseEntity<ExceptionMessage> handleGenericException(Exception e, Locale locale) {
     String errorMessage = messageSource.getMessage(INTERNAL_SERVER_ERROR, null, locale);
-    System.out.println(e.getClass());
-    log.warn("Internal server error. Message: {}", e.getMessage());
+    log.info(String.valueOf(e.getCause()));
     return new ResponseEntity<>(
         new ExceptionMessage(Map.of(INTERNAL_SERVER_ERROR, errorMessage)),
         HttpStatus.INTERNAL_SERVER_ERROR);

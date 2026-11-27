@@ -34,8 +34,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class AssetServiceImpl implements AssetService {
 
-  @Value("${cdn.storage.location}")
-  private String storageLocation;
+  private final String storageLocation;
 
   /** {@link AssetRepository}. */
   private final AssetRepository assetRepository;
@@ -45,7 +44,10 @@ public class AssetServiceImpl implements AssetService {
 
   @Autowired
   public AssetServiceImpl(
-      AssetRepository assetRepository, AssetMetadataService assetMetadataService) {
+      @Value("${cdn.storage.location}") String storageLocation,
+      AssetRepository assetRepository,
+      AssetMetadataService assetMetadataService) {
+    this.storageLocation = storageLocation;
     this.assetRepository = assetRepository;
     this.assetMetadataService = assetMetadataService;
   }

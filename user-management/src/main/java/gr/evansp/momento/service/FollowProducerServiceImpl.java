@@ -14,14 +14,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class FollowProducerServiceImpl implements FollowProducerService {
 
-  @Value("${spring.kafka.follow.topic}")
-  String topic;
+  private final String topic;
 
   private final KafkaTemplate<String, Object> kafkaTemplate;
 
   @Autowired
-  public FollowProducerServiceImpl(KafkaTemplate<String, Object> template) {
+  public FollowProducerServiceImpl(
+      @Value("${spring.kafka.follow.topic}") String topic, KafkaTemplate<String, Object> template) {
     this.kafkaTemplate = template;
+    this.topic = topic;
   }
 
   @Override

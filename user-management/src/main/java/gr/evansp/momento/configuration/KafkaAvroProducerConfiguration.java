@@ -16,11 +16,16 @@ import org.springframework.kafka.core.ProducerFactory;
 @Configuration
 public class KafkaAvroProducerConfiguration {
 
-  @Value("${spring.kafka.bootstrap-servers}")
-  private String bootstrapServers;
+  private final String bootstrapServers;
 
-  @Value("${spring.kafka.producer.properties.schema.registry.url}")
-  private String schemaRegistryUrl;
+  private final String schemaRegistryUrl;
+
+  public KafkaAvroProducerConfiguration(
+      @Value("${spring.kafka.bootstrap-servers}") String bootstrapServers,
+      @Value("${spring.kafka.producer.properties.schema.registry.url}") String schemaRegistryUrl) {
+    this.bootstrapServers = bootstrapServers;
+    this.schemaRegistryUrl = schemaRegistryUrl;
+  }
 
   @Bean
   public ProducerFactory<String, Object> avroProducerFactory() {

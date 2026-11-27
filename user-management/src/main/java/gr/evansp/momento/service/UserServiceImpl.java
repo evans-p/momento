@@ -12,7 +12,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-  @Autowired UserManagementService userManagementService;
+  private final UserManagementService userManagementService;
+
+  @Autowired
+  public UserServiceImpl(UserManagementService userManagementService) {
+    this.userManagementService = userManagementService;
+  }
 
   @Override
   public UserProfileDto register(String jwtToken) {
