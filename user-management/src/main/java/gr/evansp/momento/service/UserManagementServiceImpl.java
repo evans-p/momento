@@ -47,17 +47,16 @@ public class UserManagementServiceImpl implements UserManagementService {
   /** {@link FollowProducerService}. */
   private final FollowProducerService followProducerService;
 
-
   @Autowired
-  public UserManagementServiceImpl(JwtService jwtService,
-                                   UserProfileRepository repository,
-                                   UserFollowRepository userFollowRepository,
-                                   FollowProducerService followProducerService) {
+  public UserManagementServiceImpl(
+      JwtService jwtService,
+      UserProfileRepository repository,
+      UserFollowRepository userFollowRepository,
+      FollowProducerService followProducerService) {
     this.jwtService = jwtService;
     this.repository = repository;
     this.userFollowRepository = userFollowRepository;
     this.followProducerService = followProducerService;
-
   }
 
   @Cacheable(value = USER_CACHE, key = "#result.id", condition = "#result != null")
