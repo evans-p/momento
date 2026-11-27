@@ -1,10 +1,8 @@
-package gr.evansp.momento.configuration;
+package gr.evansp.momento.exception;
 
 import static gr.evansp.momento.constant.ExceptionConstants.*;
 
 import gr.evansp.momento.beans.ExceptionMessage;
-import gr.evansp.momento.exception.LogicException;
-import gr.evansp.momento.exception.ResourceNotFoundException;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import java.util.Locale;
@@ -31,7 +29,7 @@ import org.springframework.web.servlet.resource.NoResourceFoundException;
 public class GlobalExceptionHandler {
 
   /** {@link MessageSource}. */
-  MessageSource messageSource;
+  private final MessageSource messageSource;
 
   /**
    * Constructor.
