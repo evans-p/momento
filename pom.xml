@@ -74,6 +74,13 @@
         <version.extra-enforcer-rules>1.12.1</version.extra-enforcer-rules>
         <version.archunit-junit5>1.5.1</version.archunit-junit5>
         <testcontainers.version>1.21.4</testcontainers.version>
+        <version.pitest.maven.plugin>1.30.2</version.pitest.maven.plugin>
+        <version.pitest-junit5-plugin>1.2.3</version.pitest-junit5-plugin>
+        <version.jacoco.maven.plugin>0.8.15</version.jacoco.maven.plugin>
+
+        <pitest.mutationThreshold>60</pitest.mutationThreshold>
+        <pitest.coverageThreshold>70</pitest.coverageThreshold>
+        <pitest.testStrengthThreshold>70</pitest.testStrengthThreshold>
 
         <skipTests>true</skipTests>
         <skipPmd>true</skipPmd>
@@ -81,6 +88,7 @@
         <skipEnforcer>true</skipEnforcer>
         <skipSpotless>true</skipSpotless>
         <skipSpotbugs>true</skipSpotbugs>
+        <skipPitest>true</skipPitest>
     </properties>
 
     <dependencyManagement>
@@ -410,6 +418,108 @@
                     <artifactId>maven-site-plugin</artifactId>
                     <version>3.12.1</version>
                 </plugin>
+
+
+                <plugin>
+                    <groupId>org.pitest</groupId>
+                    <artifactId>pitest-maven</artifactId>
+                    <version>${version.pitest.maven.plugin}</version>
+                    <dependencies>
+                        <dependency>
+                            <groupId>org.pitest</groupId>
+                            <artifactId>pitest-junit5-plugin</artifactId>
+                            <version>${version.pitest-junit5-plugin}</version>
+                        </dependency>
+                    </dependencies>
+                    <configuration>
+                        <skip>${skipPitest}</skip>
+                        <maxSurviving>0</maxSurviving>
+
+                        <targetClasses>
+                            <param>gr.evansp.momento.*</param>
+                        </targetClasses>
+                        <excludedClasses>
+                            <param>gr.evansp.momento.avro.*</param>
+                            <param>gr.evansp.momento.*Application</param>
+                            <param>gr.evansp.momento.*.config.*</param>
+                            <param>gr.evansp.momento.*.configuration.*</param>
+                        </excludedClasses>
+
+                        <targetTests>
+                            <param>gr.evansp.momento.*</param>
+                        </targetTests>
+                        <excludedTestClasses>
+                            <param>gr.evansp.momento.*ArchitectureTest</param>
+                        </excludedTestClasses>
+
+                        <mutators>
+                            <mutator>STRONGER</mutator>
+                        </mutators>
+
+                        <avoidCallsTo>
+                            <avoidCallsTo>java.util.logging</avoidCallsTo>
+                            <avoidCallsTo>org.slf4j</avoidCallsTo>
+                            <avoidCallsTo>org.apache.logging.log4j</avoidCallsTo>
+                        </avoidCallsTo>
+
+                        <threads>4</threads>
+                        <timeoutFactor>1.5</timeoutFactor>
+                        <timeoutConstant>4000</timeoutConstant>
+
+                        <outputFormats>
+                            <outputFormat>HTML</outputFormat>
+                            <outputFormat>XML</outputFormat>
+                        </outputFormats>
+                        <timestampedReports>false</timestampedReports>
+
+                        <mutationThreshold>${pitest.mutationThreshold}</mutationThreshold>
+                        <coverageThreshold>${pitest.coverageThreshold}</coverageThreshold>
+                        <testStrengthThreshold>${pitest.testStrengthThreshold}</testStrengthThreshold>
+                        <failWhenNoMutations>false</failWhenNoMutations>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>pitest-mutation-coverage</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>mutationCoverage</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.jacoco</groupId>
+                    <artifactId>jacoco-maven-plugin</artifactId>
+                    <version>${version.jacoco.maven.plugin}</version>
+                    <configuration>
+                        <excludes>
+                            <exclude>gr/evansp/momento/avro/**</exclude>
+                        </excludes>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>prepare-agent</id>
+                            <goals>
+                                <goal>prepare-agent</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>report</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>report</goal>
+                            </goals>
+                            <configuration>
+                                <formats>
+                                    <format>XML</format>
+                                    <format>HTML</format>
+                                </formats>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+
             </plugins>
 
         </pluginManagement>

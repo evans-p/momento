@@ -50,6 +50,28 @@ jobs:
       - name: Run Tests
         run: mvn clean install -DskipTests=false
 
+  mutation-test:
+    name: Execute Mutation Testing
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up JDK
+        uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: maven
+      - name: Create CDN storage directory
+        run: |
+          sudo mkdir -p /var/cdn/storage
+          sudo chown -R "$(id -u):$(id -g)" /var/cdn
+      - name: Run Mutation Tests
+        run: mvn verify -DskipPitest=false -DskipTests=false
+
   spotless:
     name: Spotless Check
     needs: test
@@ -159,5 +181,4 @@ jobs:
           java-version: 21
           cache: maven
       - name: Run Spotbugs Check
-        run: mvn spotbugs:check -DskipSpotbugs=false
-
+        run: mvn -B compile spotbugs:check -DskipSpotbugs=false
