@@ -9,6 +9,7 @@ COPY pom.xml .
 COPY cdn/pom.xml ./cdn/
 COPY user-management/pom.xml ./user-management/
 COPY notifications/pom.xml ./notifications/
+COPY posts/pom.xml ./posts/
 
 RUN mvn dependency:go-offline -B -pl cdn
 
