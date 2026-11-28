@@ -25,6 +25,8 @@ Momento is a social media like app, built in java.
 - flyway
 - pom cleanup
 - Add caching to Repositories
+- Add a batch process to delete image files, whose metadata are not on posts service DB
+- Add Chatting functionality
 
 ## Useful Resources
 - https://medium.com/ing-tech-romania/implementing-a-basic-kafka-producer-and-consumer-using-spring-boot-spring-kafka-and-avro-schema-2b6d06e6c4cf
