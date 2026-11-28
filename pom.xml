@@ -78,6 +78,7 @@
         <version.pitest.maven.plugin>1.30.2</version.pitest.maven.plugin>
         <version.pitest-junit5-plugin>1.2.3</version.pitest-junit5-plugin>
         <version.jacoco.maven.plugin>0.8.15</version.jacoco.maven.plugin>
+        <version.spring-cloud-starter-openfeign>4.2.3</version.spring-cloud-starter-openfeign>
 
         <pitest.mutationThreshold>60</pitest.mutationThreshold>
         <pitest.coverageThreshold>70</pitest.coverageThreshold>
@@ -169,6 +170,12 @@
                 <artifactId>archunit-junit5</artifactId>
                 <version>${version.archunit-junit5}</version>
                 <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <version>${version.spring-cloud-starter-openfeign}</version>
             </dependency>
 
         </dependencies>
