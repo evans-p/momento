@@ -15,7 +15,7 @@ Momento is a social media like app, built in java.
 - Check locking (Optimistic/Pessimistic).
 - Finalize transaction Isolation Levels, and Transaction Propagation.
 - FMEA
-- Rethink Dates
+- Rethink Dates: https://claude.ai/chat/4d03c1c0-502e-4e2c-99be-7125dd4a0422
 - project restructure
 - enhance UserFollowAvro
 - Think more about notifications: Maybe implement them using WebSockets https://claude.ai/chat/da3efdec-365a-4302-b951-e73f95a0c2a2
@@ -24,6 +24,9 @@ Momento is a social media like app, built in java.
 - Spring Modulith
 - flyway
 - pom cleanup
+- Add caching to Repositories
+- Add a batch process to delete image files, whose metadata are not on posts service DB
+- Add Chatting functionality
 
 ## Useful Resources
 - https://medium.com/ing-tech-romania/implementing-a-basic-kafka-producer-and-consumer-using-spring-boot-spring-kafka-and-avro-schema-2b6d06e6c4cf
